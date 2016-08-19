@@ -1,0 +1,28 @@
+﻿@using Objects
+@model IEnumerable<Engine>
+@{
+    ViewBag.Title = "Main Page";
+}
+<h1 align="center">@ViewBag.Greeting</h1>
+<h3 align="center">Electric Motors</h3>
+
+<ol class="rectangle-list">
+@foreach (Engine e in Model)
+{    
+    <li><input type="hidden" name="id" value=@e.Id><a href='/Engine/Index/@e.Id'>@e.Name</a></li>
+
+    <li><span name="Date№@e.Id" class="">00</span></li>
+    <li><span name="Value№@e.Id" class="">00</span></li>
+    <li><span name="Work№@e.Id" class="">00</span></li>
+    <li><span name="Status№@e.Id" class="">00</span></li>
+    <li><span name="Test№@e.Id" class="">00</span></li>
+}
+</ol>
+
+@Html.ActionLink("Exit", "Logoff", "Account")
+
+@section Scripts {
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
+@Scripts.Render("~/Scripts/TalasJS.js")
+}
+

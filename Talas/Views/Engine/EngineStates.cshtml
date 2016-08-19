@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Objects.EngineState>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Resistance,kOhm</th>
+            <th>Work</th>
+            <th>Drying status</th>
+            <th>Test</th>
+        </tr>
+        @foreach (var es in Model)
+        {
+            <tr><td>@es.Date</td><td>@es.Value</td><td>@es.Work</td><td>@es.Status</td><td>@es.Test</td></tr>
+        }
+    </table>
+

@@ -1,0 +1,165 @@
+body, div, dl, dt, dd, h1, h2, h3, h4, h5, h6, p, pre, code, blockquote {
+	margin:0;
+	padding:0;
+	border-width:0;
+}
+body {
+	background: url(images/mainBack.jpg)no-repeat center center fixed;
+    background-size: 100% 100%; 
+    -o-background-size: 100% 100%; /* Для браузера Opera */
+    -moz-background-size: 100% 100%; /* Для MozillaFireFox */
+}
+
+div.footer{
+    display:inline-block; 
+    margin-top: 250px;
+    width: 100%;
+}
+
+span.CharOverride-1 {
+	color:#ffffff;
+	font-family:"Code Bold", sans-serif;
+	font-size:50px;
+	font-style:normal;
+	font-weight:bold;
+}
+
+span.CharOverride-3 {
+	color:#ffffff;
+	font-family:"Helvetica Neue", sans-serif;
+	font-size:16px;
+	font-style:normal;
+	font-weight:200;  
+    vertical-align:middle;
+}
+span.CharOverride-4 {
+	color:#ffffff;
+	font-family:"Helvetica Neue", sans-serif;
+	font-size:36px;
+	font-style:normal;
+	font-weight:200;
+}
+
+#_idContainer000{
+    left:-25px;
+    position:relative;
+}
+#_idContainer002 {
+    margin-bottom: 25px;  
+}
+
+#_idContainer001{
+    margin-top:200px;
+}
+
+#_idContainer003{
+    margin-top:20px;
+}
+#_idContainer004{
+    padding-top:10px;
+}
+
+.children {
+    display: block;
+    float: left;
+    vertical-align:middle;
+    height:40px;
+}
+
+#_idContainer015 {
+    float:right;
+    position: relative;
+    top:15px;
+    right: 5px;
+}
+
+._idObjectLayout-1 {
+	text-align:center;
+}
+
+
+.inputT{
+    position:relative;
+    width:350px;
+    opacity:0.7;
+    height: 40px;
+    background-color: #707679; 
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    transition: box-shadow 0.1s linear;   
+	font-family:"Helvetica Neue", serif;
+	font-size:18px;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:1.2;    
+    letter-spacing:1px;
+    padding-left: 10px;  
+	border-color:#ffffff;
+	border-width:1px;
+    color:#a6a5a4;
+    outline: none;
+}
+.inputT:hover{
+  color:#a6a5a4;
+  border-color:#ffffff; 
+}
+
+#_idInputLogin{
+    border-top-left-radius:9px;
+	border-top-right-radius:9px;
+}
+#_idInputPassword{
+    border-bottom-left-radius:9px;
+	border-bottom-right-radius:9px;
+}
+
+.submit {
+    margin-top: 25px;
+    width: 350px;
+    height: 40px;
+    cursor: pointer; /* Курсор в виде руки */ 
+    position:relative;
+    opacity:0.7;
+    background-color: #707679; 
+    border-color:#ffffff;
+	border-width:1px;
+	border-style:solid;
+    border-bottom-left-radius:9px;
+	border-bottom-right-radius:9px;
+	border-top-left-radius:9px;
+	border-top-right-radius:9px;
+    color:#ffffff;
+	font-family:"Helvetica Neue", sans-serif;
+	font-size:28px;
+	font-style:normal;
+	font-weight:200;
+    outline: none;
+}
+
+input[type="checkbox"] {
+    position:relative;
+    border-radius: 50%;
+    background: none;
+    height: 35px; /* Высота картинки */
+    width: 35px; /* Ширина картинки */
+    -webkit-appearance: none; /* Прячем чекбокс */
+    cursor: pointer; /* Курсор в виде руки */
+    border: 1px solid #ccc;
+    outline: none;
+   }
+
+input[type="checkbox"]:checked {
+    background:url(images/checked.png) center center no-repeat;
+   }
+
+.talasImg{
+    position: relative;
+    vertical-align:middle;
+}
+
+.rectangle-list ol{
+	counter-reset: lis;
+	}
+.rectangle-list li {
+    list-style-type: none;
+}
