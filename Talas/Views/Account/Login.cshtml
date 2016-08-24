@@ -4,54 +4,52 @@
     ViewBag.Title = "Authentication";
 }
 
-
-    <div class="col-md-12 _idObjectLayout-1" id="_idContainer001">
+    
+    <div class="col-sm-6 col-sm-offset-3 " id="_idContainer001">
         <span class="CharOverride-4">Sign in to</span>
     </div>
-    <div class="col-md-12 _idObjectLayout-1" id="_idContainer002">
+    <div class="col-sm-6 col-sm-offset-3 " id="_idContainer002">
         <span class="CharOverride-1">TALAS Monitoring</span>
     </div>
 
     @using (Html.BeginForm())
     {
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-            <div class="col-md-12 _idObjectLayout-1" id="_idContainer000">
-                @Html.ValidationSummary(true)
+        <div class="col-sm-6 col-sm-offset-3 " id="_idContainer000">
+            @Html.ValidationSummary(true)
+        </div>
+
+            <div class="col-sm-6 col-sm-offset-3 ">
+                <input id="_idInputLogin" class="inputT" type="text"
+                       name="Login" placeholder="Login">
             </div>
-         
-                <div class="col-md-12 _idObjectLayout-1">
-                    <input id="_idInputLogin" class="inputT" type="text"
-                           name="Login" placeholder="Login">
-                </div>            
 
-                <div class="col-md-12  _idObjectLayout-1">
-                    <input id="_idInputPassword" class="inputT" type="password" name="Password" placeholder="Password">                    
+                <div class="col-sm-6 col-sm-offset-3  ">
+                    <input id="_idInputPassword" class="inputT" type="password" name="Password" placeholder="Password">
                 </div>
-                
-           
-                <div class="col-md-12 _idObjectLayout-1">
+
+
+                <div class="col-sm-6 col-sm-offset-3 ">
                     <button class="submit" type="submit" name="submit" value="enter">
                         Log in
                     </button>
                 </div>
 
-                <div class="col-md-12 _idObjectLayout-1" id="_idContainer003">
+                <div class="col-sm-6 col-sm-offset-3 " id="_idContainer003">
                     <span class="CharOverride-3">Forgot password or login?</span>
                 </div>
 
-                <div class="container col-md-3 col-md-offset-5 _idObjectLayout-1" id="_idContainer003">
-                    <div class="children">
-                        <input class="checkbox" id="checkbox" type="checkbox"
-                               name="RememberMe"  value="true"/>
-                        <input name="RememberMe" type="hidden" value="false" />
-                    </div>
-                    <div class="children" id="_idContainer004">
-                        <span class="CharOverride-3">Keep me sign in</span>
-                    </div>
+                <div class="col-sm-6 col-sm-offset-3 " id="_idContainer003">
+                    <input class="checkbox" id="checkbox" type="checkbox"
+                           name="RememberMe" value="true" />
+                    <input name="RememberMe" type="hidden" value="false" />
+                    <span class="CharOverride-3">Keep me sign in</span>
                 </div>
+    }
 
-}
+
+
 
 @section Scripts {
  @Scripts.Render("~/bundles/jqueryval")
