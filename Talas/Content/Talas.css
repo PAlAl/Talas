@@ -4,6 +4,11 @@ body, div, dl, dt, dd, h1, h2, h3, h4, h5, h6, p, pre, code, blockquote {
     border-width: 0;
 }
 
+html {
+/* position: relative;
+  min-height: 100%;*/
+}
+
 body {
     background: url(images/mainBack.jpg)no-repeat center center fixed;
     background-size: 100% 100%;
@@ -12,17 +17,24 @@ body {
     font-family: "Helvetica Neue", sans-serif;
     font-style: normal;
     color: #ffffff;
+   /* margin-bottom: 60px;*/
 }
 
 div.footer {
     /*display:inline-block; 
     margin-top: 50%;
-    width: 100%;*/
-    position: fixed; /* Фиксированное положение */
+    width: 100%;
+    position: fixed; 
     left: 0;
-    bottom: 0; /* Левый нижний угол */
-    width: 100%; /* Ширина слоя */
-    text-align: left;
+    bottom: 0; 
+    width: 100%; */
+    /*text-align: left;
+    position: absolute;
+    bottom: 0;
+    width: 100%;*/
+  /* Set the fixed height of the footer here */
+   /* height: 60px;*/
+  /*background-color: #f5f5f5;*/
 }
 
 span.CharOverride-1 {
@@ -57,7 +69,7 @@ span.CharOverride-36 {
 
 #_idContainerFooter {
     float: right;
-   /* position: relative;*/
+    position: relative;
     top: 15px;
     right: 5px;
 }
@@ -134,11 +146,6 @@ input[type="checkbox"] {
     input[type="checkbox"]:checked {
         background: url(images/checked.png) center center no-repeat;
     }
-
-.talasImg {
-    position: relative;
-    vertical-align: middle;
-}
 
 .rectangle-list ol {
     counter-reset: lis;
