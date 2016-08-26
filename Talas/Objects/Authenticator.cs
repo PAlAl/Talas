@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Talas.Models;
@@ -7,19 +8,19 @@ namespace Objects
 {
     static public class Authenticator
     {       
-        public enum AuthenticateState { Succes, PasswordNotCorrect, UserNotFound }
-        public static string Id { get; set; } 
-        public static AuthenticateState Authenticate(string Login, string Password)
+        //public enum AuthenticateState { Succes, PasswordNotCorrect, UserNotFound }
+        public static String Id { get; set; } 
+        public static AuthenticateState Authenticate(String login, String password)
         {         
             AuthenticateState result;
             User user = null;
-            string inHashPassword;
+            String inHashPassword;
             using (AppContext db = new AppContext())
-                user = db.Users.FirstOrDefault(u => u.Login == Login);
+                user = db.Users.FirstOrDefault(u => u.Login == login);
             if (user != null)
             {
                 Id = user.Id.ToString();
-                inHashPassword = GenerateHashPassword(Password,user.Salt);            
+                inHashPassword = GenerateHashPassword(password,user.Salt);            
              
                 if (user.Password.Equals(inHashPassword))
                     result = AuthenticateState.Succes;
@@ -31,16 +32,16 @@ namespace Objects
             return result;
         }
 
-        private static string GenerateHashPassword(string Password, string UserSalt)
+        private static String GenerateHashPassword(String password, String userSalt)
         {
-            const string staticSalt = "T@l@s";
-            string result = "";          
+            const String staticSalt = "T@l@s";
+            String result = "";          
             using (MD5 md5Hash = MD5.Create())
             {
-                byte[] hashenc = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(Password + UserSalt + staticSalt));
-                foreach (var b in hashenc)
+                Byte[] hashEncodes = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(password + userSalt + staticSalt));
+                foreach (var encode in hashEncodes)
                 {
-                    result += b.ToString("x2");
+                    result += encode.ToString("x2");
                 }
             }
             return result;

@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Talas.Models;
 using System.Web.Configuration;
-using static Objects.Authenticator;
 using Objects;
 
 namespace Talas.Controllers
@@ -23,8 +22,8 @@ namespace Talas.Controllers
         {
             if (ModelState.IsValid)
             {
-                AuthenticateState r = Authenticator.Authenticate(model.Login,model.Password);
-                switch (r)
+                AuthenticateState authenticateResult = Authenticator.Authenticate(model.Login,model.Password);
+                switch (authenticateResult)
                 {
                     case AuthenticateState.PasswordNotCorrect:
                         ModelState.AddModelError("", "Password is not correct");
@@ -40,7 +39,7 @@ namespace Talas.Controllers
                         cookie.Value = Authenticator.Id;
                         if (model.RememberMe)
                         {
-                            int timeOut = GetTimeOut();
+                            Int32 timeOut = GetTimeOut();
                             cookie.Expires = DateTime.Now.AddMinutes(timeOut);
                         }
                         Response.Cookies.Add(cookie);
@@ -52,9 +51,9 @@ namespace Talas.Controllers
 
         private int GetTimeOut()
         {
-            object section = WebConfigurationManager.GetSection("system.web/authentication");
-            double time  = ((System.Web.Configuration.AuthenticationSection)section).Forms.Timeout.TotalMinutes;
-            return int.Parse(time.ToString());
+            Object section = WebConfigurationManager.GetSection("system.web/authentication");
+            Double time  = ((System.Web.Configuration.AuthenticationSection)section).Forms.Timeout.TotalMinutes;
+            return Int32.Parse(time.ToString());
         }
 
       /*  public ActionResult Register()

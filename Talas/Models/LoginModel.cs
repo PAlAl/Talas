@@ -1,16 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Talas.Models
 {
     public class LoginModel
     {
         [Required]
-        public string Login { get; set; }
+        public String Login { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public String Password { get; set; }
 
-        public bool RememberMe { get; set; }
+        public Boolean RememberMe { get; set; }
     }
 }

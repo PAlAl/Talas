@@ -15,13 +15,13 @@ namespace Talas.Controllers
     {
         private const byte NUMBERS_FOR_GRAPHICS=10;
        [Authorize]
-        public ActionResult Index(int Id)
+        public ActionResult Index(Int32 id)
         {
             if (!IsSetCookies()) return RedirectToAction("Login", "Account");
             Engine engine = null;
             using (AppContext db = new AppContext())
             {
-                engine = db.Engines.FirstOrDefault(e => e.Id == Id);
+                engine = db.Engines.FirstOrDefault(e => e.Id == id);
             }
             return View(engine);
         }
@@ -29,16 +29,16 @@ namespace Talas.Controllers
         public ActionResult EngineStates()
         {
             if (!IsSetCookies()) return RedirectToAction("Login", "Account");
-            int id = int.Parse(Request.Params["idEngine"]);
+            Int32 id = Int32.Parse(Request.Params["idEngine"]);
             List<DateTime> dates = PrepareDatesEngineState(id, Request.Params["dateStart"], Request.Params["dateFinish"]);
             return PartialView(GetListEngineState(id, dates));
         }
         [Authorize]
         public ActionResult Graph()
         {
-            int id = int.Parse(Request.Params["idEngine"]);
+            Int32 id = Int32.Parse(Request.Params["idEngine"]);
             DateTime date = Request.Params["calendar"] != "" ? DateTime.Parse(Request.Params["calendar"] + "-01") : new DateTime();
-            Dictionary<string, string> data = PrepareDataGraph(date, id);
+            Dictionary<String, String> data = PrepareDataGraph(date, id);
             DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
             .SetTitle(new Title
             {
@@ -78,92 +78,92 @@ namespace Talas.Controllers
 
 
         [Authorize]
-        public FileResult Download(string Id, string DateStart, string DateFinish)
+        public FileResult Download(String idEngine, String dateReportStart, String dateReportFinish)
         {
             if (!IsSetCookies()) return null;
             FileResult result = null;
-            if (Id != "" && Id != null)
+            if (idEngine != "" && idEngine != null)
             {
-                int id = int.Parse(Id);
-                List<DateTime> dates = PrepareDatesEngineState(id, DateStart, DateFinish);
-                List<EngineState> EngineStates = GetListEngineState(id, dates);
-                result = PrepareFileDownload(Id, EngineStates);
+                //Int32 id = Int32.Parse(id);
+                List<DateTime> dates = PrepareDatesEngineState(Int32.Parse(idEngine), dateReportStart, dateReportFinish);
+                List<EngineState> EngineStates = GetListEngineState(Int32.Parse(idEngine), dates);
+                result = PrepareFileDownload(idEngine, EngineStates);
             }
             return result;
         }
 
-        private Dictionary<string, string> PrepareDataGraph(DateTime Date, int IdEngine)
+        private Dictionary<String, String> PrepareDataGraph(DateTime date, Int32 idEngine)
         {          
-            Dictionary<string, string > result;
+            Dictionary<String, String > result;
             using (AppContext db = new AppContext())
             {
-                if (Date != DateTime.MinValue)
+                if (date != DateTime.MinValue)
                 {
-                    int month = Date.Month;
-                    result = db.Statistics.Where(st => st.EngineId == IdEngine && st.Date.Month == month).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
+                    Int32 month = date.Month;
+                    result = db.Statistics.Where(st => st.EngineId == idEngine && st.Date.Month == month).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
                 }
                 else
                 {
-                    result = db.Statistics.Where(st => st.EngineId == IdEngine).OrderByDescending(st=>st.Id).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Id).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
+                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st=>st.Id).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Id).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
                 } 
             }
             return result;
         }
 
-        private string ConvertDate(DateTime Date)
+        private String ConvertDate(DateTime date)
         {
-            return Date.Day.ToString() + "." + Date.ToString().Substring(3,2);
+            return date.Day.ToString() + "." + date.ToString().Substring(3,2);
         }
 
         private bool IsSetCookies()
         {
             return (HttpContext.Request.Cookies["Talas"] != null);
         }
-        private FileResult PrepareFileDownload(string Id ,List<EngineState> EngineStates)
+        private FileResult PrepareFileDownload(String idEngine ,List<EngineState> engineStates)
         {
-            string file_path = null, file_type = null, file_name = null;
-            file_path = Server.MapPath("~/Content/Files/" + Id + ".txt");
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(file_path, false))
+            String filePath = null, fileType = null, fileName = null;
+            filePath = Server.MapPath("~/Content/Files/" + idEngine + ".txt");
+            using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath, false))
             {
-                foreach (EngineState en in EngineStates)
+                foreach (EngineState engine in engineStates)
                 {
-                    file.WriteLine(EngineStateToString(en));
+                    file.WriteLine(EngineStateToString(engine));
                 }
             }
-            file_type = "application/plain";
-            file_name = Id + "_" + DateTime.Today.Date.ToString() + ".txt";
-            return file_path != null ? File(file_path, file_type, file_name) : null;
+            fileType = "application/plain";
+            fileName = idEngine + "_" + DateTime.Today.Date.ToString() + ".txt";
+            return filePath != null ? File(filePath, fileType, fileName) : null;
         }
 
-        private string EngineStateToString(EngineState EnState)
+        private String EngineStateToString(EngineState engineState)
         {
-            return EnState.Date.ToString() + " " + EnState.Id.ToString() + " " + EnState.Value.ToString() + " ";
+            return engineState.Date.ToString() + " " + engineState.Id.ToString() + " " + engineState.Value.ToString() + " ";
         }
 
-        private List<DateTime> PrepareDatesEngineState(int Id, string DateStart, string DateFinish)
+        private List<DateTime> PrepareDatesEngineState(Int32 idEngine, String dateReportStart, String dateReportFinish)
         {
             List <DateTime> result = new List<DateTime>();       
-            DateTime dateLast;
+            DateTime dateLastState;
             using (AppContext db = new AppContext())
             {
-                 dateLast = db.EngineStates.Where(es => es.EngineId == Id).Max(es => es.Date).Date;
+                 dateLastState = db.EngineStates.Where(es => es.EngineId == idEngine).Max(es => es.Date).Date;
             }
-            DateTime dateFirst = DateStart != ""  && DateStart != null ? DateTime.Parse(DateStart) : dateLast;
-            DateTime dateSecond = DateFinish != "" && DateFinish != null ? DateTime.Parse(DateFinish) : dateLast.AddDays(1);
+            DateTime dateFirst = dateReportStart != ""  && dateReportStart != null ? DateTime.Parse(dateReportStart) : dateLastState;
+            DateTime dateSecond = dateReportFinish != "" && dateReportFinish != null ? DateTime.Parse(dateReportFinish) : dateLastState.AddDays(1);
             result.Add(dateFirst);
             result.Add(dateSecond);
             return result;
         }
 
-        private List<EngineState> GetListEngineState(int Id, List<DateTime> Dates)
+        private List<EngineState> GetListEngineState(Int32 idEngine, List<DateTime> datesStates)
         {
-            List<EngineState> list = null;
-            DateTime dateFisrt = Dates[0], dateSecond = Dates[1];
+            List<EngineState> listStates = null;
+            DateTime dateFisrt = datesStates[0], dateSecond = datesStates[1];
             using (AppContext db = new AppContext())
             {
-                list = db.EngineStates.Where(es => es.EngineId == Id && es.Date >= dateFisrt && es.Date < dateSecond).ToList();
+                listStates = db.EngineStates.Where(es => es.EngineId == idEngine && es.Date >= dateFisrt && es.Date < dateSecond).ToList();
             }
-            return list;
+            return listStates;
         }
     }
 }

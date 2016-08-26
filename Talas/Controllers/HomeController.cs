@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Talas.Models;
 using Objects;
+using System;
 
 namespace Talas.Controllers
 {
@@ -16,7 +17,7 @@ namespace Talas.Controllers
                 return RedirectToAction("Login", "Account");
             }           
             User user = null;
-            int id = int.Parse(HttpContext.Request.Cookies["Talas"].Value);           
+            Int32 id = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);           
             using (AppContext db = new AppContext())
             {
                 user = db.Users.FirstOrDefault(u => u.Id == id);
@@ -26,15 +27,15 @@ namespace Talas.Controllers
             return View(user.Engines);
         }
 
-        public JsonResult JsonGetInfo(string[] Engines)
+        public JsonResult JsonGetInfo(string[] engines)
         {           
             List<EngineState> jsondata=new List<EngineState>();
             using (AppContext db = new AppContext())
             {
-                int id;
-                foreach (string st in Engines)
+                Int32 id;
+                foreach (string engine in engines)
                 {
-                    id = int.Parse(st);
+                    id = Int32.Parse(engine);
                     jsondata.Add(db.EngineStates.Where(es => es.EngineId == id).OrderByDescending(es => es.Date).FirstOrDefault());
                 }
             }

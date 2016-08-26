@@ -139,6 +139,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AppContext.cs" />
+    <Compile Include="Objects\AuthenticateState.cs" />
     <Compile Include="Objects\Authenticator.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Objects\Engine.cs" />

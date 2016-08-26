@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Objects
@@ -6,12 +7,12 @@ namespace Objects
     public class User
     {
         [Key]
-        public int Id { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public string Greeting { get; set; }         
-        public string Salt { get; set; }
+        public Int32 Id { get; set; }
+        public String Login { get; set; }
+        public String Password { get; set; }
+        public String Email { get; set; }
+        public String Greeting { get; set; }         
+        public String Salt { get; set; }
         public ICollection<Engine> Engines { get; set; }
     }
 
