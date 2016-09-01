@@ -1,7 +1,21 @@
-﻿function show() {
+﻿function dash() {
+    $("a[data-ajax-url*='/Home/Engine']").click();
+}
+
+$(document).ready(function () {
+    dash();
+    setTimeout(goShow(), 5000);
+});
+
+function goShow()
+{
+    setInterval('show()', 2000);
+}
+
+function show() {
     var classes = $("input:hidden").map(function (indx, element) {
         return $(element).val();
-        });
+    });
     var arr = classes.get();
     $.ajax({
         url: 'Home/JsonGetInfo',
@@ -12,7 +26,7 @@
             response = response.reverse();
             while (response.length > 0) {
                 var element = response.pop();
-                var id = element.EngineId;     
+                var id = element.EngineId;
                 $('[name = Date№' + id + ']').text(element.Date == null ? 0 : new Date(parseInt(element.Date.substr(6))).toLocaleString());
                 $('[name = Value№' + id + ']').text(element.Value == null ? 0 : element.Value);
                 $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work);
@@ -22,9 +36,3 @@
         }
     });
 }
-
-$(document).ready(function () {
-    show();
-    setInterval('show()', 2000);
-});
-

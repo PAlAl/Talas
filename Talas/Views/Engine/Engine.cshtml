@@ -1,0 +1,38 @@
+﻿@using Objects
+@model IEnumerable<Engine>
+
+<div class="scrollable">
+    <table class="table">
+        <caption class="CharOverride-32">Dashboard</caption>
+        <thead>
+            <tr>
+                <th>Electric<br />Motors</th>
+                <th>Date<br />& Time</th>
+                <th>Resistance<br />kOhm</th>
+                <th>Motor<br />Operating</th>
+                <th>Online</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Engine e in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" name="id" value=@e.Id>
+                        <a href='/Engine/Index/@e.Id'>@e.Name</a>
+                    </td>
+                    <td><span name="Date№@e.Id" class="">00</span></td>
+                    <td><span name="Value№@e.Id" class="">00</span></td>
+                    <td><span name="Work№@e.Id" class="">00</span></td>
+                    <td><span name="Status№@e.Id" class="">00</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="scrollable">
+    <table class="table">
+        <caption class="CharOverride-32">Alerts & Notification</caption>
+    </table>
+</div>
+

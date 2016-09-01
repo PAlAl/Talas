@@ -1,28 +1,62 @@
 ﻿@using Objects
-@model IEnumerable<Engine>
+
 @{
     ViewBag.Title = "Main Page";
 }
-<h1 align="center">@ViewBag.Greeting</h1>
-<h3 align="center">Electric Motors</h3>
 
-<ol class="rectangle-list">
-@foreach (Engine e in Model)
-{    
-    <li><input type="hidden" name="id" value=@e.Id><a href='/Engine/Index/@e.Id'>@e.Name</a></li>
 
-    <li><span name="Date№@e.Id" class="">00</span></li>
-    <li><span name="Value№@e.Id" class="">00</span></li>
-    <li><span name="Work№@e.Id" class="">00</span></li>
-    <li><span name="Status№@e.Id" class="">00</span></li>
-    <li><span name="Test№@e.Id" class="">00</span></li>
+<div class="row main">
+    <div class="col-md-2"><h3 align="left">TALAS</h3><h4 align="left">MONITORING</h4></div>
+    <div class="col-md-8">
+        <span class="CharOverride-36">@ViewBag.Greeting</span>
+        <span class="alerts">Alerts</span>
+    </div>
+
+    <div class="col-md-2">
+        <button type="button" data-toggle="dropdown" class="btn btn-user dropdown-toggle"><span class="caret"></span> UserName </button>
+        <ul class="dropdown-menu ">
+            <li>
+                <a href="#">Settings</a>
+            </li>
+            <li>
+                <a href="#">Log out</a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<div class="row main-body">
+    <div class="col-md-2">
+        <ul class="nav nav-stacked">
+            <li>
+                @Ajax.ActionLink("Dashboard", "Index", new AjaxOptions { UpdateTargetId = "content", Url= "/Home/Engine" })
+            </li>
+            <li>
+                @Html.ActionLink("Exit", "Logoff", "Account")
+            </li>
+            <li>
+                @Html.ActionLink("Exit", "Logoff", "Account")
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-8 tables" id="content">
+        
+    </div>
+    <div class="col-md-2">UserInfo</div>
+
+</div>
+
+
+@section Footer{
+    <footer class="footer"></footer>
 }
-</ol>
-
-@Html.ActionLink("Exit", "Logoff", "Account")
 
 @section Scripts {
-@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
-@Scripts.Render("~/Scripts/TalasJS.js")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
+    @Scripts.Render("~/Scripts/TalasJS.js")
 }
+
+
+
+
 

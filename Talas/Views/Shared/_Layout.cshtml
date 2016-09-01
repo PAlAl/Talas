@@ -12,13 +12,19 @@
     <div class="container text-center "><!--body-content-->
         @RenderBody()        
     </div>
-    <footer class="text-left footer">
-        <!--<div class="text-left navbar-fixed-bottom row-fluid">-->
-            <img src="~/Content/images/talas.png" />
-            <span>All rights reserved</span>
-       
-    </footer>
-
+  
+        @if (IsSectionDefined("Footer"))
+        {
+            @RenderSection("Footer")
+        }
+        else
+        {
+            <footer class="text-left footer">
+                <img src="~/Content/images/talas.png" />
+                <span>All rights reserved</span>
+            </footer>
+        }
+            
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

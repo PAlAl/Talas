@@ -232,6 +232,7 @@
     <Content Include="Views\Engine\Index.cshtml" />
     <Content Include="Views\Engine\EngineStates.cshtml" />
     <Content Include="Views\Engine\Graph.cshtml" />
+    <Content Include="Views\Engine\Engine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
