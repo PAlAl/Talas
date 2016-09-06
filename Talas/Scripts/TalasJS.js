@@ -4,7 +4,7 @@
 
 $(document).ready(function () {
     dash();
-    setTimeout(goShow(), 5000);
+    setTimeout(goShow(), 2000);
 });
 
 function goShow()

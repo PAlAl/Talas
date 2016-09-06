@@ -49,25 +49,30 @@ body {
 
 }
 
-span.CharOverride-1 {
+.CharOverride-1 {
     font-family: "Code Bold", sans-serif;
     font-size: 50px;
     font-weight: bold;
 }
 
-span.CharOverride-16 {
+.CharOverride-16 {
     font-size: 16px;
     font-weight: 200;
     vertical-align: middle;
 }
 
-span.CharOverride-14 {
+.CharOverride-24 {
+    font-size: 24px;
+    font-weight: 200;
+}
+
+.CharOverride-14 {
     font-size: 14px;
     font-weight: 100;
     vertical-align: middle;
 }
 
-span.CharOverride-36 {
+.CharOverride-36 {
     font-size: 36px;
     font-weight: 200;
 }
@@ -270,3 +275,18 @@ input[type="checkbox"] {
     max-height: 200px;
     overflow-y: scroll;
 }
+
+.tableInfoEngine {
+    width:100%;
+    max-width: 400px;
+}
+
+.textAlignLeft{
+    text-align:left !important;
+}
+
+tr.border_bottom td {
+  border-bottom:1pt solid #ffffff;
+  padding-top: 15px;
+}
+

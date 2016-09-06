@@ -23,7 +23,7 @@ namespace Talas.Controllers
             {
                 engine = db.Engines.FirstOrDefault(e => e.Id == id);
             }
-            return View(engine);
+            return PartialView("~/views/Engine/EngineInfo.cshtml", engine);
         }
         [Authorize]
         public ActionResult EngineStates()

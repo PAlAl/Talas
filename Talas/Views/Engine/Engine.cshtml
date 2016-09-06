@@ -18,47 +18,8 @@
             {
                 <tr>
                     <td>
-                        <input type="hidden" name="id" value=@e.Id>
-                        <a href='/Engine/Index/@e.Id'>@e.Name</a>
-                    </td>
-                    <td><span name="Date№@e.Id" class="">00</span></td>
-                    <td><span name="Value№@e.Id" class="">00</span></td>
-                    <td><span name="Work№@e.Id" class="">00</span></td>
-                    <td><span name="Status№@e.Id" class="">00</span></td>
-                </tr>
-            }
-            @foreach (Engine e in Model)
-            {
-                <tr>
-                    <td>
-                        <input type="hidden" name="id" value=@e.Id>
-                        <a href='/Engine/Index/@e.Id'>@e.Name</a>
-                    </td>
-                    <td><span name="Date№@e.Id" class="">00</span></td>
-                    <td><span name="Value№@e.Id" class="">00</span></td>
-                    <td><span name="Work№@e.Id" class="">00</span></td>
-                    <td><span name="Status№@e.Id" class="">00</span></td>
-                </tr>
-            }
-            @foreach (Engine e in Model)
-            {
-                <tr>
-                    <td>
-                        <input type="hidden" name="id" value=@e.Id>
-                        <a href='/Engine/Index/@e.Id'>@e.Name</a>
-                    </td>
-                    <td><span name="Date№@e.Id" class="">00</span></td>
-                    <td><span name="Value№@e.Id" class="">00</span></td>
-                    <td><span name="Work№@e.Id" class="">00</span></td>
-                    <td><span name="Status№@e.Id" class="">00</span></td>
-                </tr>
-            }
-            @foreach (Engine e in Model)
-            {
-                <tr>
-                    <td>
-                        <input type="hidden" name="id" value=@e.Id>
-                        <a href='/Engine/Index/@e.Id'>@e.Name</a>
+                        <input type="hidden" name="id" value=@e.Id>                       
+                        @Ajax.ActionLink(@e.Name, "Index", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Index/"+ @e.Id })
                     </td>
                     <td><span name="Date№@e.Id" class="">00</span></td>
                     <td><span name="Value№@e.Id" class="">00</span></td>

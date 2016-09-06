@@ -1,0 +1,30 @@
+﻿@using Objects
+@model Engine
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="tableInfoEngine textAlignLeft">
+            <tr class="CharOverride-24"><td>Motor @Model.Name </td></tr>
+            <tr class="border_bottom">
+                <td>Type</td>
+                <td>@Model.Type</td>
+            </tr>
+            <tr class="border_bottom">
+                <td>Power</td>
+                <td>@Model.Power</td>
+            </tr>
+            <tr class="border_bottom">
+                <td>Voltage</td>
+                <td>@Model.Voltage</td>
+            </tr>
+            <tr class="border_bottom">
+                <td>Manufacture date</td>
+                <td>@Model.ManufactureDate</td>
+            </tr>
+            <tr class="border_bottom">
+                <td>Installation date</td>
+                <td>@Model.InstallationDate</td>
+            </tr>
+        </table>
+    </div>
+</div>
