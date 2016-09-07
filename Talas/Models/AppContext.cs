@@ -10,7 +10,7 @@ namespace Talas.Models
             public DbSet<EngineState> EngineStates { get; set; }
             public DbSet<Statistic> Statistics { get; set; }
 
-        public AppContext() : base("DefaultConnection")
+        public AppContext() : base("AzureConnection")
             { }
        
     }

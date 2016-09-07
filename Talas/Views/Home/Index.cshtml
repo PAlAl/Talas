@@ -28,20 +28,21 @@
 <div class="row main-body">
     <div class="col-md-2">
         <ul class="nav nav-stacked">
-            <li>
-                @Ajax.ActionLink("Dashboard", "Index", new AjaxOptions { UpdateTargetId = "content", Url= "/Home/Engine" })
+            <li class="buttonNav">
+                @Ajax.ActionLink("Dashboard", "Index", new AjaxOptions { UpdateTargetId = "content", Url = "/Home/Engine" })
             </li>
-            <li>
-                @Html.ActionLink("Exit", "Logoff", "Account")
+            <li class="buttonNav">
+                @Html.ActionLink("Menu item 1", "", "")
             </li>
-            <li>
-                @Html.ActionLink("Exit", "Logoff", "Account")
+            <li class="buttonNav">
+                @Html.ActionLink("Menu item 2", "", "")
             </li>
         </ul>
     </div>
     <div class="col-md-8 tables" id="content">
-        
+
     </div>
+
     <div class="col-md-2">UserInfo</div>
 
 </div>
