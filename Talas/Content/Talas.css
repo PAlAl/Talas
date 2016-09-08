@@ -63,6 +63,7 @@ body {
 .CharOverride-24 {
     font-size: 24px;
     font-weight: 200;
+
 }
 
 .CharOverride-14 {
@@ -161,10 +162,10 @@ input[type="checkbox"] {
     display: inline-block;
     border-radius: 50%;
     background: none;
-    height: 35px; /* Высота картинки */
-    width: 35px; /* Ширина картинки */
+    height: 35px;
+    width: 35px;
     -webkit-appearance: none; /* Прячем чекбокс */
-    cursor: pointer; /* Курсор в виде руки */
+    cursor: pointer;
     border: 1px solid #ccc;
     outline: none;
 }
@@ -186,8 +187,8 @@ input[type="checkbox"] {
     border-bottom-right-radius: 9px;
     border-top-left-radius: 9px;
     border-top-right-radius: 9px;
-
-        display: flex;
+        /*height: 70vh;*/
+        /*display: flex;*/
 }
 
 .alerts {
@@ -259,6 +260,7 @@ input[type="checkbox"] {
     border-color: #ffffff;
     border-bottom: none;
     border-top: none;
+    height: 95%;
 }
 
 .table caption {
@@ -301,6 +303,7 @@ input[type="checkbox"] {
 .tableInfoEngine {
     width: 100%;
     max-width: 400px;
+    margin-bottom: 10vh;
 }
 
 .textAlignLeft {
@@ -309,5 +312,5 @@ input[type="checkbox"] {
 
 tr.border_bottom td {
     border-bottom: 1pt solid #ffffff;
-    padding-top: 15px;
+    padding-top: 25px;
 }
