@@ -21,15 +21,14 @@ namespace Talas.Controllers
             Engine engine = null;
             using (AppContext db = new AppContext())
             {
-                engine = db.Engines.FirstOrDefault(e => e.Id == id);
+                engine = db.Engines.FirstOrDefault(e => e.Id == id);             
             }
             return PartialView("~/views/Engine/EngineInfo.cshtml", engine);
         }
         [Authorize]
-        public ActionResult EngineStates()
+        public ActionResult EngineStates(Int32 id)
         {
             if (!IsSetCookies()) return RedirectToAction("Login", "Account");
-            Int32 id = Int32.Parse(Request.Params["idEngine"]);
             List<DateTime> dates = PrepareDatesEngineState(id, Request.Params["dateStart"], Request.Params["dateFinish"]);
             return PartialView(GetListEngineState(id, dates));
         }
@@ -91,6 +90,20 @@ namespace Talas.Controllers
             }
             return result;
         }
+
+        /*private Boolean EngineUserCheck(Int32 idEngine)
+        {
+            User user = null;
+            Engine engine = null;
+            Int32 id = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);
+            using (AppContext db = new AppContext())
+            {
+                user = db.Users.FirstOrDefault(u => u.Id == id);  
+                            
+            }
+            var a = user.Engines.First(e => e.Id == idEngine);
+            return true;
+        }*/
 
         private Dictionary<String, String> PrepareDataGraph(DateTime date, Int32 idEngine)
         {          

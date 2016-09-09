@@ -6,11 +6,11 @@
         <caption class="CharOverride-32">Dashboard</caption>
         <thead>
             <tr>
-                <th>Electric<br />Motors</th>
-                <th>Date<br />& Time</th>
-                <th>Resistance<br />kOhm</th>
-                <th>Motor<br />Operating</th>
-                <th>Online</th>
+                <th class="text-center">Electric<br />Motors</th>
+                <th class="text-center">Date<br />& Time</th>
+                <th class="text-center">Resistance<br />kOhm</th>
+                <th class="text-center">Motor<br />Operating</th>
+                <th class="text-center">Online</th>
             </tr>
         </thead>
         <tbody>
@@ -18,8 +18,8 @@
             {
                 <tr>
                     <td>
-                        <input type="hidden" name="id" value=@e.Id>                       
-                        @Ajax.ActionLink(@e.Name, "Index", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Index/"+ @e.Id })
+                        <input type="hidden" name="id" value=@e.Id>                      
+                        @Ajax.ActionLink(@e.Name, "", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Index/"+ @e.Id })
                     </td>
                     <td><span name="Date№@e.Id" class="">00</span></td>
                     <td><span name="Value№@e.Id" class="">00</span></td>

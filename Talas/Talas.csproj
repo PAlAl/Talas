@@ -235,7 +235,6 @@
     <Content Include="Views\Engine\Graph.cshtml" />
     <Content Include="Views\Engine\Engine.cshtml" />
     <Content Include="Views\Engine\EngineInfo.cshtml" />
-    <Content Include="Views\Shared\_Layout 2.cshtml" />
     <Content Include="Views\Engine\DownButtons.cshtml" />
   </ItemGroup>
   <ItemGroup>
