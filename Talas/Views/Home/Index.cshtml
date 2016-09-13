@@ -29,7 +29,7 @@
     <div class="col-md-2">
         <ul class="nav nav-stacked">
             <li class="buttonNav">
-                @Ajax.ActionLink("Dashboard", "Index", new AjaxOptions { UpdateTargetId = "content", Url = "/Home/Engine" })
+                @Ajax.ActionLink("Dashboard", "Index", new AjaxOptions { UpdateTargetId = "content", Url = "/Home/Engine"})
             </li>
             <li class="buttonNav">
                 @Html.ActionLink("Menu item 1", "", "")
@@ -53,7 +53,9 @@
 @section Scripts {
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
     @Scripts.Render("~/Scripts/TalasJS.js")
+    @Scripts.Render("~/Scripts/Highcharts-4.0.1/js/highcharts.js")
 }
+
 
 
 

@@ -202,9 +202,16 @@ input[type="checkbox"] {
     border-color: #ffffff;
     opacity: 1;
 }
-
     .btn-user:hover {
         opacity: 0.4;
+    }
+
+    .btn-primary.active {
+    background-color: rgba(0,0,0,0.3);/*3276b1*/
+    border-color: #ffffff;/*285e8e*/
+}
+    .btn-group{
+        margin-top: 10px;
     }
 
 #show{
@@ -342,24 +349,3 @@ tr.border_bottom td {
 :-ms-input-placeholder { /* Internet Explorer 10+ */
    color:    #ffffff;
 }
-
-/*inputT {
-    position: relative;
-    width: 100%;
-    opacity: 0.8;
-    height: 40px;
-    background-color: #ffffff;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    transition: box-shadow 0.1s linear;
-    font-size: 18px;
-    font-variant: normal;
-    font-weight: normal;
-    line-height: 1.2;
-    letter-spacing: 1px;
-    padding-left: 10px;
-    border-color: #ffffff;
-    border-width: 1px;
-    color: #a6a5a4;
-    outline: none;
-    max-width: 400px;
-}*/

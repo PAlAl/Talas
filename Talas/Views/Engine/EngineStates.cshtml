@@ -1,11 +1,17 @@
 ﻿@model IEnumerable<Objects.EngineState>
 
+@{
+    const string valueON = "ON";
+    const string valueOFF = "OFF";
+}
+
+
 <div class="pre-scrollable engineStates">
     <table class="table text-left">
         <thead>
             <tr>
                 <th>Date & Time</th>
-                <th>Insulation Resistance, kOhm</th>
+                <th>@ViewBag.ModeName</th>
             </tr>
         </thead>
         <tbody>
@@ -13,7 +19,22 @@
             {
                 <tr>
                     <td><span>@es.Date</span></td>
-                    <td><span>@es.Value</span></td>
+                    <td>
+                        <span>
+                            @switch ((Byte)ViewBag.Mode)
+                            {
+                                case 2:
+                                    @((bool)es.Work ? valueON : valueOFF)
+                                    break;
+                                case 3:
+                                    @es.Value
+                                    break;
+                                case 5:
+                                    @((bool)es.Status ? valueON : valueOFF)
+                                    break;
+                            }
+                        </span>
+                    </td>
                 </tr>
             }
         </tbody>

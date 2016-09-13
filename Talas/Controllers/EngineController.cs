@@ -26,17 +26,35 @@ namespace Talas.Controllers
             return PartialView("~/views/Engine/EngineInfo.cshtml", engine);
         }
         [Authorize]
-        public ActionResult EngineStates(Int32 id)
+        public ActionResult EngineStates(Int32 id,Byte mode)
         {
+            /*НЕТ ЗАЩИТЫ ОТ ЧУЖОГО ИДДВИЖКА*/
             if (!IsSetCookies()) return RedirectToAction("Login", "Account");
             List<DateTime> dates = PrepareDatesEngineState(id, Request.Params["dateStart"], Request.Params["dateFinish"]);
+            if (Request.Params["viewType"] == "graph") return PartialView("~/views/Engine/Graph.cshtml", Graph(id));
+            ViewBag.Mode = mode;
+            switch (mode)
+            {
+                case 2:
+                    ViewBag.ModeName = "Operation Hours";
+                    break;
+                case 3:
+                    ViewBag.ModeName = "Insulation Resistance, kOhm";
+                    break;
+                case 5:
+                    ViewBag.ModeName = "Drying Mode";
+                    break;
+
+            }
             return PartialView(GetListEngineState(id, dates));
         }
+
         [Authorize]
-        public ActionResult Graph()
+        public DotNet.Highcharts.Highcharts Graph(Int32 id)
         {
-            Int32 id = Int32.Parse(Request.Params["idEngine"]);
-            DateTime date = Request.Params["calendar"] != "" ? DateTime.Parse(Request.Params["calendar"] + "-01") : new DateTime();
+            //if (!IsSetCookies()) return RedirectToAction("Login", "Account");
+            DateTime date = DateTime.Parse(Request.Params["dateStart"]);
+           // DateTime date = Request.Params["calendar"] != "" ? DateTime.Parse(Request.Params["calendar"] + "-01") : new DateTime();
             Dictionary<String, String> data = PrepareDataGraph(date, id);
             DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
             .SetTitle(new Title
@@ -71,10 +89,8 @@ namespace Talas.Controllers
                                     this.x+': '+ this.y +' kOhm';
                 }*/
             });
-            return View(chart);
+            return chart;
         }
-
-
 
         [Authorize]
         public FileResult Download(String idEngine, String dateReportStart, String dateReportFinish)
@@ -91,23 +107,10 @@ namespace Talas.Controllers
             return result;
         }
 
-        /*private Boolean EngineUserCheck(Int32 idEngine)
-        {
-            User user = null;
-            Engine engine = null;
-            Int32 id = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);
-            using (AppContext db = new AppContext())
-            {
-                user = db.Users.FirstOrDefault(u => u.Id == id);  
-                            
-            }
-            var a = user.Engines.First(e => e.Id == idEngine);
-            return true;
-        }*/
-
+        #region Graph
         private Dictionary<String, String> PrepareDataGraph(DateTime date, Int32 idEngine)
-        {          
-            Dictionary<String, String > result;
+        {
+            Dictionary<String, String> result;
             using (AppContext db = new AppContext())
             {
                 if (date != DateTime.MinValue)
@@ -117,22 +120,22 @@ namespace Talas.Controllers
                 }
                 else
                 {
-                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st=>st.Id).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Id).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
-                } 
+                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Id).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Id).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
+                }
             }
             return result;
         }
 
         private String ConvertDate(DateTime date)
         {
-            return date.Day.ToString() + "." + date.ToString().Substring(3,2);
+            return date.Day.ToString() + "." + date.ToString().Substring(3, 2);
         }
 
-        private bool IsSetCookies()
-        {
-            return (HttpContext.Request.Cookies["Talas"] != null);
-        }
-        private FileResult PrepareFileDownload(String idEngine ,List<EngineState> engineStates)
+        #endregion
+
+        #region ReportDownload
+        
+        private FileResult PrepareFileDownload(String idEngine, List<EngineState> engineStates)
         {
             String filePath = null, fileType = null, fileName = null;
             filePath = Server.MapPath("~/Content/Files/" + idEngine + ".txt");
@@ -153,6 +156,27 @@ namespace Talas.Controllers
             return engineState.Date.ToString() + " " + engineState.Id.ToString() + " " + engineState.Value.ToString() + " ";
         }
 
+        #endregion
+
+        /*private Boolean EngineUserCheck(Int32 idEngine)
+        {
+            User user = null;
+            Engine engine = null;
+            Int32 id = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);
+            using (AppContext db = new AppContext())
+            {
+                user = db.Users.FirstOrDefault(u => u.Id == id);  
+                            
+            }
+            var a = user.Engines.First(e => e.Id == idEngine);
+            return true;
+        }*/
+
+        private bool IsSetCookies()
+        {
+            return (HttpContext.Request.Cookies["Talas"] != null);
+        }
+          
         private List<DateTime> PrepareDatesEngineState(Int32 idEngine, String dateReportStart, String dateReportFinish)
         {
             List <DateTime> result = new List<DateTime>();       

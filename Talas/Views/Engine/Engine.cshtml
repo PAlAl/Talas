@@ -19,7 +19,7 @@
                 <tr>
                     <td>
                         <input type="hidden" name="id" value=@e.Id>                      
-                        @Ajax.ActionLink(@e.Name, "", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Index/"+ @e.Id })
+                        @Ajax.ActionLink(@e.Name, "", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Index/"+ @e.Id, OnSuccess = "ShowHideDatePickForm(1)" })
                     </td>
                     <td><span name="Date№@e.Id" class="">00</span></td>
                     <td><span name="Value№@e.Id" class="">00</span></td>
@@ -35,4 +35,3 @@
         <caption class="CharOverride-32">Alerts & Notification</caption>
     </table>
 </div>
-

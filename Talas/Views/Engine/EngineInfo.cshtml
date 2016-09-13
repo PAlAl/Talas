@@ -4,16 +4,26 @@
 <div class="row">
     <div class="col-md-4 CharOverride-24 text-left motorName">
         Motor @Model.Name <br />Pulp Dryer, Fan
-            
+
     </div>
-    <div class="col-md-8 ">  
-        @using (Ajax.BeginForm("", "", null, new AjaxOptions { UpdateTargetId = "content2", Url = "/Engine/EngineStates/" + @Model.Id }, new { @class = "text-right" }))
+    <div class="col-md-8 ">
+        @using (Ajax.BeginForm("", "", null, new AjaxOptions { UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=" }, new { @class = "datepick text-right" }))
         {
             <span>
-                <input class="datepicker" type="text"  name="dateStart" placeholder="From" onfocus="(this.type='date')" onblur="(this.type='text')"/>
-                <input class="datepicker" type="text"  name="dateFinish" placeholder="To" onfocus="(this.type='date')" onblur="(this.type='text')"/>
-                <input id="show" type="submit" value="Show" class="btn-user"/>
+                <input class="datepicker" type="text" name="dateStart" placeholder="From" onfocus="(this.type='date')" onblur="(this.type='text')" />
+                <input class="datepicker" type="text" name="dateFinish" placeholder="To" onfocus="(this.type='date')" onblur="(this.type='text')" />
+                <input id="show" type="submit" value="Show" class="btn-user" />
             </span>
+            <div class="row hidden" id="InsilationResistButtons">
+                <div class="col-md-5 col-md-offset-8 btn-group" data-toggle="buttons">
+                    <label class="btn btn-user btn-primary active" id="labelTable">
+                        <input type="radio" name="viewType" value="table" checked >Table
+                    </label>
+                    <label class="btn btn-user btn-primary" id="labelGraph">
+                        <input type="radio" name="viewType" value="graph">Graph
+                    </label>
+                </div>
+            </div>
         }
     </div>
 </div>
