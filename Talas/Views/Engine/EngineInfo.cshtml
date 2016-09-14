@@ -16,11 +16,11 @@
             </span>
             <div class="row hidden" id="InsilationResistButtons">
                 <div class="col-md-5 col-md-offset-8 btn-group" data-toggle="buttons">
-                    <label class="btn btn-user btn-primary active" id="labelTable">
-                        <input type="radio" name="viewType" value="table" checked >Table
+                    <label class="btn btn-user btn-primary active" id="labelTable" >
+                        <input type="radio" name="viewType" value="table" checked onchange="updateInsilationResist()">Table
                     </label>
-                    <label class="btn btn-user btn-primary" id="labelGraph">
-                        <input type="radio" name="viewType" value="graph">Graph
+                    <label class="btn btn-user btn-primary" id="labelGraph" >
+                        <input type="radio" name="viewType" value="graph" onchange="updateInsilationResist()">Graph
                     </label>
                 </div>
             </div>

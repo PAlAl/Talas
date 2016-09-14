@@ -193,6 +193,7 @@
     <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-blue.js" />
     <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-green.js" />
     <Content Include="Scripts\Highcharts-4.0.1\js\themes\dark-unica.js" />
+    <Content Include="Scripts\Highcharts-4.0.1\js\themes\talas.js" />
     <Content Include="Scripts\Highcharts-4.0.1\js\themes\gray.js" />
     <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid-light.js" />
     <Content Include="Scripts\Highcharts-4.0.1\js\themes\grid.js" />

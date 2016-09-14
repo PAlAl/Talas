@@ -13,6 +13,8 @@ function goShow()
 }
 
 function onSuccess(mode) {
+    $('[name=dateStart]').val("");
+    $('[name=dateFinish]').val("");
     ShowHideDatePickForm(0);
     if (mode == 3)
         showInsulationResistBtns();
@@ -32,6 +34,13 @@ function showInsulationResistBtns()
     $('[name=viewType],[value=graph]').prop("checked", false);
     $('#labelTable').addClass("active");
     $('#labelGraph').removeClass("active");
+}
+
+function updateInsilationResist()
+{
+    $('[value=Show]').click();
+   // var getvalue = $("[name=viewType],[value=table]").attr('cheked');
+    //alert(getvalue);
 }
 
 function hideInsulationResistBtns() {

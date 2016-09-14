@@ -349,3 +349,8 @@ tr.border_bottom td {
 :-ms-input-placeholder { /* Internet Explorer 10+ */
    color:    #ffffff;
 }
+
+.graph{
+        padding-left: 10px;
+    padding-right: 10px;
+}

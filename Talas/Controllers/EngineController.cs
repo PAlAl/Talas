@@ -13,7 +13,7 @@ namespace Talas.Controllers
 {
     public class EngineController : Controller
     {
-        private const byte NUMBERS_FOR_GRAPHICS=10;
+        private const byte NUMBERS_FOR_GRAPHICS=30;
        [Authorize]
         public ActionResult Index(Int32 id)
         {
@@ -52,10 +52,10 @@ namespace Talas.Controllers
         [Authorize]
         public DotNet.Highcharts.Highcharts Graph(Int32 id)
         {
-            //if (!IsSetCookies()) return RedirectToAction("Login", "Account");
-            DateTime date = DateTime.Parse(Request.Params["dateStart"]);
-           // DateTime date = Request.Params["calendar"] != "" ? DateTime.Parse(Request.Params["calendar"] + "-01") : new DateTime();
-            Dictionary<String, String> data = PrepareDataGraph(date, id);
+            DateTime dateStart = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? DateTime.Parse(Request.Params["dateStart"]) : new DateTime();
+            DateTime dateFinish = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? DateTime.Parse(Request.Params["dateFinish"]) : new DateTime();
+            if (dateStart > dateFinish) return null;
+            Dictionary<String, String> data = PrepareDataGraph(dateStart, dateFinish, id);
             DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
             .SetTitle(new Title
             {
@@ -108,7 +108,33 @@ namespace Talas.Controllers
         }
 
         #region Graph
-        private Dictionary<String, String> PrepareDataGraph(DateTime date, Int32 idEngine)
+        private Dictionary<String, String> PrepareDataGraph(DateTime dateStart, DateTime dateFinish, Int32 idEngine)
+        {
+            Dictionary<String, String> result;
+            using (AppContext db = new AppContext())
+            {
+                if (dateStart == DateTime.MinValue || dateFinish == DateTime.MinValue)
+                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Id).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Id).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
+                else
+                    result = db.Statistics.Where(st => st.EngineId == idEngine && st.Date <= dateFinish && st.Date >= dateStart).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());                             
+            }
+            if (result.Count > NUMBERS_FOR_GRAPHICS)
+            {
+                int i = 0, d = 0;
+                Dictionary<String, String> localDictionary = new Dictionary<string, string>();
+                d = result.Count / NUMBERS_FOR_GRAPHICS;
+                while (localDictionary.Count < NUMBERS_FOR_GRAPHICS)
+                {
+                    localDictionary.Add(result.ElementAt(i).Key, result.ElementAt(i).Value);
+                    i += d;
+                }
+                result.Clear();
+                result = localDictionary;
+            }
+
+            return result;
+        }
+        private Dictionary<String, String> PrepareDataGraphMonth(DateTime date, Int32 idEngine)
         {
             Dictionary<String, String> result;
             using (AppContext db = new AppContext())
@@ -128,7 +154,9 @@ namespace Talas.Controllers
 
         private String ConvertDate(DateTime date)
         {
-            return date.Day.ToString() + "." + date.ToString().Substring(3, 2);
+            string day = date.Day>9? date.Day.ToString(): "0"+date.Day.ToString();
+            string month = date.Month > 9 ? date.Month.ToString() : "0" + date.Month.ToString();
+            return day + "." + month;
         }
 
         #endregion
@@ -198,7 +226,7 @@ namespace Talas.Controllers
             DateTime dateFisrt = datesStates[0], dateSecond = datesStates[1];
             using (AppContext db = new AppContext())
             {
-                listStates = db.EngineStates.Where(es => es.EngineId == idEngine && es.Date >= dateFisrt && es.Date < dateSecond).ToList();
+                listStates = db.EngineStates.Where(es => es.EngineId == idEngine && es.Date >= dateFisrt && es.Date < dateSecond).OrderBy(es => es.Id).ToList();
             }
             return listStates;
         }
