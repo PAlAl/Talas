@@ -12,14 +12,41 @@ function goShow()
     setInterval('show()', 2000);
 }
 
+function datePickerChange() {
+    var dateStart = $("[name=dateStart]").val();
+    var dateFinish = $("[name=dateFinish]").val();    
+    if (dateStart != "" && dateFinish != "") {
+        $(".callOnChanheDatePicker a").each(function () {
+                var url = $(this).attr('data-ajax-url');              
+                if (url != null && url.lastIndexOf("dateStart") == -1 )                    
+                    {
+                        url = url + "&dateStart=" + dateStart + "&dateFinish=" + dateFinish;
+                        $(this).attr('data-ajax-url', url);
+                    }
+            });
+    }
+    else
+    {
+        $(".callOnChanheDatePicker a").each(function () {
+                var url = $(this).attr('data-ajax-url');
+                if (url != null && url.lastIndexOf("dateStart") != -1) {
+                    url = url.slice(0, -43);
+                    $(this).attr('data-ajax-url', url);
+                }
+            });
+
+    }
+}
+
 function onSuccess(mode) {
-    $('[name=dateStart]').val("");
-    $('[name=dateFinish]').val("");
-    ShowHideDatePickForm(0);
+    if ($(".datepick").hasClass("hidden"))
+        showDatePickForm();
+
     if (mode == 3)
         showInsulationResistBtns();
     else
         hideInsulationResistBtns();
+
     var url = $('.datepick').attr('data-ajax-url');
     if (url[url.length-1] != '=')
         url =  url.slice(0, -1);
@@ -36,23 +63,25 @@ function showInsulationResistBtns()
     $('#labelGraph').removeClass("active");
 }
 
-function updateInsilationResist()
+function update()
 {
     $('[value=Show]').click();
-   // var getvalue = $("[name=viewType],[value=table]").attr('cheked');
-    //alert(getvalue);
 }
 
 function hideInsulationResistBtns() {
-    $('#InsilationResistButtons').addClass("hidden");
+    if (!$("#InsilationResistButtons").hasClass("hidden")) {
+        $('#InsilationResistButtons').addClass("hidden");
+    }
 }
 
-function ShowHideDatePickForm(mode) {
-    if (mode)
-        $('.datepick').addClass("hidden");
-    else
+function showDatePickForm() {
         $('.datepick').removeClass("hidden");
 }
+
+function hideDatePickForm() {
+        $('.datepick').addClass("hidden");
+}
+
 
 function show() {
     var classes = $("[name=id]").filter(':input').map(function (indx, element) {

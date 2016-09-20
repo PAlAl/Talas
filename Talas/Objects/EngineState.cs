@@ -10,7 +10,7 @@ namespace Objects
         public Int16 Value { get; set; }
         public DateTime Date { get; set; }
         public Boolean? Status { get; set; }
-        public Int16? Status_M { get; set; }
+        public Boolean? Status_M { get; set; }
         public Int16? Quality { get; set; }
         public Boolean? Work { get; set; }
         public Boolean? NoStart { get; set; }
@@ -18,7 +18,6 @@ namespace Objects
         public Boolean? MainCont { get; set; }
         public Boolean? SecondMeas { get; set; }
         public Boolean? Test { get; set; }
-
         public Int32 EngineId { get; set; }
         public Engine Engine { get; set; }
     }

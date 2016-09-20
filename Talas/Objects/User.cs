@@ -13,6 +13,8 @@ namespace Objects
         public String Email { get; set; }
         public String Greeting { get; set; }         
         public String Salt { get; set; }
+        public DateTime LastVisited { get; set; }
+        public String Location { get; set; }
         public ICollection<Engine> Engines { get; set; }
     }
 

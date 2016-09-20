@@ -138,12 +138,27 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609200556396_MigrateDB.cs" />
+    <Compile Include="Migrations\201609200556396_MigrateDB.Designer.cs">
+      <DependentUpon>201609200556396_MigrateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609200806127_MigrateDB1.cs" />
+    <Compile Include="Migrations\201609200806127_MigrateDB1.Designer.cs">
+      <DependentUpon>201609200806127_MigrateDB1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609200844533_MigrateDB2.cs" />
+    <Compile Include="Migrations\201609200844533_MigrateDB2.Designer.cs">
+      <DependentUpon>201609200844533_MigrateDB2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppContext.cs" />
     <Compile Include="Objects\AuthenticateState.cs" />
     <Compile Include="Objects\Authenticator.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Objects\Engine.cs" />
     <Compile Include="Objects\EngineState.cs" />
+    <Compile Include="Objects\Event.cs" />
+    <Compile Include="Objects\Message.cs" />
     <Compile Include="Objects\Statistic.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Models\RegisterModel.cs" />
@@ -211,8 +226,6 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\TalasEngineStateJS.js" />
-    <Content Include="Scripts\TalasGraphJS.js" />
     <Content Include="Scripts\TalasJS.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -231,7 +244,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Engine\Index.cshtml" />
     <Content Include="Views\Engine\EngineStates.cshtml" />
     <Content Include="Views\Engine\Graph.cshtml" />
     <Content Include="Views\Engine\Engine.cshtml" />
@@ -249,6 +261,17 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609200556396_MigrateDB.resx">
+      <DependentUpon>201609200556396_MigrateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609200806127_MigrateDB1.resx">
+      <DependentUpon>201609200806127_MigrateDB1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609200844533_MigrateDB2.resx">
+      <DependentUpon>201609200844533_MigrateDB2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

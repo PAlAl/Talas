@@ -13,7 +13,7 @@ namespace Talas.Controllers
 {
     public class EngineController : Controller
     {
-        private const byte NUMBERS_FOR_GRAPHICS=30;
+        private const byte NUMBERS_FOR_GRAPHICS=15;
        [Authorize]
         public ActionResult Index(Int32 id)
         {
@@ -30,8 +30,8 @@ namespace Talas.Controllers
         {
             /*НЕТ ЗАЩИТЫ ОТ ЧУЖОГО ИДДВИЖКА*/
             if (!IsSetCookies()) return RedirectToAction("Login", "Account");
-            List<DateTime> dates = PrepareDatesEngineState(id, Request.Params["dateStart"], Request.Params["dateFinish"]);
             if (Request.Params["viewType"] == "graph") return PartialView("~/views/Engine/Graph.cshtml", Graph(id));
+            List<DateTime> dates = PrepareDatesEngineState(id, Request.Params["dateStart"], Request.Params["dateFinish"]);          
             ViewBag.Mode = mode;
             switch (mode)
             {
@@ -44,13 +44,16 @@ namespace Talas.Controllers
                 case 5:
                     ViewBag.ModeName = "Drying Mode";
                     break;
+                case 6:
+                    ViewBag.ModeName = "Online";
+                    break;
 
             }
             return PartialView(GetListEngineState(id, dates));
         }
 
         [Authorize]
-        public DotNet.Highcharts.Highcharts Graph(Int32 id)
+        private DotNet.Highcharts.Highcharts Graph(Int32 id)
         {
             DateTime dateStart = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? DateTime.Parse(Request.Params["dateStart"]) : new DateTime();
             DateTime dateFinish = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? DateTime.Parse(Request.Params["dateFinish"]) : new DateTime();
