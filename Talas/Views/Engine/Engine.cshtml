@@ -30,8 +30,22 @@
         </tbody>
     </table>
 </div>
+<span class="CharOverride-32">Alerts & Notification</span>
+@Ajax.ActionLink("GetMessages", "","",new AjaxOptions { UpdateTargetId = "contentMessage", Url = "/Engine/Messages?showAll=0" },new { @class = "hide" })
+<div id="contentMessage">
+
+</div>
+<!--
 <div class="scrollable">
     <table class="table">
         <caption class="CharOverride-32">Alerts & Notification</caption>
+
     </table>
-</div>
+</div>-->
+
+
+<script>
+    $(document).ready(function () {
+        $('a:contains("GetMessages")').click();
+    });
+</script>

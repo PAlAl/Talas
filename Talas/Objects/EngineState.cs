@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Objects
@@ -20,5 +21,7 @@ namespace Objects
         public Boolean? Test { get; set; }
         public Int32 EngineId { get; set; }
         public Engine Engine { get; set; }
+
+        public ICollection<Event> Events { get; set; }
     }
 }

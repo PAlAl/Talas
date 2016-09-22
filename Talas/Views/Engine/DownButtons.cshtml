@@ -1,7 +1,7 @@
 ﻿<div class="row buttons">
         <ul class="nav nav-stacked callOnChanheDatePicker">
             <li class="col-md-3 buttonNav">
-                @Ajax.ActionLink("Warings and" + "\n" + " Notifications", "", new AjaxOptions {})
+                @Ajax.ActionLink("Warings and" + "\n" + " Notifications", "", new AjaxOptions { UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=1", OnSuccess = "onSuccess(1)" })
             </li>
             <li class="col-md-3 buttonNav">
                 @Ajax.ActionLink("Operation" + "\n" + "Hours", "", new AjaxOptions { UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=2", OnSuccess = "onSuccess(2)" })

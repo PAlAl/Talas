@@ -11,8 +11,8 @@ namespace Objects
         public Int32 MessageId { get; set; }
         public Message Message { get; set; }
         public Boolean IsNew { get; set; }
-        public Int32 EngineId { get; set; }
-        public Engine Engine { get; set; }
+        public Int32 EngineStateId { get; set; }
+        public EngineState EngineState { get; set; }
         public DateTime Date { get; set; }
     }
 }

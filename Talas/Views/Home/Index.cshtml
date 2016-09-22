@@ -9,9 +9,10 @@
     <div class="col-md-2"><h3 align="left">TALAS</h3><h4 align="left">MONITORING</h4></div>
     <div class="col-md-8">
         <span class="CharOverride-36">@ViewBag.Greeting</span>
-        <span class="alerts">Alerts</span>
+        <span class="spanLabelAlert">@Ajax.ActionLink("New alerts &" + "\n" + "notification", "", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Messages?showAll=1" })</span>
+        <label class="CharOverride-24 labelAlert">0</label>       
     </div>
-
+        
     <div class="col-md-2">
         <button type="button" data-toggle="dropdown" class="btn btn-user dropdown-toggle"><span class="caret"></span> UserName </button>
         <ul class="dropdown-menu ">

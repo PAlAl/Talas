@@ -351,6 +351,27 @@ tr.border_bottom td {
 }
 
 .graph{
-        padding-left: 10px;
+    padding-left: 10px;
     padding-right: 10px;
+}
+
+.labelAlert{
+    float:right;
+    border-radius: 50%;
+    width: 35px;
+    border-style: solid;
+    border-color: #ffffff;
+    border-width: 1px;
+    background-color:#ffffff;
+    color:#000000;
+}
+
+.spanLabelAlert {
+    float: right;
+    margin-left: 5px;
+    white-space: pre;
+}
+
+.spanLabelAlert a {
+    color: #ffffff;
 }

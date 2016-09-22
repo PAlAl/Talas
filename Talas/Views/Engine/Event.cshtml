@@ -1,0 +1,31 @@
+﻿@using Talas.Models
+@model IEnumerable<EventModel>
+@{   
+    Layout = "";
+}
+<div class="pre-scrollable">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-center">Electric<br />Motor</th>
+                <th class="text-center">Date<br />&Time</th>
+                <th class="text-center">Full Message</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ev in Model)
+            {
+                <tr @if (!ev.IsNew) { @: style="opacity: 0.5"
+                    }>
+                    <td><span>@ev.MotorName</span></td>
+                    <td><span>@ev.Date</span></td>
+                    <td><span> @ev.Message</span></td>
+                    <td @if (ev.IsNew) { if (ev.Message.Contains("Alert")) { @: style="background-color:rgba(255, 0, 0, 0.3); width:30px;"
+                                                     } else { @: style="background-color:rgba(0, 255, 0, 0.3); width:30px;"
+                                                        }  }></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

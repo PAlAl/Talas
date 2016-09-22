@@ -14,10 +14,8 @@ namespace Objects
         public String Voltage { get; set; }
         public DateTime? ManufactureDate { get; set; }
         public DateTime? InstallationDate { get; set; }
-
         public ICollection<EngineState> EngineStates { get; set; }
-        public ICollection<Statistic> Statistic { get; set; }
-
+        public ICollection<Statistic> Statistic { get; set; }        
         public Int32 UserId { get; set; }
         public User User { get; set; }
     }

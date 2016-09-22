@@ -150,8 +150,25 @@
     <Compile Include="Migrations\201609200844533_MigrateDB2.Designer.cs">
       <DependentUpon>201609200844533_MigrateDB2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609210532527_MigrateDB3.cs" />
+    <Compile Include="Migrations\201609210532527_MigrateDB3.Designer.cs">
+      <DependentUpon>201609210532527_MigrateDB3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609210534591_MigrateDB4.cs" />
+    <Compile Include="Migrations\201609210534591_MigrateDB4.Designer.cs">
+      <DependentUpon>201609210534591_MigrateDB4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609210541083_MigrateDB5.cs" />
+    <Compile Include="Migrations\201609210541083_MigrateDB5.Designer.cs">
+      <DependentUpon>201609210541083_MigrateDB5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609210643431_MigrateDB6.cs" />
+    <Compile Include="Migrations\201609210643431_MigrateDB6.Designer.cs">
+      <DependentUpon>201609210643431_MigrateDB6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppContext.cs" />
+    <Compile Include="Models\EventModel.cs" />
     <Compile Include="Objects\AuthenticateState.cs" />
     <Compile Include="Objects\Authenticator.cs" />
     <Compile Include="Models\LoginModel.cs" />
@@ -249,6 +266,8 @@
     <Content Include="Views\Engine\Engine.cshtml" />
     <Content Include="Views\Engine\EngineInfo.cshtml" />
     <Content Include="Views\Engine\DownButtons.cshtml" />
+    <Content Include="Views\Engine\Event.cshtml" />
+    <Content Include="Views\Engine\DatePicker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -271,6 +290,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609200844533_MigrateDB2.resx">
       <DependentUpon>201609200844533_MigrateDB2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609210532527_MigrateDB3.resx">
+      <DependentUpon>201609210532527_MigrateDB3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609210534591_MigrateDB4.resx">
+      <DependentUpon>201609210534591_MigrateDB4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609210541083_MigrateDB5.resx">
+      <DependentUpon>201609210541083_MigrateDB5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609210643431_MigrateDB6.resx">
+      <DependentUpon>201609210643431_MigrateDB6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

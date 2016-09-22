@@ -9,7 +9,8 @@ $(document).ready(function () {
 
 function goShow()
 {
-    setInterval('show()', 2000);
+    setInterval('showEnginesDispatching()', 2000);
+    setInterval('showMessageDispatching()', 5000);
 }
 
 function datePickerChange() {
@@ -83,7 +84,7 @@ function hideDatePickForm() {
 }
 
 
-function show() {
+function showEnginesDispatching() {
     var classes = $("[name=id]").filter(':input').map(function (indx, element) {
         return $(element).val();
     });
@@ -101,11 +102,24 @@ function show() {
                     var id = element.EngineId;
                     $('[name = Date№' + id + ']').text(element.Date == null ? 0 : new Date(parseInt(element.Date.substr(6))).toLocaleString());
                     $('[name = Value№' + id + ']').text(element.Value == null ? 0 : element.Value);
-                    $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work);
-                    $('[name = Status№' + id + ']').text(element.Status == null ? 0 : element.Status);
-                    $('[name = Test№' + id + ']').text(element.Test == null ? 0 : element.Test);
+                    $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work?"ON":"OFF");
+                    $('[name = Status№' + id + ']').text(element.Status == null ? 0 : element.Status ? "ON" : "OFF");
+                    //$('[name = Test№' + id + ']').text(element.Test == null ? 0 : element.Test);
                 }
             }
         });
     }
 }
+
+function showMessageDispatching() {    
+        $.ajax({
+            url: 'Home/JsonGetNumberNewMessages',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                $('.labelAlert').text(response);
+                }
+            
+        });
+}
+

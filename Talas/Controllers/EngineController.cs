@@ -26,15 +26,18 @@ namespace Talas.Controllers
             return PartialView("~/views/Engine/EngineInfo.cshtml", engine);
         }
         [Authorize]
-        public ActionResult EngineStates(Int32 id,Byte mode)
+        public ActionResult EngineStates(Int32 id, Byte mode)
         {
             /*НЕТ ЗАЩИТЫ ОТ ЧУЖОГО ИДДВИЖКА*/
+            Int32 idEngine = id;
             if (!IsSetCookies()) return RedirectToAction("Login", "Account");
-            if (Request.Params["viewType"] == "graph") return PartialView("~/views/Engine/Graph.cshtml", Graph(id));
-            List<DateTime> dates = PrepareDatesEngineState(id, Request.Params["dateStart"], Request.Params["dateFinish"]);          
+            if (Request.Params["viewType"] == "graph") return PartialView("~/views/Engine/Graph.cshtml", Graph(idEngine));
+            List<DateTime> dates = PrepareDatesEngineState(idEngine, Request.Params["dateStart"], Request.Params["dateFinish"]);          
             ViewBag.Mode = mode;
             switch (mode)
             {
+                case 1:
+                    return PartialView("~/views/Engine/Event.cshtml", GetListEvent(idEngine, dates));
                 case 2:
                     ViewBag.ModeName = "Operation Hours";
                     break;
@@ -49,16 +52,31 @@ namespace Talas.Controllers
                     break;
 
             }
-            return PartialView(GetListEngineState(id, dates));
+            return PartialView(GetListEngineState(idEngine, dates));
         }
 
         [Authorize]
-        private DotNet.Highcharts.Highcharts Graph(Int32 id)
+        public ActionResult Messages(Byte showAll)
+        {
+            ActionResult result;
+            if (showAll==1)
+            {
+                result = View("~/views/Engine/Event.cshtml", GetListEvent(-1, new List<DateTime>() {new DateTime(), DateTime.Today.AddDays(1) }));
+            }
+            else
+            {
+
+                result = View("~/views/Engine/Event.cshtml", GetListEvent(-1, null));
+            }
+            return result;
+        }
+
+        private DotNet.Highcharts.Highcharts Graph(Int32 idEngine)
         {
             DateTime dateStart = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? DateTime.Parse(Request.Params["dateStart"]) : new DateTime();
             DateTime dateFinish = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? DateTime.Parse(Request.Params["dateFinish"]) : new DateTime();
             if (dateStart > dateFinish) return null;
-            Dictionary<String, String> data = PrepareDataGraph(dateStart, dateFinish, id);
+            Dictionary<String, String> data = PrepareDataGraph(dateStart, dateFinish, idEngine);
             DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
             .SetTitle(new Title
             {
@@ -232,6 +250,49 @@ namespace Talas.Controllers
                 listStates = db.EngineStates.Where(es => es.EngineId == idEngine && es.Date >= dateFisrt && es.Date < dateSecond).OrderBy(es => es.Id).ToList();
             }
             return listStates;
+        }
+
+        private List<EventModel> GetListEvent(Int32 idEngine, List<DateTime> datesStates)
+        {
+            IQueryable<Event> events = null;
+            List<EventModel> listEventModels = new List<EventModel>();
+            List<Int32> listEngineId = new List<int>();
+            DateTime dateFisrt, dateSecond;
+            if (datesStates != null)
+            {
+                dateFisrt = datesStates[0];
+                dateSecond = datesStates[1];
+            }
+            else
+            {
+                dateFisrt = DateTime.Today;
+                dateSecond = dateFisrt.AddDays(1);
+            }
+            using (AppContext db = new AppContext())
+            {
+                if (idEngine != -1)
+                    listEngineId.Add(idEngine);
+                else
+                {
+                    Int32 idUser = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);
+                    listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e=>e.Id).ToList();
+                }
+
+                events = from e in db.Events
+                                          .Include("Message")
+                                          .Include("EngineState")
+                                          .Include("EngineState.Engine")
+                                          .Where(e => listEngineId.Contains(e.EngineState.EngineId) && e.Date >= dateFisrt && e.Date < dateSecond)
+                                          .OrderByDescending(e => e.Date)
+                         select e;
+                //listEvents = db.Events.Where(e => e.EngineState.EngineId == idEngine && e.Date >= dateFisrt && e.Date < dateSecond).OrderBy(es => es.Id).ToList();
+                foreach (Event ev in events)
+                {
+                    listEventModels.Add(new EventModel(ev.EngineState.Engine.Name, ev.Date, ev.Message.Text,ev.IsNew));
+                }
+            }
+            
+            return listEventModels;
         }
     }
 }

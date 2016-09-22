@@ -56,6 +56,24 @@ namespace Talas.Controllers
             }
             return Json(jsondata);
         }
+        public JsonResult JsonGetNumberNewMessages()
+        {
+            Int32 result = 0;
+            List<Int32> listEngineId = new List<int>();
+            Int32 idUser = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);
+            using (AppContext db = new AppContext())
+            {
+                listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e => e.Id).ToList();
+                IQueryable<Event> events = from e in db.Events
+                                          .Include("EngineState")
+                                          .Include("EngineState.Engine")
+                                          .Where(e =>e.IsNew && listEngineId.Contains(e.EngineState.EngineId))
+                                          .OrderByDescending(e => e.Date)
+                     select e;
+                result = events.Count();
+            }          
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult About()
         {

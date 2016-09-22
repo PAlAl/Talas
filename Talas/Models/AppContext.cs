@@ -9,6 +9,8 @@ namespace Talas.Models
             public DbSet<Engine> Engines { get; set; }
             public DbSet<EngineState> EngineStates { get; set; }
             public DbSet<Statistic> Statistics { get; set; }
+            public DbSet<Event> Events { get; set; }
+            public DbSet<Message> Messages { get; set; }
 
         public AppContext() : base("DefaultConnection")
             { }
