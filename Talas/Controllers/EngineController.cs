@@ -7,7 +7,7 @@ using DotNet.Highcharts.Helpers;
 using DotNet.Highcharts.Options;
 using Objects;
 using Talas.Models;
-
+using Talas.Objects;
 
 namespace Talas.Controllers
 {
@@ -65,8 +65,7 @@ namespace Talas.Controllers
             }
             else
             {
-
-                result = View("~/views/Engine/Event.cshtml", GetListEvent(-1, null));
+                result = View("~/views/Engine/Event.cshtml", GetListEvent(-2, null));
             }
             return result;
         }
@@ -254,7 +253,7 @@ namespace Talas.Controllers
 
         private List<EventModel> GetListEvent(Int32 idEngine, List<DateTime> datesStates)
         {
-            IQueryable<Event> events = null;
+            List<Event> events = null;
             List<EventModel> listEventModels = new List<EventModel>();
             List<Int32> listEngineId = new List<int>();
             DateTime dateFisrt, dateSecond;
@@ -265,12 +264,13 @@ namespace Talas.Controllers
             }
             else
             {
-                dateFisrt = DateTime.Today;
-                dateSecond = dateFisrt.AddDays(1);
+                dateFisrt = DateTime.Today.AddDays(-NUMBERS_FOR_GRAPHICS);
+                dateSecond = DateTime.Today;              
             }
             using (AppContext db = new AppContext())
             {
-                if (idEngine != -1)
+                EventComparer eventComparer = new EventComparer();
+                if (idEngine > 0)
                     listEngineId.Add(idEngine);
                 else
                 {
@@ -278,17 +278,25 @@ namespace Talas.Controllers
                     listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e=>e.Id).ToList();
                 }
 
-                events = from e in db.Events
+                events = db.Events
                                           .Include("Message")
                                           .Include("EngineState")
                                           .Include("EngineState.Engine")
-                                          .Where(e => listEngineId.Contains(e.EngineState.EngineId) && e.Date >= dateFisrt && e.Date < dateSecond)
-                                          .OrderByDescending(e => e.Date)
-                         select e;
-                //listEvents = db.Events.Where(e => e.EngineState.EngineId == idEngine && e.Date >= dateFisrt && e.Date < dateSecond).OrderBy(es => es.Id).ToList();
+                                          .Where(e => listEngineId.Contains(e.EngineState.EngineId) && e.Date >= dateFisrt && e.Date < dateSecond).ToList();
+                                          
+                                          //.OrderBy(e => e, eventComparer)
+                                          //.OrderByDescending(e => e.IsNew)                                                                                 
+                       //  select e;
+                events.Sort(eventComparer);
                 foreach (Event ev in events)
-                {
+                {                   
                     listEventModels.Add(new EventModel(ev.EngineState.Engine.Name, ev.Date, ev.Message.Text,ev.IsNew));
+                    if (idEngine==-1 && ev.IsNew)
+                    {
+                        db.Entry(ev).Entity.IsNew = false;
+                        //db.Entry(player).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                 }
             }
             

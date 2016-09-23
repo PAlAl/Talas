@@ -15,4 +15,6 @@ namespace Objects
         public EngineState EngineState { get; set; }
         public DateTime Date { get; set; }
     }
+
+
 }

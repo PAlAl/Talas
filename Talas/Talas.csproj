@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DotNet.Highcharts, Version=4.0.0.0, Culture=neutral, PublicKeyToken=88854f873df851bf, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNet.Highcharts.4.0\lib\DotNet.Highcharts.dll</HintPath>
       <Private>True</Private>
@@ -61,6 +69,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Quartz, Version=2.4.1.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.4.1\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -138,6 +150,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Jobs\CollectStatisticSheduler.cs" />
+    <Compile Include="Jobs\StatisticCollector.cs" />
     <Compile Include="Migrations\201609200556396_MigrateDB.cs" />
     <Compile Include="Migrations\201609200556396_MigrateDB.Designer.cs">
       <DependentUpon>201609200556396_MigrateDB.cs</DependentUpon>
@@ -175,6 +189,7 @@
     <Compile Include="Objects\Engine.cs" />
     <Compile Include="Objects\EngineState.cs" />
     <Compile Include="Objects\Event.cs" />
+    <Compile Include="Objects\EventComparer.cs" />
     <Compile Include="Objects\Message.cs" />
     <Compile Include="Objects\Statistic.cs" />
     <Compile Include="Objects\User.cs" />
@@ -194,6 +209,9 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\111222333 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\111222333.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
