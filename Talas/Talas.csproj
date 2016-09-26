@@ -209,6 +209,19 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-Black.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-BlackItalic.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-Bold.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-BoldItalic.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-Italic.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-Light.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-LightItalic.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-Medium.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-Roman.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-Thin.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-ThinItalic.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-UltraLightItalic.otf" />
+    <Content Include="Content\Fonts\HelveticaNeueCyr-UltraLight_0.otf" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

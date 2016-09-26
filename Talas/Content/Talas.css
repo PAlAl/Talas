@@ -9,6 +9,12 @@ html {
     min-height: 100%;
 }
 
+/*@font-face {
+    font-family: "Helvetica Neue"; 
+    src: url(Fonts/Fonts/HelveticaNeueCyr-Light.otf);
+    font-style: normal;
+}*/
+
 body {
     background: url(images/mainBack.jpg)no-repeat center center fixed;
     background-size: 100% 100%;
@@ -207,8 +213,8 @@ input[type="checkbox"] {
     }
 
     .btn-primary.active {
-    background-color: rgba(0,0,0,0.3);/*3276b1*/
-    border-color: #ffffff;/*285e8e*/
+    background-color: rgba(0,0,0,0.3) !important;/*3276b1*/
+    border-color: #ffffff !important;/*285e8e*/
 }
     .btn-group{
         margin-top: 10px;
@@ -374,4 +380,10 @@ tr.border_bottom td {
 
 .spanLabelAlert a {
     color: #ffffff;
+}
+
+.divAlert{
+    display: inline;
+    position: absolute;
+    right: 5px;
 }

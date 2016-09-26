@@ -9,12 +9,14 @@
     <div class="col-md-2"><h3 align="left">TALAS</h3><h4 align="left">MONITORING</h4></div>
     <div class="col-md-8">
         <span class="CharOverride-36">@ViewBag.Greeting</span>
-        <span class="spanLabelAlert">@Ajax.ActionLink("New alerts &" + "\n" + "notification", "", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Messages?showAll=1" })</span>
-        <label class="CharOverride-24 labelAlert">0</label>       
+        <div class="divAlert">
+            <span class="spanLabelAlert">@Ajax.ActionLink("New alerts &" + "\n" + "notification", "", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Messages?showAll=1" })</span>
+            <label class="CharOverride-24 labelAlert">0</label>
+        </div> 
     </div>
         
     <div class="col-md-2">
-        <button type="button" data-toggle="dropdown" class="btn btn-user dropdown-toggle"><span class="caret"></span> UserName </button>
+        <button type="button" data-toggle="dropdown" class="btn btn-user dropdown-toggle"><span class="caret"></span> @ViewBag.UserName </button>
         <ul class="dropdown-menu ">
             <li>
                 <a href="#">Settings</a>
@@ -38,7 +40,9 @@
           
     </div>
 
-    <div class="col-md-2">UserInfo</div>
+    <div class="col-md-2 text-left CharOverride-32">
+    Location <br />
+        <p class="CharOverride-16">@ViewBag.Location</p></div>
 </div>
 
 @section Footer{

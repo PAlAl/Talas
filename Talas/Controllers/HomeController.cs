@@ -22,6 +22,8 @@ namespace Talas.Controllers
             {
                 user = db.Users.FirstOrDefault(u => u.Id == id);
                 ViewBag.Greeting = user.Greeting;
+                ViewBag.UserName = user.Login;
+                ViewBag.Location = user.Login;
             }
             return View();
         }

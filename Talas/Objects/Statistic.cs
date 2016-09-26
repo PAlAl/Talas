@@ -13,6 +13,7 @@ namespace Objects
         public Int32 EngineId { get; set; }
         public Engine Engine { get; set; }
 
+        public Statistic() { }
         public Statistic(DateTime dateTime, Int16 value, Int32 engineId)
         {
             Date = dateTime;
