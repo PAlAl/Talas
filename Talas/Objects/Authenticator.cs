@@ -20,8 +20,9 @@ namespace Objects
             if (user != null)
             {
                 Id = user.Id.ToString();
-                inHashPassword = GenerateHashPassword(password,user.Salt);            
-             
+                inHashPassword = password;
+                //inHashPassword = GenerateHashPassword(password,user.Salt);            
+
                 if (user.Password.Equals(inHashPassword))
                     result = AuthenticateState.Succes;
                 else

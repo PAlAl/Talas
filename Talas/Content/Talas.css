@@ -27,7 +27,6 @@ body {
 
 .footer {
     position: absolute;
-    bottom: 15px;
     width: 90%;
     height: 75px;
     border-color: #8FB5D5;
@@ -37,6 +36,11 @@ body {
     border-left: none;
     border-right: none;
     margin-left: 5%;
+}
+@media only screen and (min-device-height:660px) {
+ .footer {
+    bottom: 15px;
+    }
 }
 
     .footer img {
@@ -103,6 +107,10 @@ body {
 
 #_idContainer001 {
     margin-top: 10%;
+}
+
+#_idContainer004 {
+    margin-bottom: 10px;
 }
 
 .inputT {
@@ -249,6 +257,7 @@ input[type="checkbox"] {
     max-width: 160px;
     padding-right: 0px;
     padding-left: 0px;
+    min-width: 130px;
 }
 
     .buttonNav a {
@@ -383,7 +392,14 @@ tr.border_bottom td {
 }
 
 .divAlert{
-    display: inline;
+    /*display: inline;*/
     position: absolute;
     right: 5px;
+}
+
+@media only screen and (min-width: 480px) {
+ .divAlert{
+    display: inline;
+}
+
 }

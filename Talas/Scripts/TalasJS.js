@@ -100,7 +100,8 @@ function showEnginesDispatching() {
                 while (response.length > 0) {
                     var element = response.pop();
                     var id = element.EngineId;
-                    $('[name = Date№' + id + ']').text(element.Date == null ? 0 : new Date(parseInt(element.Date.substr(6))).toLocaleString());
+                    var date = new Date(parseInt(element.Date.substr(6)));
+                    $('[name = Date№' + id + ']').text(element.Date == null ? 0 : date.toLocaleDateString()+" "+date.toLocaleTimeString());//new Date(parseInt(element.Date.substr(6))).toLocaleString());
                     $('[name = Value№' + id + ']').text(element.Value == null ? 0 : element.Value);
                     $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work?"ON":"OFF");
                     $('[name = Status№' + id + ']').text(element.Status == null ? 0 : element.Status ? "ON" : "OFF");
