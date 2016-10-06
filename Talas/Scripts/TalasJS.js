@@ -4,13 +4,15 @@
 
 $(document).ready(function () {
     dash();
-    setTimeout(goShow(), 2000);
+    setTimeout('showEnginesDispatching()', 2000);
+    setTimeout('showMessageDispatching()', 2000);
+    goShow();     
 });
 
 function goShow()
 {
-    setInterval('showEnginesDispatching()', 2000);
-    setInterval('showMessageDispatching()', 5000);
+    setInterval('showEnginesDispatching()', 30000);
+    setInterval('showMessageDispatching()', 30000);
 }
 
 function datePickerChange() {
@@ -112,12 +114,16 @@ function showEnginesDispatching() {
     }
 }
 
-function showMessageDispatching() {    
+function showMessageDispatching() {
         $.ajax({
             url: 'Home/JsonGetNumberNewMessages',
             type: 'GET',
             dataType: 'json',
             success: function (response) {
+                if (response > 99 && $('.labelAlert').css('width') == '35px')
+                    $('.labelAlert').css('width', 45);
+                if (response < 100 && $('.labelAlert').css('width') == '45px')
+                    $('.labelAlert').css('width', 35);
                 $('.labelAlert').text(response);
                 }
             

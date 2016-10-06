@@ -29,7 +29,8 @@ namespace Talas.Jobs
                     }
                     
                 }
-                db.SaveChanges();
+                if (listValues.Count != 0)
+                    db.SaveChanges();
             }
         }
     }
