@@ -1,4 +1,16 @@
-﻿@using (Ajax.BeginForm("", "", null, new AjaxOptions { UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=" }, new { @class = "datepick text-right" }))
+﻿@{ 
+    string link;
+    if (ViewBag.All!=null && ViewBag.All)
+    {
+        link = "/Engine/Messages?showAll=2";
+    }
+    else
+    {
+        link = "/Engine/EngineStates?id=" + @Model.Id + "&mode=";
+    }
+}
+
+@using (Ajax.BeginForm("", "", null, new AjaxOptions { UpdateTargetId = "content2", Url = link/*"/Engine/EngineStates?id=" + @Model.Id + "&mode=" */}, new { @class = "datepick text-right" }))
 {
     <span>
         <input class="datepicker" type="text" name="dateStart" placeholder="From" onfocus="(this.type='date')" onblur="(this.type='text')" onchange="datePickerChange()" />

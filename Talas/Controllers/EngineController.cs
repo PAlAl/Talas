@@ -37,6 +37,7 @@ namespace Talas.Controllers
             switch (mode)
             {
                 case 1:
+                    ViewBag.All = false;
                     return PartialView("~/views/Engine/Event.cshtml", GetListEvent(idEngine));
                 case 2:
                     ViewBag.ModeName = "Operation Hours";
@@ -59,15 +60,21 @@ namespace Talas.Controllers
         public ActionResult Messages(Byte showAll)
         {
             ActionResult result;
-            result = View("~/views/Engine/Event.cshtml", GetListEvent(-1));
-            /*if (showAll==1)
+            switch (showAll)
             {
-                result = View("~/views/Engine/Event.cshtml", GetListEvent(-1, new List<DateTime>() {new DateTime(), DateTime.Today.AddDays(1) }));
+                case 1:
+                    ViewBag.All = true;
+                    result = View("~/views/Engine/EventAll.cshtml", GetListEvent(-1));
+                    break;
+                case 2:
+                    result = PartialView("~/views/Engine/Event.cshtml", GetListEvent(-1));
+                    break;
+                default:
+                    ViewBag.All = false;
+                    result = View("~/views/Engine/Event.cshtml", GetListEvent(-1));
+                    break;
+
             }
-            else
-            {
-                result = View("~/views/Engine/Event.cshtml", GetListEvent(-2, null));
-            }*/
             return result;
         }
 

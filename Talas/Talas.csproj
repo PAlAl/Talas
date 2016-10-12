@@ -152,35 +152,6 @@
     </Compile>
     <Compile Include="Jobs\CollectStatisticSheduler.cs" />
     <Compile Include="Jobs\StatisticCollector.cs" />
-    <Compile Include="Migrations\201609200556396_MigrateDB.cs" />
-    <Compile Include="Migrations\201609200556396_MigrateDB.Designer.cs">
-      <DependentUpon>201609200556396_MigrateDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609200806127_MigrateDB1.cs" />
-    <Compile Include="Migrations\201609200806127_MigrateDB1.Designer.cs">
-      <DependentUpon>201609200806127_MigrateDB1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609200844533_MigrateDB2.cs" />
-    <Compile Include="Migrations\201609200844533_MigrateDB2.Designer.cs">
-      <DependentUpon>201609200844533_MigrateDB2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609210532527_MigrateDB3.cs" />
-    <Compile Include="Migrations\201609210532527_MigrateDB3.Designer.cs">
-      <DependentUpon>201609210532527_MigrateDB3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609210534591_MigrateDB4.cs" />
-    <Compile Include="Migrations\201609210534591_MigrateDB4.Designer.cs">
-      <DependentUpon>201609210534591_MigrateDB4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609210541083_MigrateDB5.cs" />
-    <Compile Include="Migrations\201609210541083_MigrateDB5.Designer.cs">
-      <DependentUpon>201609210541083_MigrateDB5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609210643431_MigrateDB6.cs" />
-    <Compile Include="Migrations\201609210643431_MigrateDB6.Designer.cs">
-      <DependentUpon>201609210643431_MigrateDB6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AppContext.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Objects\AuthenticateState.cs" />
@@ -298,6 +269,7 @@
     <Content Include="Views\Engine\DownButtons.cshtml" />
     <Content Include="Views\Engine\Event.cshtml" />
     <Content Include="Views\Engine\DatePicker.cshtml" />
+    <Content Include="Views\Engine\EventAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -310,29 +282,6 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201609200556396_MigrateDB.resx">
-      <DependentUpon>201609200556396_MigrateDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609200806127_MigrateDB1.resx">
-      <DependentUpon>201609200806127_MigrateDB1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609200844533_MigrateDB2.resx">
-      <DependentUpon>201609200844533_MigrateDB2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609210532527_MigrateDB3.resx">
-      <DependentUpon>201609210532527_MigrateDB3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609210534591_MigrateDB4.resx">
-      <DependentUpon>201609210534591_MigrateDB4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609210541083_MigrateDB5.resx">
-      <DependentUpon>201609210541083_MigrateDB5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609210643431_MigrateDB6.resx">
-      <DependentUpon>201609210643431_MigrateDB6.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

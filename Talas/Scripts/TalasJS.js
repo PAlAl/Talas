@@ -129,14 +129,11 @@ function showMessageDispatching() {
                     $('.labelAlert').css('width', 45);
                 if (response < 100 && $('.labelAlert').css('width') == '45px')
                     $('.labelAlert').css('width', 35);
-               /* alert(response);
-                alert($('.labelAlert').val())
                 if (response != $('.labelAlert').text())
                 {
-                    alert("asdasdasd");
+                    $('.labelAlert').text(response);
                     $('a:contains("GetMessages")').click();
-                }*/
-                $('.labelAlert').text(response);
+                }              
                 }
             
         });

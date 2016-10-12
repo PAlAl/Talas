@@ -1,0 +1,24 @@
+﻿@using Talas.Models
+@model IEnumerable<EventModel>
+@{   
+    Layout = "";
+}
+
+    <div class="row">
+        <div class="col-md-4 CharOverride-24 text-left motorName">
+            Alerts & Notifications
+        </div>
+        <div class="col-md-8" id="_idContainer004">
+            @{Html.RenderPartial("DatePicker");}
+        </div>
+    </div>
+
+<div class="row allMessages" id="content2">
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#show').click();
+    });
+</script>
