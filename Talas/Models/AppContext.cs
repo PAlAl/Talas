@@ -12,7 +12,7 @@ namespace Talas.Models
             public DbSet<Event> Events { get; set; }
             public DbSet<Message> Messages { get; set; }
 
-        public AppContext() : base("Default2Connection")
+        public AppContext() : base("AzureConnection")
             { }
        
     }

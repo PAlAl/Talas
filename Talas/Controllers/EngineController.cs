@@ -37,7 +37,7 @@ namespace Talas.Controllers
             switch (mode)
             {
                 case 1:
-                    return PartialView("~/views/Engine/Event.cshtml", GetListEvent(idEngine, dates));
+                    return PartialView("~/views/Engine/Event.cshtml", GetListEvent(idEngine));
                 case 2:
                     ViewBag.ModeName = "Operation Hours";
                     break;
@@ -59,14 +59,15 @@ namespace Talas.Controllers
         public ActionResult Messages(Byte showAll)
         {
             ActionResult result;
-            if (showAll==1)
+            result = View("~/views/Engine/Event.cshtml", GetListEvent(-1));
+            /*if (showAll==1)
             {
                 result = View("~/views/Engine/Event.cshtml", GetListEvent(-1, new List<DateTime>() {new DateTime(), DateTime.Today.AddDays(1) }));
             }
             else
             {
                 result = View("~/views/Engine/Event.cshtml", GetListEvent(-2, null));
-            }
+            }*/
             return result;
         }
 
@@ -240,33 +241,34 @@ namespace Talas.Controllers
             return result;
         }
 
+        private List<DateTime>  PrepareDatesMessage()
+        {
+            List<DateTime> result = new List<DateTime>();
+            DateTime dateFirst = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? DateTime.Parse(Request.Params["dateStart"]) : DateTime.Today.AddDays(-NUMBERS_FOR_GRAPHICS);
+            DateTime dateSecond = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? DateTime.Parse(Request.Params["dateFinish"]) : DateTime.Today;
+            result.Add(dateFirst);
+            result.Add(dateSecond);
+            return result;
+        }
+
         private List<EngineState> GetListEngineState(Int32 idEngine, List<DateTime> datesStates)
         {
             List<EngineState> listStates = null;
             DateTime dateFisrt = datesStates[0], dateSecond = datesStates[1];
             using (AppContext db = new AppContext())
             {
-                listStates = db.EngineStates.Where(es => es.EngineId == idEngine && es.Date >= dateFisrt && es.Date < dateSecond).OrderBy(es => es.Id).ToList();
+                listStates = db.EngineStates.Where(es => es.EngineId == idEngine && es.Date >= dateFisrt && es.Date < dateSecond).OrderByDescending(es => es.Date).ToList();
             }
             return listStates;
         }
 
-        private List<EventModel> GetListEvent(Int32 idEngine, List<DateTime> datesStates)
+        private List<EventModel> GetListEvent(Int32 idEngine)
         {
             List<Event> events = null;
             List<EventModel> listEventModels = new List<EventModel>();
             List<Int32> listEngineId = new List<int>();
-            DateTime dateFisrt, dateSecond;
-            if (datesStates != null)
-            {
-                dateFisrt = datesStates[0];
-                dateSecond = datesStates[1];
-            }
-            else
-            {
-                dateFisrt = DateTime.Today.AddDays(-NUMBERS_FOR_GRAPHICS);
-                dateSecond = DateTime.Today;              
-            }
+            List<DateTime> dates = PrepareDatesMessage();
+            DateTime dateFirst= dates[0], dateSecond= dates[1];
             using (AppContext db = new AppContext())
             {
                 EventComparer eventComparer = new EventComparer();
@@ -282,7 +284,7 @@ namespace Talas.Controllers
                                           .Include("Message")
                                           .Include("EngineState")
                                           .Include("EngineState.Engine")
-                                          .Where(e => listEngineId.Contains(e.EngineState.EngineId) && e.Date >= dateFisrt && e.Date < dateSecond).ToList();
+                                          .Where(e => listEngineId.Contains(e.EngineState.EngineId) && e.Date >= dateFirst && e.Date <= dateSecond).ToList();
                                           
                                           //.OrderBy(e => e, eventComparer)
                                           //.OrderByDescending(e => e.IsNew)                                                                                 
@@ -302,5 +304,6 @@ namespace Talas.Controllers
             
             return listEventModels;
         }
+
     }
 }

@@ -55,6 +55,11 @@ function onSuccess(mode) {
         url =  url.slice(0, -1);
     url = url + mode;
     $('.datepick').attr('data-ajax-url', url);
+
+    if ($('[name=dateStart]').val() != "" || $('[name=dateFinish]').val() != "") 
+    {
+        update();
+    }
 }
 
 function showInsulationResistBtns()
@@ -106,7 +111,7 @@ function showEnginesDispatching() {
                     $('[name = Date№' + id + ']').text(element.Date == null ? 0 : date.toLocaleDateString()+" "+date.toLocaleTimeString());//new Date(parseInt(element.Date.substr(6))).toLocaleString());
                     $('[name = Value№' + id + ']').text(element.Value == null ? 0 : element.Value);
                     $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work?"ON":"OFF");
-                    $('[name = Status№' + id + ']').text(element.Status == null ? 0 : element.Status ? "ON" : "OFF");
+                    $('[name = Status№' + id + ']').text(element.Status_M == null ? 0 : element.Status_M ? "ON" : "OFF");
                     //$('[name = Test№' + id + ']').text(element.Test == null ? 0 : element.Test);
                 }
             }
@@ -124,6 +129,13 @@ function showMessageDispatching() {
                     $('.labelAlert').css('width', 45);
                 if (response < 100 && $('.labelAlert').css('width') == '45px')
                     $('.labelAlert').css('width', 35);
+               /* alert(response);
+                alert($('.labelAlert').val())
+                if (response != $('.labelAlert').text())
+                {
+                    alert("asdasdasd");
+                    $('a:contains("GetMessages")').click();
+                }*/
                 $('.labelAlert').text(response);
                 }
             
