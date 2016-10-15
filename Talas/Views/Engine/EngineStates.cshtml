@@ -12,6 +12,12 @@
             <tr>
                 <th>Date & Time</th>
                 <th>@ViewBag.ModeName</th>
+                @if ((Byte)ViewBag.Mode == 4)
+                {
+                    <th>R30</th>
+                    <th>R60</th>
+                    <th>RAvg</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -29,6 +35,9 @@
                                 case 3:
                                     @es.Value
                                     break;
+                                case 4:
+                                    @((es.R60!=null && es.R30!=null) ? (float)es.R60 / (float)es.R30 : 0)
+                                    break;
                                 case 5:
                                     @((bool)es.Status ? valueON : valueOFF)
                                     break;
@@ -38,8 +47,26 @@
                             }
                         </span>
                     </td>
+                    @if ((Byte)ViewBag.Mode==4)
+                    {
+                        <td>
+                            <span>@es.R30</span>
+                        </td>
+                        <td>
+                            <span>@es.R60</span>
+                        </td>
+                        <td>
+                            <span>@es.R60</span>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+@if (ViewBag.WorkTimes != null)
+{
+    <input type="hidden" name="work" value=@ViewBag.WorkTimes>
+    <input type="hidden" name="notWork" value=@ViewBag.NotWorkTimes>
+}

@@ -10,7 +10,7 @@
     <div class="col-md-8">
         <span class="CharOverride-36">@ViewBag.Greeting</span>
         <div class="divAlert">
-            <span class="spanLabelAlert">@Ajax.ActionLink("New alerts &" + "\n" + "notification", "", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Messages?showAll=1" })</span>
+            <span class="spanLabelAlert">@Ajax.ActionLink("New alerts &" + "\n" + "notification", "", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Messages?showAll=1", OnSuccess = "hideWorkInfo()" })</span>
             <label class="CharOverride-24 labelAlert">0</label>
         </div> 
     </div>
@@ -32,7 +32,7 @@
     <div class="col-md-2">
         <ul class="nav nav-stacked">
             <li class="buttonNav">
-                @Ajax.ActionLink("Dashboard", "Index", new AjaxOptions { UpdateTargetId = "content", Url = "/Home/Engine"})
+                @Ajax.ActionLink("Dashboard", "Index", new AjaxOptions { UpdateTargetId = "content", Url = "/Home/Engine",OnSuccess = "hideWorkInfo()" })
             </li>
         </ul>
     </div>
@@ -42,7 +42,15 @@
 
     <div class="col-md-2 text-left CharOverride-32">
     Location <br />
-        <p class="CharOverride-16">@ViewBag.Location</p></div>
+        <p class="CharOverride-16">@ViewBag.Location</p>
+        <div class="hidden CharOverride-16" id="workInfo">
+            <p class="CharOverride-14">Total Operating Hours</p>
+            <div class="timeWork" id="work"></div>
+            <p class="CharOverride-14">Stand by Hours</p>
+            <div class="timeWork" id="notWork"></div>
+        </div>
+    </div>
+
 </div>
 
 @section Footer{

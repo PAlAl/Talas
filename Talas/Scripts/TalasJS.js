@@ -50,6 +50,15 @@ function onSuccess(mode) {
     else
         hideInsulationResistBtns();
 
+    if (mode == 2) {
+        showWorkInfo();
+        $('#work').text($('[name=work]').val());
+        $('#notWork').text($('[name=notWork]').val());
+    }
+    else      
+        hideWorkInfo();
+    
+
     var url = $('.datepick').attr('data-ajax-url');
     if (url[url.length-1] != '=')
         url =  url.slice(0, -1);
@@ -90,6 +99,14 @@ function hideDatePickForm() {
         $('.datepick').addClass("hidden");
 }
 
+function hideWorkInfo() {
+    if (!$('#workInfo').hasClass("hidden"))
+        $('#workInfo').addClass("hidden");
+}
+
+function showWorkInfo() {
+    $('#workInfo').removeClass("hidden");
+}
 
 function showEnginesDispatching() {
     var classes = $("[name=id]").filter(':input').map(function (indx, element) {

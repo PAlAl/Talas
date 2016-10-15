@@ -15,7 +15,7 @@
     <div class="row buttons">
         <ul class="nav nav-stacked callOnChanheDatePicker">
             <li class="col-md-3 buttonNav">
-                @Html.ActionLink("Polarization" + "\n" + " Index", "", "")
+                @Ajax.ActionLink("Polarization" + "\n" + " Index", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=4", OnSuccess = "onSuccess(4)" })
             </li>
             <li class="col-md-3 buttonNav">
                 @Ajax.ActionLink("Drying" + "\n" + " Actions", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id+ "&mode=5", OnSuccess = "onSuccess(5)" })

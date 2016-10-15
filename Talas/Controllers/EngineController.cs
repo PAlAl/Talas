@@ -41,9 +41,15 @@ namespace Talas.Controllers
                     return PartialView("~/views/Engine/Event.cshtml", GetListEvent(idEngine));
                 case 2:
                     ViewBag.ModeName = "Operation Hours";
+                    List<String> workTimes = GetWorkTimes(idEngine);
+                    ViewBag.WorkTimes = workTimes[0];
+                    ViewBag.NotWorkTimes = workTimes[1];
                     break;
                 case 3:
                     ViewBag.ModeName = "Insulation Resistance, kOhm";
+                    break;
+                case 4:
+                    ViewBag.ModeName = "Polarization Index";
                     break;
                 case 5:
                     ViewBag.ModeName = "Drying Mode";
@@ -227,6 +233,50 @@ namespace Talas.Controllers
             var a = user.Engines.First(e => e.Id == idEngine);
             return true;
         }*/
+
+        private List<String> GetWorkTimes(Int32 idEngine)
+        {
+            List<String> result = new List<String>();
+            TimeSpan workTime=TimeSpan.Zero, notWorkTime= TimeSpan.Zero,changeTime = TimeSpan.Zero;
+            Boolean mode=false;
+            DateTime lastDate=new DateTime();
+            using (AppContext db = new AppContext())
+            {
+                var workTimes = db.EngineStates.Where(es => es.EngineId == idEngine).OrderBy(es => es.Date).Select(es=>new {IsWork = es.Work,Date = es.Date });
+                foreach (var work in workTimes)
+                {
+                    if (lastDate == DateTime.MinValue)
+                    {       lastDate = work.Date;
+                            mode = (bool)work.IsWork;
+                            continue;
+                    }
+                    else
+                    {
+                        if (work.IsWork==mode)
+                        {
+                            if (mode)
+                                workTime += work.Date-lastDate;
+                            else
+                                notWorkTime += work.Date - lastDate;
+
+
+                        }
+                        else
+                        {
+                            changeTime += work.Date - lastDate;
+                        }
+                    }
+                    lastDate = work.Date;
+                    mode = (bool)work.IsWork;
+                }                  
+            }
+            workTime += TimeSpan.FromTicks(changeTime.Ticks/2);
+            notWorkTime += TimeSpan.FromTicks(changeTime.Ticks / 2);
+            result.Add(workTime.Days+"d."+workTime.Hours+"h."+workTime.Minutes+"m.");
+            result.Add(notWorkTime.Days + "d." + notWorkTime.Hours + "h." + notWorkTime.Minutes + "m.");
+            return result;
+        }
+
 
         private bool IsSetCookies()
         {

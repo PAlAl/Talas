@@ -19,6 +19,9 @@ namespace Objects
         public Boolean? MainCont { get; set; }
         public Boolean? SecondMeas { get; set; }
         public Boolean? Test { get; set; }
+        public Int16? Ravg { get; set; }
+        public Int16? R30 { get; set; }
+        public Int16? R60 { get; set; }
         public Int32 EngineId { get; set; }
         public Engine Engine { get; set; }
 
