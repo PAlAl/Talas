@@ -11,7 +11,7 @@
 </div>
 
 <div class="row" id="content2">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <table class="tableInfoEngine text-left">
             <tr class="border_bottom">
                 <td>Type</td>
@@ -34,6 +34,16 @@
                 <td>@Model.InstallationDate</td>
             </tr>
         </table>
+    </div>
+    <div class="col-md-6">
+        <form action="/Engine/Download" method="post">
+            <span>
+                <input class="datepicker" type="text" name="dateStart" placeholder="From" onfocus="(this.type='date')" onblur="(this.type='text')" />
+                <input class="datepicker" type="text" name="dateFinish" placeholder="To" onfocus="(this.type='date')" onblur="(this.type='text')" />
+            </span>
+            @Html.HiddenFor(x=>x.Id)
+            <button type="submit" class="btn btn-user btn-download">Download Report</button>
+        </form>
     </div>
 </div>
 

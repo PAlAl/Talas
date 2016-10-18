@@ -127,13 +127,15 @@ namespace Talas.Controllers
         }
 
         [Authorize]
-        public FileResult Download(String idEngine, String dateReportStart, String dateReportFinish)
+        public FileResult Download()
         {
             if (!IsSetCookies()) return null;
+            String idEngine = Request.Params["id"];
+            String dateReportStart = Request.Params["dateStart"];
+            String dateReportFinish = Request.Params["dateFinish"];
             FileResult result = null;
             if (idEngine != "" && idEngine != null)
             {
-                //Int32 id = Int32.Parse(id);
                 List<DateTime> dates = PrepareDatesEngineState(Int32.Parse(idEngine), dateReportStart, dateReportFinish);
                 List<EngineState> EngineStates = GetListEngineState(Int32.Parse(idEngine), dates);
                 result = PrepareFileDownload(idEngine, EngineStates);
@@ -203,9 +205,10 @@ namespace Talas.Controllers
             filePath = Server.MapPath("~/Content/Files/" + idEngine + ".txt");
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath, false))
             {
-                foreach (EngineState engine in engineStates)
+                file.WriteLine("        Date       |Value|Ravg| Pi |Work |Status|lowR |noStart|mainCont|secondMeas|test");
+                foreach (EngineState engineState in engineStates)
                 {
-                    file.WriteLine(EngineStateToString(engine));
+                    file.WriteLine(EngineStateToString(engineState));
                 }
             }
             fileType = "application/plain";
@@ -215,7 +218,26 @@ namespace Talas.Controllers
 
         private String EngineStateToString(EngineState engineState)
         {
-            return engineState.Date.ToString() + " " + engineState.Id.ToString() + " " + engineState.Value.ToString() + " ";
+            return engineState.Date.ToString() + "|" +
+                AddSpacing(engineState.Value.ToString(),5) + "|" + 
+               (engineState.Ravg==null?"null": AddSpacing(engineState.Ravg.ToString(),4)) + "|" +
+                (engineState.R60 == null || engineState.R30 == null ? "null" : AddSpacing(((float)engineState.R60/(float)engineState.R30).ToString(),4)) + "|" +
+                AddSpacing(engineState.Work.ToString(),5) + "|" +
+                AddSpacing(engineState.Status.ToString(),6) + "|" +
+                AddSpacing(engineState.LowR.ToString(),5) + "|" +
+                AddSpacing(engineState.NoStart.ToString(),7) + "|" +
+                AddSpacing(engineState.MainCont.ToString(),8) + "|" +
+                AddSpacing(engineState.SecondMeas.ToString(),10) + "|" +
+                engineState.Test.ToString();
+        }
+
+        private String AddSpacing (String st, Byte count)
+        {
+            for (int i= st.Length; i<count; i++)
+            {
+                st += " ";
+            }
+            return st;
         }
 
         #endregion

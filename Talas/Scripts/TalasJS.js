@@ -125,7 +125,7 @@ function showEnginesDispatching() {
                     var element = response.pop();
                     var id = element.EngineId;
                     var date = new Date(parseInt(element.Date.substr(6)));
-                    $('[name = Date№' + id + ']').text(element.Date == null ? 0 : date.toLocaleDateString()+" "+date.toLocaleTimeString());//new Date(parseInt(element.Date.substr(6))).toLocaleString());
+                    $('[name = Date№' + id + ']').text(element.Date == null ? 0 : prepareTimeValue(date.getDate()) + "-" + prepareTimeValue((date.getMonth() + 1)) + "-" + date.getFullYear() + " " + prepareTimeValue(date.getHours()) + ":" + prepareTimeValue(date.getMinutes()) + ":" + prepareTimeValue(date.getSeconds()));//new Date(parseInt(element.Date.substr(6))).toLocaleString());
                     $('[name = Value№' + id + ']').text(element.Value == null ? 0 : element.Value);
                     $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work?"ON":"OFF");
                     $('[name = Status№' + id + ']').text(element.Status_M == null ? 0 : element.Status_M ? "ON" : "OFF");
@@ -134,6 +134,11 @@ function showEnginesDispatching() {
             }
         });
     }
+}
+
+function prepareTimeValue(s)
+{
+    return(s<10)?"0"+s:s;
 }
 
 function showMessageDispatching() {
