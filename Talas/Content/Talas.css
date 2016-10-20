@@ -9,17 +9,17 @@ html {
     min-height: 100%;
 }
 
-/*@font-face {
-    font-family: "Helvetica Neue"; 
-    src: url(Fonts/Fonts/HelveticaNeueCyr-Light.otf);
+@font-face {
+    font-family: Helvetica Neue; 
+    src: url(Fonts/HelveticaNeueCyr-Thin.otf);
     font-style: normal;
-}*/
+}
 
 body {
     background: url(images/mainBack.jpg)no-repeat center center fixed;
     background-size: 100% 100%;
-    font-family: "Helvetica Neue", sans-serif;
-    font-style: normal;
+    /*font-family: "HelveticaNe", sans-serif;*/
+    /*font-style: normal;*/
     color: #ffffff;
     margin-bottom: 60px;
     margin-top: 30px;
@@ -39,12 +39,12 @@ body {
 }
 @media only screen and (min-device-height:660px) {
  .footer {
-    bottom: 15px;
+    bottom: 25px;
     }
 }
 
     .footer img {
-        bottom: -30px;
+        bottom: -45px;
         position: relative;
     }
 
@@ -52,16 +52,22 @@ body {
         float: right;
         position: relative;
         right: 5px;
-        bottom: -40px;
-        font-size: 14px;
+        bottom: -60px;
+        font-size: 10px;
         font-weight: 200;
         vertical-align: middle;
     }
 
 .CharOverride-1 {
-    font-family: "Code Bold", sans-serif;
+    /*font-family: "Code Bold", sans-serif;*/
     font-size: 50px;
     font-weight: bold;
+}
+
+.CharOverride-12 {
+    font-size: 12px;
+    font-weight: 200;
+    vertical-align: middle;
 }
 
 .CharOverride-16 {
@@ -116,7 +122,7 @@ body {
 .inputT {
     position: relative;
     width: 100%;
-    opacity: 0.8;
+    /*opacity: 0.8;*/
     height: 40px;
     background-color: #ffffff /*#707679*/;
     box-shadow: 0 0 5px rgba(0,0,0,0.1);
@@ -131,7 +137,7 @@ body {
     border-width: 1px;
     color: #a6a5a4;
     outline: none;
-    max-width: 400px;
+    max-width: 300px;
 }
 
     .inputT:hover {
@@ -140,13 +146,14 @@ body {
     }
 
 #_idInputLogin {
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 #_idInputPassword {
-    border-bottom-left-radius: 9px;
-    border-bottom-right-radius: 9px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    margin-top:5px;
 }
 
 .submit {
@@ -160,15 +167,15 @@ body {
     border-color: #ffffff;
     border-width: 1px;
     border-style: solid;
-    border-bottom-left-radius: 9px;
-    border-bottom-right-radius: 9px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     font-size: 28px;
     font-weight: 200;
     outline: none;
     color: #ffffff;
-    max-width: 250px;
+    max-width: 180px;
 }
 
 input[type="checkbox"] {
@@ -176,8 +183,8 @@ input[type="checkbox"] {
     display: inline-block;
     border-radius: 50%;
     background: none;
-    height: 35px;
-    width: 35px;
+    height: 20px;
+    width: 20px;
     -webkit-appearance: none; /* Прячем чекбокс */
     cursor: pointer;
     border: 1px solid #ccc;
@@ -197,10 +204,10 @@ input[type="checkbox"] {
     padding-top: 25px;
     min-height: 500px;
     background-color: rgba(153,153,153,0.3);
-    border-bottom-left-radius: 9px;
-    border-bottom-right-radius: 9px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
         /*height: 70vh;*/
         /*display: flex;*/
 }
@@ -215,9 +222,16 @@ input[type="checkbox"] {
     background-color: rgba(0,0,0,0);
     border-color: #ffffff;
     opacity: 1;
+    min-width:160px;
+    font-size: 16px;
+    letter-spacing:0.1em ;
 }
     .btn-user:hover {
         opacity: 0.4;
+    }
+
+    .btn-user:focus {
+        color: #ffffff;
     }
 
     .btn-primary.active {
@@ -250,10 +264,10 @@ input[type="checkbox"] {
     border-width: 1px;
     border-style: solid;
     border-color: #ffffff;
-    border-bottom-left-radius: 9px;
-    border-bottom-right-radius: 9px;
-    border-top-left-radius: 9px;
-    border-top-right-radius: 9px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     max-width: 160px;
     padding-right: 0px;
     padding-left: 0px;
@@ -295,11 +309,16 @@ input[type="checkbox"] {
 }
 
 .table thead {
-    background-color: rgba(72,72,72,0.5);
+    background-color: rgba(32,32,32,0.5);
 }
 
 .table th {
-    vertical-align: middle !important;
+    vertical-align: middle !important;  
+    border-bottom: 0 !important;  
+}
+
+.table tbody > tr:first-child > td {
+    border-top: 0 !important;
 }
 
 .table a {
@@ -426,4 +445,10 @@ tr.border_bottom td {
 
 .btn-download{
     margin-top:10px;
+}
+
+.usermenu{
+     -webkit-box-shadow: none !important; 
+     box-shadow: none !important; 
+     background-clip: unset !important;/*padding-box; */
 }

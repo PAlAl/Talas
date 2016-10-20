@@ -25,6 +25,14 @@ namespace Objects
         public Int32 EngineId { get; set; }
         public Engine Engine { get; set; }
 
+        public String DateString
+        {
+            get
+            {
+                return Date.ToString("dd.MM.yyyy HH:mm:ss");
+            }
+        }
+
         public ICollection<Event> Events { get; set; }
     }
 }

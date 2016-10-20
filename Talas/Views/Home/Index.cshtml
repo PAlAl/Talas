@@ -17,10 +17,11 @@
         
     <div class="col-md-2">
         <button type="button" data-toggle="dropdown" class="btn btn-user dropdown-toggle"><span class="caret"></span> @ViewBag.UserName </button>
-        <ul class="dropdown-menu ">
+        <ul class="dropdown-menu usermenu">
             <li>
                 <a href="#">Settings</a>
             </li>
+            <li class="divider"></li>
             <li>
                 @Html.ActionLink("Log out", "Logoff", "Account")
             </li>

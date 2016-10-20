@@ -205,7 +205,19 @@ namespace Talas.Controllers
             filePath = Server.MapPath("~/Content/Files/" + idEngine + ".txt");
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(filePath, false))
             {
-                file.WriteLine("        Date       |Value|Ravg| Pi |Work |Status|lowR |noStart|mainCont|secondMeas|test");
+                file.WriteLine(
+                "R – Instant value of insolation Resistance\r\n" +
+                "R30 - insolation Resistance after 30 sec\r\n" +
+                "R60 - insolation Resistance after 60 sec\r\n" +
+                "DAR - Dielectric Absorption Ratio (R60 / R30)\r\n" +
+                "Ravg – Average insolation Resistance for 60 sec\r\n" +
+                "Talas Dryer – connected / disconnected\r\n" +
+                "Motor – Ready / not ready to start\r\n" +
+                "Drying – on / off\r\n" +
+                "Motor – on / off\r\n" +
+                "Motor Start - ok / failure") ;
+ 
+                 file.WriteLine("        Date       |  R  | R30 | R60 | DAR |Ravg|Talas Dryer|Motor|Drying|Motor|Motor Start");
                 foreach (EngineState engineState in engineStates)
                 {
                     file.WriteLine(EngineStateToString(engineState));
@@ -218,24 +230,27 @@ namespace Talas.Controllers
 
         private String EngineStateToString(EngineState engineState)
         {
-            return engineState.Date.ToString() + "|" +
-                AddSpacing(engineState.Value.ToString(),5) + "|" + 
-               (engineState.Ravg==null?"null": AddSpacing(engineState.Ravg.ToString(),4)) + "|" +
-                (engineState.R60 == null || engineState.R30 == null ? "null" : AddSpacing(((float)engineState.R60/(float)engineState.R30).ToString(),4)) + "|" +
-                AddSpacing(engineState.Work.ToString(),5) + "|" +
-                AddSpacing(engineState.Status.ToString(),6) + "|" +
-                AddSpacing(engineState.LowR.ToString(),5) + "|" +
-                AddSpacing(engineState.NoStart.ToString(),7) + "|" +
-                AddSpacing(engineState.MainCont.ToString(),8) + "|" +
-                AddSpacing(engineState.SecondMeas.ToString(),10) + "|" +
-                engineState.Test.ToString();
+            return engineState.DateString + "|" +
+                AddSpacing(engineState.Value.ToString(), 5) + "|" +
+                AddSpacing(engineState.R30.ToString(), 5) + "|" +
+                AddSpacing(engineState.R60.ToString(), 5) + "|" +
+                (engineState.R60 == null || engineState.R30 == null ? "     " : AddSpacing(((float)engineState.R60 / (float)engineState.R30).ToString(), 5)) + "|" +
+                (AddSpacing(engineState.Ravg.ToString(), 4)) + "|" +
+                AddSpacing((bool)engineState.MainCont?"on":"off", 11) + "|" +
+                AddSpacing((bool)engineState.LowR ? "on" : "off", 5) + "|" +
+                AddSpacing((bool)engineState.Status ? "on" : "off", 6) + "|" +
+                AddSpacing((bool)engineState.Work ? "on" : "off", 5) + "|" +               
+                AddSpacing((bool)engineState.NoStart ? "on" : "off", 11);
         }
 
         private String AddSpacing (String st, Byte count)
         {
             for (int i= st.Length; i<count; i++)
             {
-                st += " ";
+                if (i%2==0)
+                    st += " ";
+                else
+                    st=" "+st;
             }
             return st;
         }
