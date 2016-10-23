@@ -10,21 +10,25 @@
     }
 }
 
-@using (Ajax.BeginForm("", "", null, new AjaxOptions { UpdateTargetId = "content2", Url = link/*"/Engine/EngineStates?id=" + @Model.Id + "&mode=" */}, new { @class = "datepick text-right" }))
+@using (Ajax.BeginForm("", "", null, new AjaxOptions { UpdateTargetId = "content2", Url = link/*"/Engine/EngineStates?id=" + @Model.Id + "&mode=" */}, new { @class = "datepick text-left" }))
 {
-    <span>
-        <input class="datepicker" type="text" name="dateStart" placeholder="From" onfocus="(this.type='date')" onblur="(this.type='text')" onchange="datePickerChange()" />
-        <input class="datepicker" type="text" name="dateFinish" placeholder="To" onfocus="(this.type='date')" onblur="(this.type='text')" onchange="datePickerChange()" />
-        <input id="show" type="submit" value="Show" class="btn-user" />
-    </span>
-            <div class="row hidden" id="InsilationResistButtons">
-                <div class="col-md-5 col-md-offset-8 btn-group" data-toggle="buttons">
-                    <label class="btn btn-user btn-primary active" id="labelTable">
-                        <input type="radio" name="viewType" value="table" checked onchange="update()">Table
-                    </label>
-                    <label class="btn btn-user btn-primary" id="labelGraph">
-                        <input type="radio" name="viewType" value="graph" onchange="update()">Graph
-                    </label>
-                </div>
+    <div class="row">
+        <div class="col-md-offset-3">
+            <span>
+                <input class="datepicker" type="text" name="dateStart" placeholder="From" onfocus="(this.type='date')" onblur="(this.type='text')" onchange="datePickerChange()" />
+                <input class="datepicker" type="text" name="dateFinish" placeholder="To" onfocus="(this.type='date')" onblur="(this.type='text')" onchange="datePickerChange()" />
+                <input id="show" type="submit" value="Show" class="btn-user" />
+            </span>
+        </div>
+    </div>
+        <div class="row hidden" id="InsilationResistButtons">
+            <div class="col-md-offset-3 btn-group" data-toggle="buttons">
+                <label class="btn  active" id="labelTable">  <!--btn-user btn-primary-->
+                    <input type="radio" name="viewType" value="table" checked onchange="update()">Table
+                </label>
+                <label class="btn" id="labelGraph">
+                    <input type="radio" name="viewType" value="graph" onchange="update()">Graph
+                </label>
             </div>
+        </div>  
 }

@@ -41,6 +41,13 @@ function datePickerChange() {
     }
 }
 
+function onActiveDownButtons(event) {
+    var elemLi = event.currentTarget;
+    $("li.buttonNav.active").each(function (i,elem) {
+        $(elem).removeClass("active");
+    });
+    $(elemLi).addClass("active");    
+}
 function onSuccess(mode) {
     if ($(".datepick").hasClass("hidden"))
         showDatePickForm();
@@ -132,11 +139,6 @@ function showEnginesDispatching() {
             }
         });
     }
-}
-
-function prepareTimeValue(s)
-{
-    return(s<10)?"0"+s:s;
 }
 
 function showMessageDispatching() {

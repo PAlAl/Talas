@@ -4,7 +4,10 @@
     Layout = "";
 }
 
-<div class="pre-scrollable">
+<div  @if (@ViewBag.All) { @: class="pre-scrollable" 
+     }
+          else { @: class="pre-scrollable engineStates" 
+          }>
     <table class="table">
         <thead>
             <tr>

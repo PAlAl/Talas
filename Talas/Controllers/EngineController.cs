@@ -73,10 +73,11 @@ namespace Talas.Controllers
                     result = View("~/views/Engine/EventAll.cshtml", GetListEvent(-1));
                     break;
                 case 2:
+                    ViewBag.All = true;
                     result = PartialView("~/views/Engine/Event.cshtml", GetListEvent(-1));
                     break;
                 default:
-                    ViewBag.All = false;
+                    ViewBag.All = true;
                     result = View("~/views/Engine/Event.cshtml", GetListEvent(-1));
                     break;
 
@@ -91,28 +92,49 @@ namespace Talas.Controllers
             if (dateStart > dateFinish) return null;
             Dictionary<String, String> data = PrepareDataGraph(dateStart, dateFinish, idEngine);
             DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
+            .InitChart(new Chart { BackgroundColor = new BackColorOrGradient(System.Drawing.Color.Transparent) })
             .SetTitle(new Title
             {
-                Text = "Data"
+                Text = ""
             })
             .SetXAxis(new XAxis
             {
-                Categories = data.Keys.ToArray()
+                Categories = data.Keys.ToArray(),
+                LineColor = Color.Black,
+                TickColor = Color.Black,
+                GridLineColor = Color.Black,
+                Labels = new XAxisLabels { Style = "color: '#000000'" },
+
             })
             .SetYAxis(new YAxis
             {
-                Title = new YAxisTitle() { Text = "Insulation Resistance,kOhm" },
+                Title = new YAxisTitle() { Text = "Insulation Resistance,kOhm" , Style = "color: '#000000'" },
                 Min = 0,
                 GridLineWidth = 0,
                 AlternateGridColor = null,
-                PlotBands = new[] { new YAxisPlotBands { From=0,To=500, Color = Color.Red},
-                                    new YAxisPlotBands { From = 500, To = 1100, Color=Color.Orange},
-                                    new YAxisPlotBands { From = 1100, To = 10000, Color= Color.Green}}
-            })
+                LineColor = Color.Black,
+                PlotBands = new[] { new YAxisPlotBands { From=0,To=500, Color = Color.FromArgb(100,Color.Red)},
+                                    new YAxisPlotBands { From = 500, To = 1100, Color=Color.FromArgb(100,Color.Orange)},
+                                    new YAxisPlotBands { From = 1100, To = 10000, Color= Color.FromArgb(100,Color.Green)}},
+                GridLineColor = Color.Black,
+                TickColor = Color.Black,
+                Labels = new YAxisLabels{ Style= "color: '#000000'" }
+        })
             .SetSeries(new Series
             {
+                PlotOptionsBar = new PlotOptionsBar { ShowInLegend=false},
                 Name = "Insulation Resistance",
-                Data = new Data(Array.ConvertAll(data.Values.ToArray(), element => (object)element))
+                Data = new Data(Array.ConvertAll(data.Values.ToArray(), element => (object)element)),
+                Color = Color.FromArgb(209,209,209),
+                PlotOptionsSeries = new PlotOptionsSeries
+                {
+                    Marker = new PlotOptionsSeriesMarker
+                    {
+                        FillColor = Color.Gray,
+                        LineWidth = 2,
+                        LineColor = Color.White
+                    }
+                },             
             })
             .SetTooltip(new Tooltip
             {
