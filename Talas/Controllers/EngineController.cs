@@ -110,6 +110,7 @@ namespace Talas.Controllers
             {
                 Title = new YAxisTitle() { Text = "Insulation Resistance,kOhm" , Style = "color: '#000000'" },
                 Min = 0,
+                MinTickInterval=500,
                 GridLineWidth = 0,
                 AlternateGridColor = null,
                 LineColor = Color.Black,

@@ -416,7 +416,7 @@ tr.border_bottom td {
    color:    #ffffff;
 }
 
-.graph{
+#chart_container{
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -453,7 +453,7 @@ tr.border_bottom td {
 }
 
 .timeWork{
-    
+    padding: 5px 0px 5px 0px; 
     text-align:center;
     background-color: rgba(0,0,0,0);
     border-width: 1px;
@@ -514,11 +514,13 @@ tr.border_bottom td {
         margin-bottom:initial;
     }
     .engineStates{
-        position: absolute;
+        /*position: absolute;
         bottom: 35%;
         top: 70px;
         left: 5px;
-        right: 5px;
+        right: 5px;*/
+        height:100%;
+        max-height: none  !important;
     }
     #buttons1{
     position: absolute;
@@ -529,5 +531,27 @@ tr.border_bottom td {
     position: absolute;
     bottom: 0;
     left: 20%;
+    }
+    #content2{
+    position: absolute;
+    bottom: 165px;
+    top: 70px;
+    left: 5px;
+    right: 5px;
+    padding-right: 10px;
+    padding-left: 10px;
+    }
+    .allMessages{
+        bottom: 10px  !important;
+    }
+    .allMessages>.pre-scrollable{
+        height:100%;
+        max-height: none  !important;
+    }
+    .graph{
+        height: 100%;
+    }
+    #chart_container{
+        height: 100%;
     }
 }
