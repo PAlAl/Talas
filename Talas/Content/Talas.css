@@ -10,16 +10,29 @@ html {
 }
 
 @font-face {
-    font-family: Helvetica Neue; 
+    font-family: Joora;
     src: url(Fonts/HelveticaNeueCyr-Thin.otf);
+    src: url(Fonts/HelveticaNeueCyr-Thin.ttf);
+    src: url(Fonts/helveticaneuecyr-thin-webfont.woff) format('woff');
+    src: url(Fonts/helveticaneuecyr-thin-webfont.woff2) format('woff2');
     font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Zina;
+    src: url("Fonts/HelveticaThin/HelveticaThin.eot");
+    src: url("Fonts/HelveticaThin/HelveticaThin.eot?#iefix")format("embedded-opentype"),
+    url("Fonts/HelveticaThin/HelveticaThin.woff") format("woff"),
+    url("Fonts/HelveticaThin/HelveticaThin.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
 }
 
 body {
     background: url(images/mainBack.jpg)no-repeat center center fixed;
     background-size: 100% 100%;
-    /*font-family: "HelveticaNe", sans-serif;*/
-    /*font-style: normal;*/
+    font-family:Zina; 
     color: #ffffff;
     margin-bottom: 60px;
     margin-top: 30px;
@@ -54,7 +67,6 @@ body {
     }
 
 .CharOverride-1 {
-    /*font-family: "Code Bold", sans-serif;*/
     font-size: 50px;
     font-weight: bold;
 }
@@ -202,7 +214,7 @@ input[type="checkbox"] {
 
 .main-body {
     margin-top: 30px;
-    padding-top: 25px;
+    /*padding-top: 25px;*/
     min-height: 500px;
     background-color: rgba(153,153,153,0.3);
     border-bottom-left-radius: 6px;
@@ -535,7 +547,7 @@ tr.border_bottom td {
     #content2{
     position: absolute;
     bottom: 165px;
-    top: 70px;
+    top: 85px;
     left: 5px;
     right: 5px;
     padding-right: 10px;

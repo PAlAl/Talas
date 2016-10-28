@@ -14,6 +14,14 @@ namespace Objects
         public Int32 EngineStateId { get; set; }
         public EngineState EngineState { get; set; }
         public DateTime Date { get; set; }
+
+        public String DateString
+        {
+            get
+            {
+                return Date.ToString("dd.MM.yyyy HH:mm:ss");
+            }
+        }
     }
 
 

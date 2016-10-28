@@ -30,18 +30,18 @@
 
 </div>
 <div class="row main-body">
-    <div class="col-md-2">
+    <div class="col-md-2" style="padding-top:25px">
         <ul class="nav nav-stacked">
             <li class="buttonNav">
                 @Ajax.ActionLink("Dashboard", "Index", new AjaxOptions { UpdateTargetId = "content", Url = "/Home/Engine",OnSuccess = "hideWorkInfo()" })
             </li>
         </ul>
     </div>
-    <div class="col-md-8 tables top-to-bottom-line" id="content">
+    <div class="col-md-8 tables top-to-bottom-line" id="content"  style="padding-top:25px">
           
     </div>
 
-    <div class="col-md-2 text-left CharOverride-32">
+    <div class="col-md-2 text-left CharOverride-32" style="padding-top:25px">
     Location <br />
         <p class="CharOverride-16">@ViewBag.Location</p>
         <div class="hidden CharOverride-16" id="workInfo">

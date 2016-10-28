@@ -247,7 +247,7 @@ namespace Talas.Controllers
                 }
             }
             fileType = "application/plain";
-            fileName = idEngine + "_" + DateTime.Today.Date.ToString() + ".txt";
+            fileName = idEngine + "_" + DateTime.Today.Date.Day + "_" + DateTime.Today.Date.Month + "_" + DateTime.Today.Date.Year + ".txt";
             return filePath != null ? File(filePath, fileType, fileName) : null;
         }
 

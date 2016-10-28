@@ -26,11 +26,11 @@ namespace Talas.Jobs
                     {
                         averageValue = listValues.Average(x => x);
                         db.Statistics.Add(new Statistic(date, (short)averageValue, enId));
+                        db.SaveChanges();
                     }
                     
                 }
-                if (listValues.Count != 0)
-                    db.SaveChanges();
+                
             }
         }
     }

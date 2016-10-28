@@ -23,8 +23,8 @@
                 <tr @if (!ev.IsNew) { @: style="opacity: 0.5"
                     }>
                     <td><span>@ev.MotorName</span></td>
-                    <td><span>@ev.Date</span></td>
-                    <td><span> @ev.Message</span></td>
+                    <td><span>@ev.DateString</span></td>
+                    <td class="text-left"><span> @ev.Message</span></td>
                     <td @if (ev.IsNew) { if (ev.Message.Contains("Alert")) { @: style="background-color:rgba(255, 0, 0, 0.3); width:30px;"
                                                      } else { @: style="background-color:rgba(0, 255, 0, 0.3); width:30px;"
                                                         }  }></td>

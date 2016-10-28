@@ -18,5 +18,21 @@ namespace Objects
         public ICollection<Statistic> Statistic { get; set; }        
         public Int32 UserId { get; set; }
         public User User { get; set; }
+
+        public String ManufactureDateString
+        {
+            get
+            {
+                return (ManufactureDate==null)?String.Empty:((DateTime)ManufactureDate).ToString("dd.MM.yyyy HH:mm:ss");
+            }
+        }
+
+        public String InstallationDateString
+        {
+            get
+            {
+                return (InstallationDate == null) ? String.Empty : ((DateTime)InstallationDate).ToString("dd.MM.yyyy HH:mm:ss");
+            }
+        }
     }
 }

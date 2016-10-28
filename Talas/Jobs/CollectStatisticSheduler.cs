@@ -11,7 +11,7 @@ namespace Talas.Jobs
     {
         public static void Start()
         {
-            DateTime startTime = DateTime.Today.AddDays(1);
+            DateTime startTime = DateTime.Today;
             //startTime.AddHours(startTime.Hour-(startTime.Hour-1));//установка кол-ва часов в 1
 
             IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();

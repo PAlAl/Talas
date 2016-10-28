@@ -20,5 +20,13 @@ namespace Talas.Models
             IsNew = isNew;
         }
 
+        public String DateString
+        {
+            get
+            {
+                return Date.ToString("dd.MM.yyyy HH:mm:ss");
+            }
+        }
+
     }
 }

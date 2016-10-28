@@ -20,5 +20,13 @@ namespace Objects
             Value = value;
             EngineId = engineId;
         }
+
+        public String DateString
+        {
+            get
+            {
+                return Date.ToString("dd.MM.yyyy HH:mm:ss");
+            }
+        }
     }
 }
