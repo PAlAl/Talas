@@ -252,17 +252,12 @@ input[type="checkbox"] {
              letter-spacing: 0.1em;
     }
 
-    .dropdown-menu {
-        max-width: 160px;
-        width:auto;
-    }
-
     .btn-primary.active {
     background-color: rgba(0,0,0,0.3) !important;/*3276b1*/
     border-color: #ffffff !important;/*285e8e*/
 }
     .btn-group{
-        margin-top: 10px;
+       /*margin-top: 10px;*/
     }
 
 #show{
@@ -270,10 +265,9 @@ input[type="checkbox"] {
     box-shadow: none;
     width: 50px;
     border-width:1px;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    border-radius: 3px;
+    margin-left: 10px;
+    border-color: rgba(209,209,209,1);
 }
 
 .caret {
@@ -289,10 +283,7 @@ input[type="checkbox"] {
     border-width: 1px;
     border-style: solid;
     border-color: rgba(209,209,209,1);
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    border-radius: 3px;
     max-width: 150px;
     padding-right: 0px;
     padding-left: 0px;
@@ -403,19 +394,23 @@ tr.border_bottom td {
     height: 35vh;
 }
 
-.datepicker{
+#datepicker{
     border-style: solid;
-    width:120px;    
+    width:120px; 
+    height:25px;   
     background: none;
     border-color: rgba(209,209,209,1);
     border-width: 1px;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-    text-align: center;
+    border-radius: 3px 3px 3px 3px;
     color: #ffffff;
     box-shadow:none;
+    margin-left:5px;
+}
+
+.datepicker-dropdown
+{
+    margin-top: 40px;
+    background: rgb(180, 180, 180);
 }
 
 ::-webkit-input-placeholder { /* WebKit browsers */
@@ -471,10 +466,7 @@ tr.border_bottom td {
     border-width: 1px;
     border-style: solid;
     border-color: #ffffff;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    border-radius: 3px;
 }
 #workInfo{
     margin-top:15px;
@@ -489,6 +481,9 @@ tr.border_bottom td {
      -webkit-box-shadow: none !important; 
      box-shadow: none !important; 
      background-clip: unset !important;/*padding-box; */
+     max-width: 160px;
+     width:auto;
+     text-align:center;
 }
 
 #labelTable, #labelGraph{
@@ -497,6 +492,10 @@ tr.border_bottom td {
 
     #labelGraph.active,#labelTable.active {
         color:#afafaf;
+    }
+
+    #labelGraph.focus,#labelTable.focus {
+        outline: none;
     }
 
 @media only screen and (min-device-height:660px) {

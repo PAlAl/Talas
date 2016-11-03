@@ -28,6 +28,11 @@ namespace Talas.Controllers
             return View();
         }
 
+        public ActionResult Ind()
+        {
+            return View();
+        }
+
         [Authorize]
         public ActionResult Engine()
         {

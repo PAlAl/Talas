@@ -12,13 +12,16 @@
 
 @using (Ajax.BeginForm("", "", null, new AjaxOptions { UpdateTargetId = "content2", Url = link/*"/Engine/EngineStates?id=" + @Model.Id + "&mode=" */}, new { @class = "datepick text-left" }))
 {
+
+    
+
     <div class="row">
-        <div class="col-md-offset-3">
-            <span>
-                <input class="datepicker" type="text" name="dateStart" placeholder="From" onfocus="(this.type='date')" onblur="(this.type='text')" onchange="datePickerChange()" />
-                <input class="datepicker" type="text" name="dateFinish" placeholder="To" onfocus="(this.type='date')" onblur="(this.type='text')" onchange="datePickerChange()" />
-                <input id="show" type="submit" value="Show" class="btn-user" />
-            </span>
+        <div class="col-md-offset-3">   
+                <div class="input-daterange input-group" id="datepickers">
+                    <input type="text" id="datepicker" class="datepicker" name="dateStart"  placeholder="From"  onchange="datePickerChange()">
+                    <input type="text" id="datepicker" class="datepicker" name="dateFinish" placeholder="To"  onchange="datePickerChange()">
+                    <input id="show" type="submit" value="Show" class="btn-user" />
+                </div>
         </div>
     </div>
         <div class="row hidden" id="InsilationResistButtons">
@@ -30,5 +33,9 @@
                     <input type="radio" name="viewType" value="graph" onchange="update()">Graph
                 </label>
             </div>
-        </div>  
+        </div>
+}
+
+@section Scripts {
+
 }

@@ -38,8 +38,8 @@
     <div class="col-md-6">
         <form action="/Engine/Download" method="post">
             <span>
-                <input class="datepicker" type="text" name="dateStart" placeholder="From" onfocus="(this.type='date')" onblur="(this.type='text')" />
-                <input class="datepicker" type="text" name="dateFinish" placeholder="To" onfocus="(this.type='date')" onblur="(this.type='text')" />
+                <input id="datepicker" class="text-center  datepicker" type="text" name="dateStart" placeholder="From"  />
+                <input id="datepicker" class="text-center  datepicker" type="text" name="dateFinish" placeholder="To"  />
             </span>
             @Html.HiddenFor(x=>x.Id)
             <button type="submit" class="btn btn-user btn-download">Download Report</button>
@@ -49,6 +49,14 @@
 
 @Html.Partial("~/Views/Engine/DownButtons.cshtml")
 
-
+<script>
+    $(document).ready(function () {
+        
+        $('.datepicker').datepicker({
+            format: 'dd.mm.yyyy'
+        });
+        //$('#show').click();
+    });
+</script>
 
 
