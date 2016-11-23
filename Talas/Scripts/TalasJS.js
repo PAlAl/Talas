@@ -15,29 +15,34 @@ function goShow()
     setInterval('showMessageDispatching()', 30000);
 }
 
+function clearLink()
+{
+    $(".callOnChanheDatePicker a").each(function () {
+        var url = $(this).attr('data-ajax-url');
+        if (url != null && url.lastIndexOf("dateStart") != -1) {
+            url = url.slice(0, -43);
+            $(this).attr('data-ajax-url', url);
+        }
+    });
+}
+
 function datePickerChange() {
-    var dateStart = $("[name=dateStart]").val();
-    var dateFinish = $("[name=dateFinish]").val();    
+    var dateStart = $("[name=dateStart]").val();//datepicker("getDate");
+    var dateFinish = $("[name=dateFinish]").val()//datepicker("getDate");
     if (dateStart != "" && dateFinish != "") {
         $(".callOnChanheDatePicker a").each(function () {
-                var url = $(this).attr('data-ajax-url');              
-                if (url != null && url.lastIndexOf("dateStart") == -1 )                    
-                    {
-                        url = url + "&dateStart=" + dateStart + "&dateFinish=" + dateFinish;
-                        $(this).attr('data-ajax-url', url);
-                    }
+            var url = $(this).attr('data-ajax-url');
+            if (url != null)
+            {
+                if (url.lastIndexOf("dateStart") != -1) clearLink();
+                url = url + "&dateStart=" + dateStart + "&dateFinish=" + dateFinish;
+                $(this).attr('data-ajax-url', url);
+            }
             });
     }
     else
     {
-        $(".callOnChanheDatePicker a").each(function () {
-                var url = $(this).attr('data-ajax-url');
-                if (url != null && url.lastIndexOf("dateStart") != -1) {
-                    url = url.slice(0, -43);
-                    $(this).attr('data-ajax-url', url);
-                }
-            });
-
+        clearLink();
     }
 }
 
@@ -130,11 +135,13 @@ function showEnginesDispatching() {
                 response = response.reverse();
                 while (response.length > 0) {
                     var element = response.pop();
-                    var id = element.EngineId;
-                    $('[name = Date№' + id + ']').text(element.DateString);
-                    $('[name = Value№' + id + ']').text(element.Value == null ? 0 : element.Value);
-                    $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work?"ON":"OFF");
-                    $('[name = Status№' + id + ']').text(element.Status_M == null ? 0 : element.Status_M ? "ON" : "OFF");
+                    if (element != null) {
+                        var id = element.EngineId;
+                        $('[name = Date№' + id + ']').text(element.DateString);
+                        $('[name = Value№' + id + ']').text(element.Value == null ? 0 : element.Value);
+                        $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work ? "ON" : "OFF");
+                        $('[name = Status№' + id + ']').text(element.Status_M == null ? 0 : element.Status_M ? "ON" : "OFF");
+                    }
                 }
             }
         });

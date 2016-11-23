@@ -48,7 +48,7 @@ namespace Talas.Controllers
 
         public JsonResult JsonGetInfo(string[] engines)
         {           
-            List<EngineState> jsondata=new List<EngineState>();
+            List<LastEngineState> jsondata=new List<LastEngineState>();
             if (engines !=null && engines.Length != 0)
             {
                 using (AppContext db = new AppContext())
@@ -57,7 +57,7 @@ namespace Talas.Controllers
                     foreach (string engine in engines)
                     {
                         id = Int32.Parse(engine);
-                        jsondata.Add(db.EngineStates.Where(es => es.EngineId == id).OrderByDescending(es => es.Date).FirstOrDefault());
+                        jsondata.Add(db.LastEngineStates.Where(es => es.EngineId == id).FirstOrDefault());
                     }
                 }
             }
@@ -71,13 +71,14 @@ namespace Talas.Controllers
             using (AppContext db = new AppContext())
             {
                 listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e => e.Id).ToList();
-                IQueryable<Event> events = from e in db.Events
+                /*IQueryable<Event> events = from e in db.Events
                                           .Include("EngineState")
                                           .Include("EngineState.Engine")
                                           .Where(e =>e.IsNew && listEngineId.Contains(e.EngineState.EngineId))
                                           .OrderByDescending(e => e.Date)
-                     select e;
-                result = events.Count();
+                     select e;*/
+                result = db.Events.Where(e => e.IsNew && listEngineId.Contains(e.EngineId)).Count();
+                //result = events.Count();
             }          
             return Json(result, JsonRequestBehavior.AllowGet);
         }

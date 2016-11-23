@@ -8,6 +8,7 @@ using DotNet.Highcharts.Options;
 using Objects;
 using Talas.Models;
 using Talas.Objects;
+using System.Globalization;
 
 namespace Talas.Controllers
 {
@@ -31,7 +32,7 @@ namespace Talas.Controllers
             /*НЕТ ЗАЩИТЫ ОТ ЧУЖОГО ИДДВИЖКА*/
             Int32 idEngine = id;
             if (!IsSetCookies()) return RedirectToAction("Login", "Account");
-            if (Request.Params["viewType"] == "graph") return PartialView("~/views/Engine/Graph.cshtml", Graph(idEngine));
+            if (Request.Params["viewType"] == "graph" && mode==3) return PartialView("~/views/Engine/Graph.cshtml", Graph(idEngine));
             List<DateTime> dates = PrepareDatesEngineState(idEngine, Request.Params["dateStart"], Request.Params["dateFinish"]);          
             ViewBag.Mode = mode;
             switch (mode)
@@ -78,17 +79,47 @@ namespace Talas.Controllers
                     break;
                 default:
                     ViewBag.All = true;
-                    result = View("~/views/Engine/Event.cshtml", GetListEvent(-1));
+                    result = View("~/views/Engine/Event.cshtml", GetListEvent(0));
                     break;
 
             }
             return result;
         }
 
+        [Authorize]
+        public FileResult Download()
+        {
+            if (!IsSetCookies()) return null;
+            String idEngine = Request.Params["id"];
+            String dateReportStart = Request.Params["dateStart"];
+            String dateReportFinish = Request.Params["dateFinish"];
+
+            DateTime FD, TD;
+            string format = "dd.MM.yyyy";
+            DateTime.TryParseExact(dateReportStart, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out FD);
+            DateTime.TryParseExact(dateReportFinish, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out TD);
+
+            FileResult result = null;
+            if (idEngine != "" && idEngine != null)
+            {
+                List<DateTime> dates = PrepareDatesEngineState(Int32.Parse(idEngine), dateReportStart, dateReportFinish);
+                List<EngineState> EngineStates = GetListEngineState(Int32.Parse(idEngine), dates);
+                result = PrepareFileDownload(idEngine, EngineStates);
+            }
+            return result;
+        }
+
+        #region Graph
         private DotNet.Highcharts.Highcharts Graph(Int32 idEngine)
         {
-            DateTime dateStart = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? DateTime.Parse(Request.Params["dateStart"]) : new DateTime();
-            DateTime dateFinish = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? DateTime.Parse(Request.Params["dateFinish"]) : new DateTime();
+            DateTime FD, TD;
+            string format = "dd.MM.yyyy";
+            DateTime.TryParseExact(Request.Params["dateStart"], format, CultureInfo.InvariantCulture, DateTimeStyles.None, out FD);
+            DateTime.TryParseExact(Request.Params["dateFinish"], format, CultureInfo.InvariantCulture, DateTimeStyles.None, out TD);
+
+            DateTime dateStart = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? FD/*DateTime.Parse(Request.Params["dateStart"])*/ : new DateTime();
+            DateTime dateFinish = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? TD/*DateTime.Parse(Request.Params["dateFinish"])*/ : new DateTime();
+
             if (dateStart > dateFinish) return null;
             Dictionary<String, String> data = PrepareDataGraph(dateStart, dateFinish, idEngine);
             DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
@@ -108,9 +139,10 @@ namespace Talas.Controllers
             })
             .SetYAxis(new YAxis
             {
-                Title = new YAxisTitle() { Text = "Insulation Resistance,kOhm" , Style = "color: '#000000'" },
+                Title = new YAxisTitle() { Text = "Insulation Resistance,kOhm", Style = "color: '#000000'" },
                 Min = 0,
-                MinTickInterval=500,
+                MinTickInterval = 500,
+                Max = 10000,
                 GridLineWidth = 0,
                 AlternateGridColor = null,
                 LineColor = Color.Black,
@@ -119,14 +151,14 @@ namespace Talas.Controllers
                                     new YAxisPlotBands { From = 1100, To = 10000, Color= Color.FromArgb(100,Color.Green)}},
                 GridLineColor = Color.Black,
                 TickColor = Color.Black,
-                Labels = new YAxisLabels{ Style= "color: '#000000'" }
-        })
+                Labels = new YAxisLabels { Style = "color: '#000000'" }
+            })
             .SetSeries(new Series
             {
-                PlotOptionsBar = new PlotOptionsBar { ShowInLegend=false},
+                PlotOptionsBar = new PlotOptionsBar { ShowInLegend = false },
                 Name = "Insulation Resistance",
                 Data = new Data(Array.ConvertAll(data.Values.ToArray(), element => (object)element)),
-                Color = Color.FromArgb(209,209,209),
+                Color = Color.FromArgb(209, 209, 209),
                 PlotOptionsSeries = new PlotOptionsSeries
                 {
                     Marker = new PlotOptionsSeriesMarker
@@ -135,7 +167,7 @@ namespace Talas.Controllers
                         LineWidth = 2,
                         LineColor = Color.White
                     }
-                },             
+                },
             })
             .SetTooltip(new Tooltip
             {
@@ -149,33 +181,15 @@ namespace Talas.Controllers
             return chart;
         }
 
-        [Authorize]
-        public FileResult Download()
-        {
-            if (!IsSetCookies()) return null;
-            String idEngine = Request.Params["id"];
-            String dateReportStart = Request.Params["dateStart"];
-            String dateReportFinish = Request.Params["dateFinish"];
-            FileResult result = null;
-            if (idEngine != "" && idEngine != null)
-            {
-                List<DateTime> dates = PrepareDatesEngineState(Int32.Parse(idEngine), dateReportStart, dateReportFinish);
-                List<EngineState> EngineStates = GetListEngineState(Int32.Parse(idEngine), dates);
-                result = PrepareFileDownload(idEngine, EngineStates);
-            }
-            return result;
-        }
-
-        #region Graph
         private Dictionary<String, String> PrepareDataGraph(DateTime dateStart, DateTime dateFinish, Int32 idEngine)
         {
             Dictionary<String, String> result;
             using (AppContext db = new AppContext())
             {
                 if (dateStart == DateTime.MinValue || dateFinish == DateTime.MinValue)
-                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Id).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Id).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
+                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Date).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Date).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
                 else
-                    result = db.Statistics.Where(st => st.EngineId == idEngine && st.Date <= dateFinish && st.Date >= dateStart).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());                             
+                    result = db.Statistics.Where(st => st.EngineId == idEngine && st.Date <= dateFinish && st.Date >= dateStart).OrderBy(st => st.Date).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());                             
             }
             if (result.Count > NUMBERS_FOR_GRAPHICS)
             {
@@ -205,7 +219,7 @@ namespace Talas.Controllers
                 }
                 else
                 {
-                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Id).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Id).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
+                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Date).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Date).ToDictionary(st => ConvertDate(st.Date), st => st.Value.ToString());
                 }
             }
             return result;
@@ -345,14 +359,20 @@ namespace Talas.Controllers
           
         private List<DateTime> PrepareDatesEngineState(Int32 idEngine, String dateReportStart, String dateReportFinish)
         {
-            List <DateTime> result = new List<DateTime>();       
+            List <DateTime> result = new List<DateTime>();
             DateTime dateLastState;
+
+            DateTime FD, TD;
+            string format = "dd.MM.yyyy";
+            DateTime.TryParseExact(dateReportStart, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out FD);
+            DateTime.TryParseExact(dateReportFinish, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out TD);
+
             using (AppContext db = new AppContext())
             {
                  dateLastState = db.EngineStates.Where(es => es.EngineId == idEngine).Max(es => es.Date).Date;
             }
-            DateTime dateFirst = dateReportStart != ""  && dateReportStart != null ? DateTime.Parse(dateReportStart) : dateLastState;
-            DateTime dateSecond = dateReportFinish != "" && dateReportFinish != null ? DateTime.Parse(dateReportFinish) : dateLastState.AddDays(1);
+            DateTime dateFirst = dateReportStart != ""  && dateReportStart != null ? FD/*DateTime.Parse(dateReportStart)*/ : dateLastState;
+            DateTime dateSecond = dateReportFinish != "" && dateReportFinish != null ? TD/*DateTime.Parse(dateReportFinish)*/ : dateLastState.AddDays(1);
             result.Add(dateFirst);
             result.Add(dateSecond);
             return result;
@@ -361,8 +381,14 @@ namespace Talas.Controllers
         private List<DateTime>  PrepareDatesMessage()
         {
             List<DateTime> result = new List<DateTime>();
-            DateTime dateFirst = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? DateTime.Parse(Request.Params["dateStart"]) : DateTime.Today.AddDays(-NUMBERS_FOR_GRAPHICS);
-            DateTime dateSecond = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? DateTime.Parse(Request.Params["dateFinish"]) : DateTime.Today;
+
+            DateTime FD, TD;
+            string format = "dd.MM.yyyy";
+            DateTime.TryParseExact(Request.Params["dateStart"], format, CultureInfo.InvariantCulture, DateTimeStyles.None, out FD);
+            DateTime.TryParseExact(Request.Params["dateFinish"], format, CultureInfo.InvariantCulture, DateTimeStyles.None, out TD);
+
+            DateTime dateFirst = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? FD /*DateTime.Parse(Request.Params["dateStart"])*/ : DateTime.Today.AddDays(-NUMBERS_FOR_GRAPHICS);
+            DateTime dateSecond = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? TD/* DateTime.Parse(Request.Params["dateFinish"]) */: DateTime.Today;
             result.Add(dateFirst);
             result.Add(dateSecond);
             return result;
@@ -374,7 +400,7 @@ namespace Talas.Controllers
             DateTime dateFisrt = datesStates[0], dateSecond = datesStates[1];
             using (AppContext db = new AppContext())
             {
-                listStates = db.EngineStates.Where(es => es.EngineId == idEngine && es.Date >= dateFisrt && es.Date < dateSecond).OrderByDescending(es => es.Date).ToList();
+                listStates = db.EngineStates.Where(es => es.EngineId == idEngine && es.Date >= dateFisrt && es.Date <= dateSecond).OrderByDescending(es => es.Date).ToList();
             }
             return listStates;
         }
@@ -397,29 +423,50 @@ namespace Talas.Controllers
                     listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e=>e.Id).ToList();
                 }
 
-                events = db.Events
-                                          .Include("Message")
-                                          .Include("EngineState")
-                                          .Include("EngineState.Engine")
-                                          .Where(e => listEngineId.Contains(e.EngineState.EngineId) && e.Date >= dateFirst && e.Date <= dateSecond).ToList();
-                                          
-                                          //.OrderBy(e => e, eventComparer)
-                                          //.OrderByDescending(e => e.IsNew)                                                                                 
-                       //  select e;
+                events = db.Events.Where(e => listEngineId.Contains(e.EngineId) && e.Date >= dateFirst && e.Date <= dateSecond).ToList();
                 events.Sort(eventComparer);
                 foreach (Event ev in events)
-                {                   
-                    listEventModels.Add(new EventModel(ev.EngineState.Engine.Name, ev.Date, ev.Message.Text,ev.IsNew));
+                {
+                    Engine engine = db.Engines.Where(en => en.Id == ev.EngineId).FirstOrDefault();
+                    String engineName = engine != null ? engine.Name:String.Empty;
+                    Message message = db.Messages.Where(m => m.Id == ev.MessageId).FirstOrDefault();
+                    String messageText = message != null ? message.Text : String.Empty;
+                    listEventModels.Add(new EventModel(engineName, ev.Date, messageText, ev.IsNew));
                     if (idEngine==-1 && ev.IsNew)
                     {
                         db.Entry(ev).Entity.IsNew = false;
-                        //db.Entry(player).State = EntityState.Modified;
                         db.SaveChanges();
                     }
                 }
-            }
-            
+            }           
             return listEventModels;
+        }
+
+        [Authorize]
+        public void GetStatistic(Int32 engineId, String dateStart, String dateFinish)
+        {
+            DateTime periodStart = dateStart != "" && dateStart != null ? DateTime.Parse(dateStart) : new DateTime();
+            DateTime periodFinish = dateFinish != "" && dateFinish != null ? DateTime.Parse(dateFinish) : new DateTime();
+            Double averageValue;
+            using (AppContext db = new AppContext())
+            {
+                while (periodStart <= periodFinish)
+                {
+                    if (!db.Statistics.Any(x => x.EngineId == engineId && x.Date == periodStart))
+                    {
+                        DateTime endDay = periodStart.AddDays(1).AddMilliseconds(-1);
+                        List<Int16> listValues = db.EngineStates.Where(s => s.EngineId == engineId && s.Date >= periodStart && s.Date <= endDay).Select(es => es.Value).ToList();
+                        if (listValues.Count != 0)
+                        {
+                            averageValue = listValues.Average(x => x);
+                            db.Statistics.Add(new Statistic(periodStart, (short)averageValue, engineId));
+                            db.SaveChanges();
+                        }
+                    }
+                    periodStart = periodStart.AddDays(1);
+                }
+
+            }  
         }
 
     }

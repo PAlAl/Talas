@@ -10,13 +10,10 @@
     }
 }
 
-@using (Ajax.BeginForm("", "", null, new AjaxOptions { UpdateTargetId = "content2", Url = link/*"/Engine/EngineStates?id=" + @Model.Id + "&mode=" */}, new { @class = "datepick text-left" }))
+@using (Ajax.BeginForm("", "", null, new AjaxOptions { UpdateTargetId = "content2", Url = link}, new { @class = "datepick text-left" }))
 {
-
-    
-
     <div class="row">
-        <div class="col-md-offset-3">   
+        <div class="col-md-offset-2">   
                 <div class="input-daterange input-group" id="datepickers">
                     <input type="text" id="datepicker" class="datepicker" name="dateStart"  placeholder="From"  onchange="datePickerChange()">
                     <input type="text" id="datepicker" class="datepicker" name="dateFinish" placeholder="To"  onchange="datePickerChange()">
@@ -34,8 +31,4 @@
                 </label>
             </div>
         </div>
-}
-
-@section Scripts {
-
 }

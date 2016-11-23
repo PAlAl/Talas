@@ -14,6 +14,7 @@ namespace Objects
         public Int32 EngineStateId { get; set; }
         public EngineState EngineState { get; set; }
         public DateTime Date { get; set; }
+        public Int32 EngineId { get; set; }
 
         public String DateString
         {

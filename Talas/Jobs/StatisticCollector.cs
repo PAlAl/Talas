@@ -21,14 +21,16 @@ namespace Talas.Jobs
                 listEnginesId = db.Engines.Select(e=>e.Id).ToList();
                 foreach (Int32 enId in listEnginesId)
                 {
-                    listValues = db.EngineStates.Where(es => es.EngineId==enId && es.Date>=date && es.Date<DateTime.Today).Select(es=>es.Value).ToList();
-                    if (listValues.Count != 0)
+                    if (!db.Statistics.Any(x => x.EngineId == enId && x.Date == date))
                     {
-                        averageValue = listValues.Average(x => x);
-                        db.Statistics.Add(new Statistic(date, (short)averageValue, enId));
-                        db.SaveChanges();
-                    }
-                    
+                        listValues = db.EngineStates.Where(es => es.EngineId == enId && es.Date >= date && es.Date < DateTime.Today).Select(es => es.Value).ToList();
+                        if (listValues.Count != 0)
+                        {
+                            averageValue = listValues.Average(x => x);
+                            db.Statistics.Add(new Statistic(date, (short)averageValue, enId));
+                            db.SaveChanges();
+                        }
+                    }                   
                 }
                 
             }
