@@ -388,7 +388,7 @@ namespace Talas.Controllers
             DateTime.TryParseExact(Request.Params["dateFinish"], format, CultureInfo.InvariantCulture, DateTimeStyles.None, out TD);
 
             DateTime dateFirst = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? FD /*DateTime.Parse(Request.Params["dateStart"])*/ : DateTime.Today.AddDays(-NUMBERS_FOR_GRAPHICS);
-            DateTime dateSecond = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? TD/* DateTime.Parse(Request.Params["dateFinish"]) */: DateTime.Today;
+            DateTime dateSecond = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? TD/* DateTime.Parse(Request.Params["dateFinish"]) */: DateTime.Today.AddDays(1);
             result.Add(dateFirst);
             result.Add(dateSecond);
             return result;

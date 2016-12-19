@@ -23,7 +23,7 @@ namespace Talas.Controllers
                 user = db.Users.FirstOrDefault(u => u.Id == id);
                 ViewBag.Greeting = user.Greeting;
                 ViewBag.UserName = user.Login;
-                ViewBag.Location = user.Login;
+                ViewBag.Location = string.IsNullOrEmpty(user.Location)?user.Login:user.Location;
             }
             return View();
         }
@@ -41,7 +41,10 @@ namespace Talas.Controllers
             using (AppContext db = new AppContext())
             {
                 user = db.Users.FirstOrDefault(u => u.Id == id);
-                user.Engines = db.Engines.Where(e => e.UserId == id).ToList();
+                if (user.Login == "General")
+                    user.Engines = db.Engines.ToList();
+                else
+                    user.Engines = db.Engines.Where(e => e.UserId == id).ToList();
             }
             return PartialView("~/views/Engine/Engine.cshtml", user.Engines);
         }
@@ -67,10 +70,14 @@ namespace Talas.Controllers
         {
             Int32 result = 0;
             List<Int32> listEngineId = new List<int>();
-            Int32 idUser = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);
+            Int32 idUser = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);          
             using (AppContext db = new AppContext())
             {
-                listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e => e.Id).ToList();
+                User user = db.Users.FirstOrDefault(u => u.Id == idUser);
+                if (user.Login == "General")
+                    listEngineId = db.Engines.Select(e => e.Id).ToList();
+                else
+                    listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e => e.Id).ToList();
                 /*IQueryable<Event> events = from e in db.Events
                                           .Include("EngineState")
                                           .Include("EngineState.Engine")
