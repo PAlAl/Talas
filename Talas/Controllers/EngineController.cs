@@ -409,7 +409,7 @@ namespace Talas.Controllers
         private List<EngineState> GetListEngineState(Int32 idEngine, List<DateTime> datesStates)
         {
             List<EngineState> listStates = null;
-            DateTime dateFisrt = datesStates[0], dateSecond = datesStates[1];
+            DateTime dateFisrt = datesStates[0], dateSecond = datesStates[1].AddHours(23).AddMinutes(59);
             using (AppContext db = new AppContext())
             {
                 listStates = db.EngineStates.Where(es => es.EngineId == idEngine && es.Date >= dateFisrt && es.Date <= dateSecond).OrderByDescending(es => es.Date).ToList();
