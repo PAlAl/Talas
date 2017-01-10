@@ -114,6 +114,7 @@ function hideDatePickForm() {
 function hideWorkInfo() {
     if (!$('#workInfo').hasClass("hidden"))
         $('#workInfo').addClass("hidden");
+    $('a:contains("GetMessages")').click();
 }
 
 function showWorkInfo() {

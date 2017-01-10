@@ -31,36 +31,48 @@ namespace Talas.Controllers
         {
             /*НЕТ ЗАЩИТЫ ОТ ЧУЖОГО ИДДВИЖКА*/
             Int32 idEngine = id;
+            List <EngineState> result = new List<EngineState>();
             if (!IsSetCookies()) return RedirectToAction("Login", "Account");
             if (Request.Params["viewType"] == "graph" && mode==3) return PartialView("~/views/Engine/Graph.cshtml", Graph(idEngine));
-            List<DateTime> dates = PrepareDatesEngineState(idEngine, Request.Params["dateStart"], Request.Params["dateFinish"]);          
-            ViewBag.Mode = mode;
-            switch (mode)
+            using (AppContext db = new AppContext())
             {
-                case 1:
-                    ViewBag.All = false;
-                    return PartialView("~/views/Engine/Event.cshtml", GetListEvent(idEngine));
-                case 2:
-                    ViewBag.ModeName = "Operation Hours";
-                    List<String> workTimes = GetWorkTimes(idEngine);
-                    ViewBag.WorkTimes = workTimes[0];
-                    ViewBag.NotWorkTimes = workTimes[1];
-                    break;
-                case 3:
-                    ViewBag.ModeName = "Insulation Resistance, kOhm";
-                    break;
-                case 4:
-                    ViewBag.ModeName = "Polarization Index";
-                    break;
-                case 5:
-                    ViewBag.ModeName = "Drying Mode";
-                    break;
-                case 6:
-                    ViewBag.ModeName = "Online";
-                    break;
-
+                if (db.EngineStates.Any(es => es.EngineId == idEngine))
+                {
+                    List<DateTime> dates = PrepareDatesEngineState(idEngine, Request.Params["dateStart"],Request.Params["dateFinish"]);
+                    ViewBag.Mode = mode;
+                    switch (mode)
+                    {
+                        case 1:
+                            ViewBag.All = false;
+                            return PartialView("~/views/Engine/Event.cshtml", GetListEvent(idEngine));
+                        case 2:
+                            ViewBag.ModeName = "Operation Hours";
+                            List<String> workTimes = GetWorkTimes(idEngine);
+                            ViewBag.WorkTimes = workTimes[0];
+                            ViewBag.NotWorkTimes = workTimes[1];
+                            break;
+                        case 3:
+                            ViewBag.ModeName = "Insulation Resistance, kOhm";
+                            break;
+                        case 4:
+                            ViewBag.ModeName = "Polarization Index";
+                            break;
+                        case 5:
+                            ViewBag.ModeName = "Drying Mode";
+                            break;
+                        case 6:
+                            ViewBag.ModeName = "Online";
+                            break;
+                    }
+                    result = GetListEngineState(idEngine, dates);
+                }
+                else
+                {
+                    ViewBag.ModeName = "No data from engine";
+                    ViewBag.Mode = mode;
+                }
             }
-            return PartialView(GetListEngineState(idEngine, dates));
+            return PartialView(result);
         }
 
         [Authorize]
@@ -420,7 +432,11 @@ namespace Talas.Controllers
                 else
                 {
                     Int32 idUser = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);
-                    listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e=>e.Id).ToList();
+                    User user = db.Users.FirstOrDefault(u => u.Id == idUser);
+                    if (user.Login == "General")
+                        listEngineId = db.Engines.Select(e => e.Id).ToList();
+                    else
+                        listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e=>e.Id).ToList();
                 }
 
                 events = db.Events.Where(e => listEngineId.Contains(e.EngineId) && e.Date >= dateFirst && e.Date <= dateSecond).ToList();
