@@ -424,6 +424,7 @@ namespace Talas.Controllers
             List<Int32> listEngineId = new List<int>();
             List<DateTime> dates = PrepareDatesMessage();
             DateTime dateFirst= dates[0], dateSecond= dates[1];
+            User user = null;
             using (AppContext db = new AppContext())
             {
                 EventComparer eventComparer = new EventComparer();
@@ -432,7 +433,7 @@ namespace Talas.Controllers
                 else
                 {
                     Int32 idUser = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);
-                    User user = db.Users.FirstOrDefault(u => u.Id == idUser);
+                    user = db.Users.FirstOrDefault(u => u.Id == idUser);
                     if (user.Login == "General")
                         listEngineId = db.Engines.Select(e => e.Id).ToList();
                     else
@@ -448,7 +449,7 @@ namespace Talas.Controllers
                     Message message = db.Messages.Where(m => m.Id == ev.MessageId).FirstOrDefault();
                     String messageText = message != null ? message.Text : String.Empty;
                     listEventModels.Add(new EventModel(engineName, ev.Date, messageText, ev.IsNew));
-                    if (idEngine==-1 && ev.IsNew)
+                    if (idEngine==-1 && ev.IsNew && (user==null || user.Login!= "General"))
                     {
                         db.Entry(ev).Entity.IsNew = false;
                         db.SaveChanges();

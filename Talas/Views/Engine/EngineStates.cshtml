@@ -3,6 +3,7 @@
 @{  
     const string valueON = "ON";
     const string valueOFF = "OFF";
+    const string valueHigh = "High";
 }
 
 <div class="pre-scrollable engineStates">
@@ -32,7 +33,7 @@
                                     @((bool)es.Work ? valueON : valueOFF)
                                     break;
                                 case 3:
-                                    @es.Value
+                                    @(es.Value> 8000 ? valueHigh: es.Value.ToString())
                                     break;
                                 case 4:
                                     @((es.R60!=null && es.R30!=null) ? (float)es.R60 / (float)es.R30 : 0)

@@ -24,6 +24,7 @@ namespace Talas.Controllers
                 ViewBag.Greeting = user.Greeting;
                 ViewBag.UserName = user.Login;
                 ViewBag.Location = string.IsNullOrEmpty(user.Location)?user.Login:user.Location;
+                ViewBag.IsGeneral = user.Login == "General" ?"1" : "0";
             }
             return View();
         }
