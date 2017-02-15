@@ -18,6 +18,7 @@ namespace Objects
         public ICollection<Statistic> Statistic { get; set; }        
         public Int32 UserId { get; set; }
         public User User { get; set; }
+        public Boolean IsDelete { get; set; }
 
         public String ManufactureDateString
         {

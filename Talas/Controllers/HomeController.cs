@@ -43,9 +43,9 @@ namespace Talas.Controllers
             {
                 user = db.Users.FirstOrDefault(u => u.Id == id);
                 if (user.Login == "General")
-                    user.Engines = db.Engines.ToList();
+                    user.Engines = db.Engines.Where(x=>!x.IsDelete).ToList();
                 else
-                    user.Engines = db.Engines.Where(e => e.UserId == id).ToList();
+                    user.Engines = db.Engines.Where(e => e.UserId == id && !e.IsDelete).ToList();
             }
             return PartialView("~/views/Engine/Engine.cshtml", user.Engines);
         }
@@ -76,9 +76,9 @@ namespace Talas.Controllers
             {
                 User user = db.Users.FirstOrDefault(u => u.Id == idUser);
                 if (user.Login == "General")
-                    listEngineId = db.Engines.Select(e => e.Id).ToList();
+                    listEngineId = db.Engines.Where(e=>!e.IsDelete).Select(e => e.Id).ToList();
                 else
-                    listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e => e.Id).ToList();
+                    listEngineId = db.Engines.Where(e => e.UserId == idUser && !e.IsDelete).Select(e => e.Id).ToList();
                 /*IQueryable<Event> events = from e in db.Events
                                           .Include("EngineState")
                                           .Include("EngineState.Engine")

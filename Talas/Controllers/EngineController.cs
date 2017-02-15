@@ -435,9 +435,9 @@ namespace Talas.Controllers
                     Int32 idUser = Int32.Parse(HttpContext.Request.Cookies["Talas"].Value);
                     user = db.Users.FirstOrDefault(u => u.Id == idUser);
                     if (user.Login == "General")
-                        listEngineId = db.Engines.Select(e => e.Id).ToList();
+                        listEngineId = db.Engines.Where(e=>!e.IsDelete).Select(e => e.Id).ToList();
                     else
-                        listEngineId = db.Engines.Where(e => e.UserId == idUser).Select(e=>e.Id).ToList();
+                        listEngineId = db.Engines.Where(e => e.UserId == idUser && !e.IsDelete).Select(e=>e.Id).ToList();
                 }
 
                 events = db.Events.Where(e => listEngineId.Contains(e.EngineId) && e.Date >= dateFirst && e.Date <= dateSecond).ToList();

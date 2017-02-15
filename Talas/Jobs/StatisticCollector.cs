@@ -18,7 +18,7 @@ namespace Talas.Jobs
             DateTime date = DateTime.Today.AddDays(-1);
             using (AppContext db = new AppContext())
             {
-                listEnginesId = db.Engines.Select(e=>e.Id).ToList();
+                listEnginesId = db.Engines.Where(e=>!e.IsDelete).Select(e=>e.Id).ToList();
                 foreach (Int32 enId in listEnginesId)
                 {
                     if (!db.Statistics.Any(x => x.EngineId == enId && x.Date == date))
