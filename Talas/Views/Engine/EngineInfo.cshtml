@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col-md-5 CharOverride-30 text-left motorName">
-        Motor @Model.Name <br /><div class="CharOverride-12">Pulp Dryer, Fan</div>
+        Motor @Model.Name <br /><div class="CharOverride-12">@(Model.Form!=null? Model.Form:"Pulp Dryer, Fan")</div>
     </div>
     <div class="col-md-7" id="_idContainer004">       
         @{Html.RenderPartial("DatePicker");}

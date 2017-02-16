@@ -19,6 +19,8 @@ namespace Objects
         public Int32 UserId { get; set; }
         public User User { get; set; }
         public Boolean IsDelete { get; set; }
+        public String Form { get; set; }
+        public Int32 Order { get; set; }
 
         public String ManufactureDateString
         {

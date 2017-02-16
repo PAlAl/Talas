@@ -43,9 +43,9 @@ namespace Talas.Controllers
             {
                 user = db.Users.FirstOrDefault(u => u.Id == id);
                 if (user.Login == "General")
-                    user.Engines = db.Engines.Where(x=>!x.IsDelete).ToList();
+                    user.Engines = db.Engines.Where(x=>!x.IsDelete).OrderBy(x=>x.Order).ToList();
                 else
-                    user.Engines = db.Engines.Where(e => e.UserId == id && !e.IsDelete).ToList();
+                    user.Engines = db.Engines.Where(e => e.UserId == id && !e.IsDelete).OrderBy(x => x.Order).ToList();
             }
             return PartialView("~/views/Engine/Engine.cshtml", user.Engines);
         }
