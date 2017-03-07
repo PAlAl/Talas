@@ -335,6 +335,7 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\TalasJSIsClamp.js" />
     <Content Include="Scripts\TalasJS.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -364,6 +365,9 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Home\Ind.cshtml" />
+    <Content Include="Views\Home\IndexClamp.cshtml" />
+    <Content Include="Views\Engine\EngineClamp.cshtml" />
+    <Content Include="Views\Engine\DownButtonsClamp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -30,19 +30,26 @@
                             @switch ((Byte)ViewBag.Mode)
                             {
                                 case 2:
-                                    @((bool)es.Work ? valueON : valueOFF)
+                                    @((es.Work == null)? valueOFF: (bool)es.Work ? valueON : valueOFF)
                                     break;
                                 case 3:
-                                    @(es.Value> 8000 ? valueHigh: es.Value.ToString())
+                                    if (ViewBag.IsClamp)
+                                     {
+                                        @(es.LeakageCurrent)
+                                     }
+                                     else
+                                     {
+                                         @(es.Value > 8000 ? valueHigh : es.Value.ToString())
+                                     }
                                     break;
-                                case 4:
+                                    case 4:
                                     @((es.R60!=null && es.R30!=null) ? (float)es.R60 / (float)es.R30 : 0)
                                     break;
-                                case 5:
+                                    case 5:
                                     @((bool)es.Status ? valueON : valueOFF)
                                     break;
-                                case 6:
-                                    @((bool)es.Status_M ? valueON : valueOFF)
+                                    case 6:
+                                    @( es.Status_M == null ? valueOFF:(bool)es.Status_M ? valueON : valueOFF)
                                     break;
                             }
                         </span>
@@ -56,7 +63,7 @@
                             <span>@es.R60</span>
                         </td>
                         <td>
-                            <span>@es.R60</span>
+                            <span>@es.Ravg</span>
                         </td>
                     }
                 </tr>

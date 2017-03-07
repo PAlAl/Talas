@@ -36,6 +36,7 @@ namespace Talas.Controllers
             if (Request.Params["viewType"] == "graph" && mode==3) return PartialView("~/views/Engine/Graph.cshtml", Graph(idEngine));
             using (AppContext db = new AppContext())
             {
+                Engine eng = db.Engines.FirstOrDefault(x => x.Id == idEngine);
                 if (db.EngineStates.Any(es => es.EngineId == idEngine))
                 {
                     List<DateTime> dates = PrepareDatesEngineState(idEngine, Request.Params["dateStart"],Request.Params["dateFinish"]);
@@ -52,7 +53,8 @@ namespace Talas.Controllers
                             ViewBag.NotWorkTimes = workTimes[1];
                             break;
                         case 3:
-                            ViewBag.ModeName = "Insulation Resistance, kOhm";
+                            ViewBag.IsClamp = eng == null ? false : eng.IsClamp;
+                            ViewBag.ModeName = ViewBag.IsClamp? "Leakage Current, A" : "Insulation Resistance, kOhm";
                             break;
                         case 4:
                             ViewBag.ModeName = "Polarization Index";
@@ -325,7 +327,7 @@ namespace Talas.Controllers
             DateTime lastDate=new DateTime();
             using (AppContext db = new AppContext())
             {
-                var workTimes = db.EngineStates.Where(es => es.EngineId == idEngine).OrderBy(es => es.Date).Select(es=>new {IsWork = es.Work,Date = es.Date });
+                var workTimes = db.EngineStates.Where(es => es.EngineId == idEngine).OrderBy(es => es.Date).Select(es=>new {IsWork = (es.Work == null?false:es.Work),Date = es.Date });
                 foreach (var work in workTimes)
                 {
                     if (lastDate == DateTime.MinValue)

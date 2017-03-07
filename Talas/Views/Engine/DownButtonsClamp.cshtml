@@ -1,0 +1,13 @@
+﻿<div class="row buttons"  id="buttons1">
+        <ul class="nav nav-stacked callOnChanheDatePicker">
+            <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
+                @Ajax.ActionLink("Operation" + "\n" + "Hours", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=2", OnSuccess = "onSuccess(2)" })
+            </li>
+            <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
+                @Ajax.ActionLink("Leakage" + "\n" + " Current", "", new AjaxOptions {HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=3", OnSuccess = "onSuccess(3)"})
+            </li>
+            <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
+                @Ajax.ActionLink("Data Transfer" + "\n" + " History", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=6", OnSuccess = "onSuccess(6)" })
+            </li>
+        </ul>
+    </div>

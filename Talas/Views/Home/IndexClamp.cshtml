@@ -1,0 +1,69 @@
+﻿@using Objects
+
+@{
+    ViewBag.Title = "Main Page";
+}
+
+<div id="isGeneral" style="display: none">@ViewBag.IsGeneral</div>
+<div class="row main">
+    <div class="col-md-2 text-left">
+        <img src="~/Content/images/Logo.png" />
+    </div>
+    <div class="col-md-8">
+        <span class="CharOverride-36">@ViewBag.Greeting</span>
+    </div>
+
+    <div class="col-md-2">
+        <button id="usermenu" type="button" data-toggle="dropdown" class="btn btn-user dropdown-toggle"><span class="caret"></span> @ViewBag.UserName </button>
+        <ul class="dropdown-menu usermenu">
+            <li>
+                <a href="#">Settings</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                @Html.ActionLink("Log out", "Logoff", "Account")
+            </li>
+        </ul>
+    </div>
+
+</div>
+<div class="row main-body">
+    <div class="col-md-2" style="padding-top:25px">
+        <ul class="nav nav-stacked">
+            <li class="buttonNav">
+                @Ajax.ActionLink("Dashboard", "Index", new AjaxOptions { UpdateTargetId = "content", Url = "/Home/Engine", OnSuccess = "hideWorkInfo()" })
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-8 tables top-to-bottom-line" id="content" style="padding-top:25px">
+
+    </div>
+
+    <div class="col-md-2 text-left CharOverride-32" style="padding-top:25px">
+        Location <br />
+        <p class="CharOverride-16">@ViewBag.Location</p>
+        <div class="hidden CharOverride-16" id="workInfo">
+            <p class="CharOverride-14">Total Operating Hours</p>
+            <div class="timeWork" id="work"></div>
+            <p class="CharOverride-14">Stand by Hours</p>
+            <div class="timeWork" id="notWork"></div>
+        </div>
+    </div>
+
+</div>
+
+@section Footer{
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.js")
+    @Scripts.Render("~/Scripts/TalasJSIsClamp.js")
+    @Scripts.Render("~/Scripts/Highcharts-4.0.1/js/highcharts.js")
+}
+
+
+
+
+
+

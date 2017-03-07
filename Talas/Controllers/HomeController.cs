@@ -21,10 +21,26 @@ namespace Talas.Controllers
             using (AppContext db = new AppContext())
             {
                 user = db.Users.FirstOrDefault(u => u.Id == id);
+                if (user!=null && user.IsClamp)
+                    return RedirectToAction("IndexClamp", new { id = id });
                 ViewBag.Greeting = user.Greeting;
                 ViewBag.UserName = user.Login;
                 ViewBag.Location = string.IsNullOrEmpty(user.Location)?user.Login:user.Location;
                 ViewBag.IsGeneral = user.Login == "General" ?"1" : "0";
+            }
+            return View();
+        }
+
+        public ActionResult IndexClamp(Int32 id)
+        {
+            User user = null;
+            using (AppContext db = new AppContext())
+            {
+                user = db.Users.FirstOrDefault(u => u.Id == id);
+                ViewBag.Greeting = user.Greeting;
+                ViewBag.UserName = user.Login;
+                ViewBag.Location = string.IsNullOrEmpty(user.Location) ? user.Login : user.Location;
+                ViewBag.IsGeneral = user.Login == "General" ? "1" : "0";
             }
             return View();
         }
@@ -47,7 +63,10 @@ namespace Talas.Controllers
                 else
                     user.Engines = db.Engines.Where(e => e.UserId == id && !e.IsDelete).OrderBy(x => x.Order).ToList();
             }
-            return PartialView("~/views/Engine/Engine.cshtml", user.Engines);
+            if (user.IsClamp)
+                return PartialView("~/views/Engine/EngineClamp.cshtml", user.Engines);
+            else
+                return PartialView("~/views/Engine/Engine.cshtml", user.Engines);
         }
 
         public JsonResult JsonGetInfo(string[] engines)

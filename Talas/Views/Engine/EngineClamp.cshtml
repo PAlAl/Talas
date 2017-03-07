@@ -1,0 +1,33 @@
+﻿@using Objects
+@model IEnumerable<Engine>
+
+<div class="scrollable">
+    <table class="table">
+        <caption class="CharOverride-32" style="padding:initial !important; color:#ffffff !important;text-align: left;">Dashboard</caption>
+        <thead>
+            <tr>
+                <th class="text-center">Electric<br />Motors</th>
+                <th class="text-center">Date<br />& Time</th>
+                <th class="text-center">Leakage Current<br />A</th>
+                <th class="text-center">Motor<br />Operating</th>
+                <th class="text-center">Online</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Engine e in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" name="id" value=@e.Id>                      
+                        @Ajax.ActionLink(@e.Name, "", new AjaxOptions { UpdateTargetId = "content", Url = "/Engine/Index/"+ @e.Id, OnSuccess = "hideDatePickForm(1)" })
+                    </td>
+                    <td><span name="Date№@e.Id" class="">00</span></td>
+                    <td><span name="Value№@e.Id" class="">00</span></td>
+                    <td><span name="Work№@e.Id" class="">00</span></td>
+                    <td><span name="Status№@e.Id" class="">00</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

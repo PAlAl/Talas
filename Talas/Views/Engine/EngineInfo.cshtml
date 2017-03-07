@@ -11,6 +11,7 @@
 </div>
 
 <div class="row" id="content2">
+    @Html.HiddenFor(x => x.IsClamp)
     <div class="col-md-6">
         <table class="tableInfoEngine text-left">
             <tr class="border_bottom">
@@ -41,13 +42,18 @@
                 <input id="datepicker" class="text-center  datepicker" type="text" name="dateStart" placeholder="From"  />
                 <input id="datepicker" class="text-center  datepicker" type="text" name="dateFinish" placeholder="To"  />
             </span>
-            @Html.HiddenFor(x=>x.Id)
+            @Html.HiddenFor(x => x.Id)
             <button type="submit" class="btn btn-user btn-download">Download Report</button>
         </form>
     </div>
 </div>
 
-@Html.Partial("~/Views/Engine/DownButtons.cshtml")
+@if (Model.IsClamp) { 
+    @Html.Partial("~/Views/Engine/DownButtonsClamp.cshtml")}
+else{
+@Html.Partial("~/Views/Engine/DownButtons.cshtml")}
+
+
 
 <script>
     $(document).ready(function () {

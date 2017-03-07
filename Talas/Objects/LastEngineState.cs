@@ -32,5 +32,31 @@ namespace Objects
                 return Date.ToString("dd.MM.yyyy HH:mm:ss");
             }
         }
+
+        public Double LeakageCurrent
+        {
+            get
+            {
+                Double result = 0;
+                if (R60.HasValue && R30.HasValue && Ravg.HasValue)
+                    switch (R30)
+                    {
+                        case 11:
+                            result = (Double)R60.Value / 10 + (Double)Ravg.Value / 1000;
+                            break;
+                        case 10:
+                            result = ((Double)R60.Value / 10 + (Double)Ravg.Value / 1000) / 1000;
+                            break;
+                        case 2:
+                            result = ((Double)R60.Value + ((Double)Ravg.Value / 100)) / 1000;
+                            break;
+                        case 4:
+                            result = ((Double)R60.Value * 10 + (Double)Ravg.Value / 10) / 1000;
+                            break;
+                    }
+
+                return result;
+            }
+        }
     }
 }

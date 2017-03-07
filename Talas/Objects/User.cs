@@ -15,6 +15,7 @@ namespace Objects
         public String Salt { get; set; }
         public DateTime LastVisited { get; set; }
         public String Location { get; set; }
+        public Boolean IsClamp { get; set; }
         public ICollection<Engine> Engines { get; set; }
     }
 
