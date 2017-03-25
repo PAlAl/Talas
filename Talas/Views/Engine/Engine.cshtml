@@ -1,7 +1,7 @@
 ﻿@using Objects
 @model IEnumerable<Engine>
 
-<div class="scrollable">
+<div class="scrollable" style="max-height: 50%">
     <table class="table">
         <caption class="CharOverride-32" style="padding:initial !important; color:#ffffff !important;text-align: left;">Dashboard</caption>
         <thead>
@@ -32,7 +32,7 @@
 </div>
 <div class="row text-left CharOverride-32" style="margin-left:5px">Alerts & Notification</div>
 @Ajax.ActionLink("GetMessages", "","",new AjaxOptions { UpdateTargetId = "contentMessage", Url = "/Engine/Messages?showAll=0" },new { @class = "hide" })
-<div id="contentMessage">
+<div id="contentMessage" class="pre-scrollable" style="max-height: 40%">
 
 </div>
 <!--

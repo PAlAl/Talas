@@ -45,6 +45,7 @@ namespace Talas.Controllers
                     {
                         case 1:
                             ViewBag.All = false;
+                            ViewBag.Main = false;
                             return PartialView("~/views/Engine/Event.cshtml", GetListEvent(idEngine));
                         case 2:
                             ViewBag.ModeName = "Operation Hours";
@@ -85,14 +86,17 @@ namespace Talas.Controllers
             {
                 case 1:
                     ViewBag.All = true;
+                    ViewBag.Main = false;
                     result = View("~/views/Engine/EventAll.cshtml", GetListEvent(-1));
                     break;
                 case 2:
                     ViewBag.All = true;
+                    ViewBag.Main = false;
                     result = PartialView("~/views/Engine/Event.cshtml", GetListEvent(-1));
                     break;
                 default:
                     ViewBag.All = true;
+                    ViewBag.Main = true;
                     result = View("~/views/Engine/Event.cshtml", GetListEvent(0));
                     break;
 
