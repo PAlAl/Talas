@@ -137,7 +137,8 @@ function showEnginesDispatching() {
                     if (element != null) {
                         var id = element.EngineId;
                         $('[name = Date№' + id + ']').text(element.DateString);
-                        $('[name = Value№' + id + ']').text(element.LeakageCurrent);
+                        //$('[name = Value№' + id + ']').text(element.LeakageCurrent);
+                        $('[name = Value№' + id + ']').text(element.Value);
                         $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work ? "ON" : "OFF");
                         $('[name = Status№' + id + ']').text(element.Status_M == null ? 0 : element.Status_M ? "ON" : "OFF");
                     }

@@ -12,6 +12,10 @@
             <tr>
                 <th>Date & Time</th>
                 <th>@ViewBag.ModeName</th>
+                @if (ViewBag.IsClamp != null && ViewBag.IsClamp)
+                {
+                    <th>Instant Leakage Current, A</th>
+                }
                 @if ((Byte)ViewBag.Mode == 4)
                 {
                     <th>R30</th>
@@ -35,7 +39,7 @@
                                 case 3:
                                     if (ViewBag.IsClamp)
                                      {
-                                        @(es.LeakageCurrent)
+                                        @(es.Value)
                                      }
                                      else
                                      {
@@ -54,6 +58,12 @@
                             }
                         </span>
                     </td>
+                    @if (ViewBag.IsClamp != null && ViewBag.IsClamp)
+                    {
+                        <td>
+                            <span>@es.LeakageCurrent</span>
+                        </td>
+                    }
                     @if ((Byte)ViewBag.Mode==4)
                     {
                         <td>

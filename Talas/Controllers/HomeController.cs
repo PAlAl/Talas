@@ -80,7 +80,7 @@ namespace Talas.Controllers
                     foreach (string engine in engines)
                     {
                         id = Int32.Parse(engine);
-                        jsondata.Add(db.LastEngineStates.Where(es => es.EngineId == id).FirstOrDefault());
+                        jsondata.Add(db.LastEngineStates.FirstOrDefault(es => es.EngineId == id));
                     }
                 }
             }
