@@ -1,9 +1,12 @@
-﻿@model IEnumerable<Objects.EngineState>
+﻿@using System.Globalization
+@model IEnumerable<Objects.EngineState>
 
 @{  
     const string valueON = "ON";
     const string valueOFF = "OFF";
     const string valueHigh = "High";
+
+    const string formatClampValue = "0.0000000";
 }
 
 <div class="pre-scrollable engineStates">
@@ -39,7 +42,7 @@
                                 case 3:
                                     if (ViewBag.IsClamp)
                                      {
-                                        @(es.Value)
+                                        @(((double)es.Value/1000000).ToString(formatClampValue))
                                      }
                                      else
                                      {
@@ -61,7 +64,7 @@
                     @if (ViewBag.IsClamp != null && ViewBag.IsClamp)
                     {
                         <td>
-                            <span>@es.LeakageCurrent</span>
+                            <span>@es.LeakageCurrent.ToString(formatClampValue)</span>
                         </td>
                     }
                     @if ((Byte)ViewBag.Mode==4)
