@@ -139,7 +139,11 @@ function showEnginesDispatching() {
                     if (element != null) {
                         var id = element.EngineId;
                         $('[name = Date№' + id + ']').text(element.DateString);
-                        $('[name = Value№' + id + ']').text(element.Value == null ? 0 : (element.Value > 8000 ? "High" : element.Value));
+                        //$('[name = Value№' + id + ']').text(element.Value == null ? 0 : (element.Value > 8000 ? "High" : element.Value));
+                        if (element.Engine != null && element.Engine.IsClamp)
+                            $('[name = Value№' + id + ']').text(element.Value/1000000);
+                        else
+                            $('[name = Value№' + id + ']').text(element.Value == null ? 0 : (element.Value > 8000 ? "High" : element.Value));
                         $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work ? "ON" : "OFF");
                         $('[name = Status№' + id + ']').text(element.Status_M == null ? 0 : element.Status_M ? "ON" : "OFF");
                     }
