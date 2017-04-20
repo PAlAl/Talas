@@ -22,7 +22,7 @@ namespace Objects
         public String Form { get; set; }
         public Int32 Order { get; set; }
         public Boolean IsClamp { get; set; }
-        public Int16? NormalCurrent { get; set; }
+        public Int32? NormalCurrent { get; set; }
 
         public String ManufactureDateString
         {

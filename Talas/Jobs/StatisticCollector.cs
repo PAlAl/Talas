@@ -11,7 +11,7 @@ namespace Talas.Jobs
     {
         private List<Int32> listEnginesId;
         private Double averageValue;
-        private List<short> listValues;
+        private List<Int32> listValues;
         
         public void Execute(IJobExecutionContext context)
         {
@@ -27,7 +27,7 @@ namespace Talas.Jobs
                         if (listValues.Count != 0)
                         {
                             averageValue = listValues.Average(x => x);
-                            db.Statistics.Add(new Statistic(date, (short)averageValue, enId));
+                            db.Statistics.Add(new Statistic(date, (Int32)averageValue, enId));
                             db.SaveChanges();
                         }
                     }                   

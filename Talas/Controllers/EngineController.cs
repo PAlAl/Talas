@@ -475,11 +475,11 @@ namespace Talas.Controllers
                     if (!db.Statistics.Any(x => x.EngineId == engineId && x.Date == periodStart))
                     {
                         DateTime endDay = periodStart.AddDays(1).AddMilliseconds(-1);
-                        List<Int16> listValues = db.EngineStates.Where(s => s.EngineId == engineId && s.Date >= periodStart && s.Date <= endDay).Select(es => es.Value).ToList();
+                        List<Int32> listValues = db.EngineStates.Where(s => s.EngineId == engineId && s.Date >= periodStart && s.Date <= endDay).Select(es => es.Value).ToList();
                         if (listValues.Count != 0)
                         {
                             averageValue = listValues.Average(x => x);
-                            db.Statistics.Add(new Statistic(periodStart, (short)averageValue, engineId));
+                            db.Statistics.Add(new Statistic(periodStart, (Int32)averageValue, engineId));
                             db.SaveChanges();
                         }
                     }

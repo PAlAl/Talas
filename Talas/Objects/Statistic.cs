@@ -8,13 +8,13 @@ namespace Objects
         [Key]
         public Int32 Id { get; set; }      
         public DateTime Date { get; set; }
-        public Int16 Value { get; set; }
+        public Int32 Value { get; set; }
 
         public Int32 EngineId { get; set; }
         public Engine Engine { get; set; }
 
         public Statistic() { }
-        public Statistic(DateTime dateTime, Int16 value, Int32 engineId)
+        public Statistic(DateTime dateTime, Int32 value, Int32 engineId)
         {
             Date = dateTime;
             Value = value;
