@@ -160,16 +160,16 @@ namespace Talas.Controllers
                 Title = new YAxisTitle() { Text = "Insulation Resistance,MOhm", Style = "color: '#000000'" },             
                 Min = 0,
                 MinTickInterval = 1000,
-                Max = 10000,
+                Max = 25000,
                 GridLineWidth = 0,
                 AlternateGridColor = null,
                 LineColor = Color.Black,
                 PlotBands = new[] { new YAxisPlotBands { From=0,To=500, Color = Color.FromArgb(100,Color.Red)},
                                     new YAxisPlotBands { From = 500, To = 1100, Color=Color.FromArgb(100,Color.Orange)},
-                                    new YAxisPlotBands { From = 1100, To = 10000, Color= Color.FromArgb(100,Color.Green)}},
+                                    new YAxisPlotBands { From = 1100, To = 25000, Color= Color.FromArgb(100,Color.Green)}},
                 GridLineColor = Color.Black,
                 TickColor = Color.Black,
-                Labels = new YAxisLabels { Style = "color: '#000000'", Formatter = "function() {if (this.value < 8001){ return this.value/1000 +'M';} else {return 'High';} }" },
+                Labels = new YAxisLabels { Style = "color: '#000000'", Formatter = "function() {if (this.value < 20001){ return this.value/1000 +'M';} else {return 'High';} }" },
                 })
             .SetSeries(new Series
             {
@@ -191,7 +191,7 @@ namespace Talas.Controllers
             {
                 //Formatter =  "<b>{point.y:,.0f}%</b>"
                // Formatter = "function() {'sssss'}"
-                Formatter = " function() { var st; if (this.y < 8001) {st = this.y + ' MOhm';} else{ st= 'High';} return '<b>'+this.series.name +'</b><br/>'+  this.x +': '+ st;}"
+                Formatter = " function() { var st; if (this.y < 20001) {st = this.y + ' MOhm';} else{ st= 'High';} return '<b>'+this.series.name +'</b><br/>'+  this.x +': '+ st;}"
             });
             return chart;
         }
@@ -202,9 +202,9 @@ namespace Talas.Controllers
             using (AppContext db = new AppContext())
             {
                 if (dateStart == DateTime.MinValue || dateFinish == DateTime.MinValue)
-                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Date).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Date).ToDictionary(st => ConvertDate(st.Date), st => (st.Value<8000?st.Value.ToString():"9000"));
+                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Date).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Date).ToDictionary(st => ConvertDate(st.Date), st => (st.Value<20000?st.Value.ToString():"21000"));
                 else
-                    result = db.Statistics.Where(st => st.EngineId == idEngine && st.Date <= dateFinish && st.Date >= dateStart).OrderBy(st => st.Date).ToDictionary(st => ConvertDate(st.Date), st => (st.Value < 8000 ? st.Value.ToString() : "9000"));                             
+                    result = db.Statistics.Where(st => st.EngineId == idEngine && st.Date <= dateFinish && st.Date >= dateStart).OrderBy(st => st.Date).ToDictionary(st => ConvertDate(st.Date), st => (st.Value < 20000 ? st.Value.ToString() : "21000"));                             
             }
             if (result.Count > NUMBERS_FOR_GRAPHICS)
             {
