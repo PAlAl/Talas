@@ -1,0 +1,27 @@
+﻿<div class="row buttons" id="buttons1">
+    <ul class="nav nav-stacked callOnChanheDatePicker">
+        <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
+            @Ajax.ActionLink("Warings and" + "\n" + " Notifications", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=1", OnSuccess = "onSuccess(1)" })
+        </li>
+        <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
+            @Ajax.ActionLink("Operation" + "\n" + "Hours", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=2", OnSuccess = "onSuccess(2)" })
+        </li>
+        <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
+            @Ajax.ActionLink("Insulation" + "\n" + " Resistance", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=3", OnSuccess = "onSuccess(3)" })
+        </li>
+    </ul>
+
+</div>
+<div class="row buttons" id="buttons2">
+    <ul class="nav nav-stacked callOnChanheDatePicker">
+        <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
+            @Ajax.ActionLink("Polarization" + "\n" + " Index", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=4", OnSuccess = "onSuccess(4)" })
+        </li>
+        <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
+            @*@Ajax.ActionLink("Drying" + "\n" + " Actions", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=5", OnSuccess = "onSuccess(5)" })*@
+        </li>
+        <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
+            @Ajax.ActionLink("Data Transfer" + "\n" + " History", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=6", OnSuccess = "onSuccess(6)" })
+        </li>
+    </ul>
+</div>

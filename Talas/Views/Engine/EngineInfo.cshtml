@@ -12,6 +12,7 @@
 
 <div class="row" id="content2">
     @Html.HiddenFor(x => x.IsClamp)
+    @Html.HiddenFor(x => x.IsTes)
     <div class="col-md-6">
         <table class="tableInfoEngine text-left">
             <tr class="border_bottom">
@@ -48,10 +49,14 @@
     </div>
 </div>
 
-@if (Model.IsClamp) { 
-    @Html.Partial("~/Views/Engine/DownButtonsClamp.cshtml")}
-else{
-@Html.Partial("~/Views/Engine/DownButtons.cshtml")}
+@if (Model.IsClamp)
+{
+    @Html.Partial("~/Views/Engine/DownButtonsClamp.cshtml")
+}
+else
+{
+    @(Model.IsTes ? Html.Partial("~/Views/Engine/DownButtonsTes.cshtml") : Html.Partial("~/Views/Engine/DownButtons.cshtml"))
+}
 
 
 

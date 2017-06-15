@@ -55,10 +55,12 @@ namespace Talas.Controllers
                             break;
                         case 3:
                             ViewBag.IsClamp = eng == null ? false : eng.IsClamp;
-                            ViewBag.ModeName = ViewBag.IsClamp? "Leakage Current, A" : "Insulation Resistance, kOhm";
+                            ViewBag.IsTes = eng == null ? false : eng.IsTes;
+                            ViewBag.ModeName = ViewBag.IsClamp? "Leakage Current, A" : ViewBag.IsTes ? "Insulation Resistance, MOhm" : "Insulation Resistance, kOhm";
                             break;
                         case 4:
-                            ViewBag.ModeName = "Polarization Index";
+                            ViewBag.IsTes = eng == null ? false : eng.IsTes;
+                            ViewBag.ModeName = ViewBag.IsTes ? "Polarization Index R30" : "Polarization Index";
                             break;
                         case 5:
                             ViewBag.ModeName = "Drying Mode";

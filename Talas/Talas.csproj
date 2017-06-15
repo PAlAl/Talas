@@ -368,6 +368,7 @@
     <Content Include="Views\Home\IndexClamp.cshtml" />
     <Content Include="Views\Engine\EngineClamp.cshtml" />
     <Content Include="Views\Engine\DownButtonsClamp.cshtml" />
+    <Content Include="Views\Engine\DownButtonsTes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
