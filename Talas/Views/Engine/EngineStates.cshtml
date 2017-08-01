@@ -24,11 +24,11 @@
                     if (ViewBag.IsTes)
                     {
                         <th>Polarization Index R60</th>
+                        <th>DAR (R60/R30)</th>
                         <th>R0</th>
                     }
                     <th>R30</th>
                     <th>R60</th>
-                    <th>RAvg</th>
                 }
             </tr>
         </thead>
@@ -91,7 +91,10 @@
                         if (ViewBag.IsTes)
                         {/*Polarization Index R60*/
                             <td>
-                                <span>@((es.Value != null && es.R60 != null) ? (float)es.R60 / (float)es.Value : 0)</span>
+                                <span>@((es.Value != null && es.R60 != null) ? (float) es.R60/(float) es.Value : 0)</span>
+                            </td>
+                            <td>@*DAR (R60/R30)*@
+                                <span>@((es.R30 != null && es.R60 != null) ? (float)es.R60 / (float)es.R30 : 0)</span>
                             </td>
                             <td>@*R0*@
                                 <span>@es.Value</span>
@@ -102,9 +105,6 @@
                         </td>
                         <td>
                             <span>@es.R60</span>
-                        </td>
-                        <td>
-                            <span>@es.Ravg</span>
                         </td>
                     }
                 </tr>
