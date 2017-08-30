@@ -21,7 +21,7 @@
                     @Ajax.ActionLink("Drying" + "\n" + " Actions", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=5", OnSuccess = "onSuccess(5)" })
                 </li>
                 <li class="col-md-3 buttonNav" onclick="onActiveDownButtons(event)">
-                    @Ajax.ActionLink("Data Transfer" + "\n" + " History", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=6", OnSuccess = "onSuccess(6)" })
+                    @*@Ajax.ActionLink("Data Transfer" + "\n" + " History", "", new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "content2", Url = "/Engine/EngineStates?id=" + @Model.Id + "&mode=6", OnSuccess = "onSuccess(6)" })*@
                 </li>
             </ul>
     </div>
