@@ -148,7 +148,7 @@ function showEnginesDispatching() {
                                 $('[name = Value№' + id + ']').text(element.Value == null ? 0 : (element.Value > 20000 ? "High" : element.Value));
                         }
                         $('[name = Work№' + id + ']').text(element.Work == null ? 0 : element.Work ? "ON" : "OFF");
-                        $('[name = Status№' + id + ']').text(element.Status_M == null ? 0 : element.Status_M ? "ON" : "OFF");
+                        $('[name = Status№' + id + ']').text(element.Engine == null ? 0 : element.Engine.ModemStatus ? "ON" : "OFF");
                     }
                 }
             }

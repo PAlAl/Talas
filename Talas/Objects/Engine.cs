@@ -23,6 +23,8 @@ namespace Objects
         public Int32 Order { get; set; }
         public Boolean IsClamp { get; set; }
 
+        public Boolean ModemStatus { get; set; }
+
         public Boolean IsTes { get; set; }
         public Int32? NormalCurrent { get; set; }
 
