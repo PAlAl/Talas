@@ -143,7 +143,7 @@ function showEnginesDispatching() {
                             $('[name = Value№' + id + ']').text(element.Value / 1000000);
                         else {
                             if (element.Engine != null && element.Engine.IsTes)
-                                $('[name = Value№' + id + ']').text(element.Value == null ? 0 : (element.Value > 50000 ? "High" : element.Value));
+                                $('[name = Value№' + id + ']').text(element.Value == null ? 0 : (element.Value > 1000000 ? "High" : element.Value));
                             else
                                 $('[name = Value№' + id + ']').text(element.Value == null ? 0 : (element.Value > 20000 ? "High" : element.Value));
                         }
