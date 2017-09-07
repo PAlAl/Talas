@@ -22,6 +22,7 @@ namespace Objects
         public Int32? Ravg { get; set; }
         public Int32? R30 { get; set; }
         public Int32? R60 { get; set; }
+        public Int32? R5 { get; set; }
         public Int32 EngineId { get; set; }
         public Engine Engine { get; set; }
 
