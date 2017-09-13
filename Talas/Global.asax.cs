@@ -15,6 +15,7 @@ namespace Talas
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             CollectStatisticSheduler.Start();
+            MailSender.StartMailSenderWork();
         }
     }
 }

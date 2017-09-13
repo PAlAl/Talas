@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using Objects;
+using Talas.Objects;
 
 namespace Talas.Models
 {
@@ -12,6 +13,7 @@ namespace Talas.Models
             public DbSet<Event> Events { get; set; }
             public DbSet<Message> Messages { get; set; }
             public DbSet<LastEngineState> LastEngineStates { get; set; }
+            public DbSet<NewEmailsMessage> NewEmailsMessage { get; set; }
 
         public AppContext() : base("AzureConnection")
             { }

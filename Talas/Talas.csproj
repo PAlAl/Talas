@@ -151,6 +151,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Jobs\CollectStatisticSheduler.cs" />
+    <Compile Include="Jobs\MailSender.cs" />
     <Compile Include="Jobs\StatisticCollector.cs" />
     <Compile Include="Models\AppContext.cs" />
     <Compile Include="Models\EventModel.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Objects\Event.cs" />
     <Compile Include="Objects\EventComparer.cs" />
     <Compile Include="Objects\Message.cs" />
+    <Compile Include="Objects\NewEmailsMessage.cs" />
     <Compile Include="Objects\Statistic.cs" />
     <Compile Include="Objects\User.cs" />
     <Compile Include="Models\RegisterModel.cs" />
