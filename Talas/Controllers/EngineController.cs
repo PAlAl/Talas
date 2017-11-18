@@ -56,7 +56,7 @@ namespace Talas.Controllers
                         case 3:
                             ViewBag.IsClamp = eng == null ? false : eng.IsClamp;
                             ViewBag.IsTes = eng == null ? false : eng.IsTes;
-                            ViewBag.ModeName = ViewBag.IsClamp? "Leakage Current, A" : ViewBag.IsTes ? "Insulation Resistance, MOhm" : "Insulation Resistance, kOhm";
+                            ViewBag.ModeName = ViewBag.IsClamp? "Leakage Current, A" : ViewBag.IsTes ? "Insulation Resistance, kOhm" : "Insulation Resistance, kOhm";
                             break;
                         case 4:
                             ViewBag.IsTes = eng == null ? false : eng.IsTes;
