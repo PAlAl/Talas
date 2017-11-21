@@ -15,7 +15,13 @@
         <thead>
             <tr>
                 <th>Date & Time</th>
-                <th>@ViewBag.ModeName</th>
+                <th>
+                    @ViewBag.ModeName
+                    @if (ViewBag.IsClamp != null && ViewBag.IsClamp)
+                    {
+                        <h6>(Average 30s)</h6>
+                    }
+                </th>
                 @if (ViewBag.IsClamp != null && ViewBag.IsClamp)
                 {
                     <th>Instant Leakage Current, mA</th>

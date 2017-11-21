@@ -33,7 +33,22 @@ namespace Talas.Controllers
             Int32 idEngine = id;
             List <EngineState> result = new List<EngineState>();
             if (!IsSetCookies()) return RedirectToAction("Login", "Account");
-            if (Request.Params["viewType"] == "graph" && mode==3) return PartialView("~/views/Engine/Graph.cshtml", Graph(idEngine));
+            if (Request.Params["viewType"] == "graph" && mode == 3)
+            {
+                using (AppContext db = new AppContext())
+                {
+                    Engine eng = db.Engines.FirstOrDefault(x => x.Id == idEngine);
+
+                    if (eng.IsClamp)
+                    {
+                        return PartialView("~/views/Engine/Graph.cshtml", ClampGraph(idEngine));
+                    }
+                    else
+                    {
+                        return PartialView("~/views/Engine/Graph.cshtml", Graph(idEngine));
+                    }
+                }
+            }
             using (AppContext db = new AppContext())
             {
                 Engine eng = db.Engines.FirstOrDefault(x => x.Id == idEngine);
@@ -141,7 +156,7 @@ namespace Talas.Controllers
             DateTime dateFinish = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? TD/*DateTime.Parse(Request.Params["dateFinish"])*/ : new DateTime();
 
             if (dateStart > dateFinish) return null;
-            Dictionary<String, String> data = PrepareDataGraph(dateStart, dateFinish, idEngine);
+            Dictionary<String, String> data = PrepareDataGraph(dateStart, dateFinish, idEngine, 20000, "21000");
             DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
             .InitChart(new Chart { BackgroundColor = new BackColorOrGradient(System.Drawing.Color.Transparent) })
             .SetTitle(new Title
@@ -198,15 +213,115 @@ namespace Talas.Controllers
             return chart;
         }
 
-        private Dictionary<String, String> PrepareDataGraph(DateTime dateStart, DateTime dateFinish, Int32 idEngine)
+        private DotNet.Highcharts.Highcharts ClampGraph(Int32 idEngine)
+        {
+            DateTime FD, TD;
+            string format = "dd.MM.yyyy";
+            DateTime.TryParseExact(Request.Params["dateStart"], format, CultureInfo.InvariantCulture, DateTimeStyles.None, out FD);
+            DateTime.TryParseExact(Request.Params["dateFinish"], format, CultureInfo.InvariantCulture, DateTimeStyles.None, out TD);
+
+            DateTime dateStart = Request.Params["dateStart"] != "" && Request.Params["dateStart"] != null ? FD : new DateTime();
+            DateTime dateFinish = Request.Params["dateFinish"] != "" && Request.Params["dateFinish"] != null ? TD : new DateTime();
+
+            if (dateStart > dateFinish) return null;
+
+            Dictionary<String, String> data = PrepareDataGraph(dateStart, dateFinish, idEngine, 30, "31", true);
+
+            DotNet.Highcharts.Highcharts chart = new DotNet.Highcharts.Highcharts("chart")
+            .InitChart(new Chart { BackgroundColor = new BackColorOrGradient(System.Drawing.Color.Transparent) })
+            .SetTitle(new Title
+            {
+                Text = ""
+            })
+            .SetXAxis(new XAxis
+            {
+                Categories = data.Keys.ToArray(),
+                LineColor = Color.Black,
+                TickColor = Color.Black,
+                GridLineColor = Color.Black,
+                Labels = new XAxisLabels { Style = "color: '#000000'" },
+
+            })
+            .SetYAxis(new YAxis
+            {
+                Title = new YAxisTitle() { Text = "Leakage Current, mA", Style = "color: '#000000'" },
+                Min = 0,
+                MinTickInterval = 1,
+                Max = 35,
+                GridLineWidth = 0,
+                AlternateGridColor = null,
+                LineColor = Color.Black,
+                PlotBands = new[] { new YAxisPlotBands { From=0,To=10, Color = Color.FromArgb(100,Color.Red)},
+                                    new YAxisPlotBands { From = 10, To = 21, Color=Color.FromArgb(100,Color.Orange)},
+                                    new YAxisPlotBands { From = 21, To = 35, Color= Color.FromArgb(100,Color.Green)}},
+                GridLineColor = Color.Black,
+                TickColor = Color.Black,
+                Labels = new YAxisLabels { Style = "color: '#000000'", Formatter = "function() {if (this.value < 31){ return this.value +'mA';} else {return 'High';} }" },
+            })
+            .SetSeries(new Series
+            {
+                PlotOptionsBar = new PlotOptionsBar { ShowInLegend = false },
+                Name = "Leakage Current",
+                Data = new Data(Array.ConvertAll(data.Values.ToArray(), element => (object)element)),
+                Color = Color.FromArgb(209, 209, 209),
+                PlotOptionsSeries = new PlotOptionsSeries
+                {
+                    Marker = new PlotOptionsSeriesMarker
+                    {
+                        FillColor = Color.Gray,
+                        LineWidth = 2,
+                        LineColor = Color.White
+                    }
+                },
+            })
+            .SetTooltip(new Tooltip
+            {
+                //Formatter =  "<b>{point.y:,.0f}%</b>"
+                // Formatter = "function() {'sssss'}"
+                Formatter = " function() { var st; if (this.y < 31) {st = this.y + ' mA';} else{ st= 'High';} return '<b>'+this.series.name +'</b><br/>'+  this.x +': '+ st;}"
+            });
+            return chart;
+        }
+
+        private Dictionary<String, String> PrepareDataGraph(DateTime dateStart, DateTime dateFinish, Int32 idEngine, Int32 maxValue, String maxValueString, Boolean isClamp = false)
         {
             Dictionary<String, String> result;
             using (AppContext db = new AppContext())
             {
                 if (dateStart == DateTime.MinValue || dateFinish == DateTime.MinValue)
-                    result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Date).Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Date).ToDictionary(st => ConvertDate(st.Date), st => (st.Value<20000?st.Value.ToString():"21000"));
+                {
+                    if (isClamp)
+                    {
+                        result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Date).
+                            Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Date)
+                            .ToDictionary(st => ConvertDate(st.Date), st => (st.ClampValue < maxValue ? st.ClampValue.ToString(new CultureInfo("en-us")) : maxValueString));
+                    }
+                    else
+                    {
+                        result = db.Statistics.Where(st => st.EngineId == idEngine).OrderByDescending(st => st.Date).
+                            Take(NUMBERS_FOR_GRAPHICS).OrderBy(st => st.Date)
+                            .ToDictionary(st => ConvertDate(st.Date),
+                                st => (st.Value < maxValue ? st.Value.ToString() : maxValueString));
+                    }
+                }
                 else
-                    result = db.Statistics.Where(st => st.EngineId == idEngine && st.Date <= dateFinish && st.Date >= dateStart).OrderBy(st => st.Date).ToDictionary(st => ConvertDate(st.Date), st => (st.Value < 20000 ? st.Value.ToString() : "21000"));                             
+                {
+                    if (isClamp)
+                    {
+                        result = db.Statistics.Where(
+                            st => st.EngineId == idEngine && st.Date <= dateFinish && st.Date >= dateStart)
+                            .OrderBy(st => st.Date)
+                            .ToDictionary(st => ConvertDate(st.Date), st => (st.ClampValue < maxValue ? st.ClampValue.ToString(new CultureInfo("en-us")) : maxValueString));
+                    }
+                    else
+                    {
+                        result = db.Statistics.Where(
+                            st => st.EngineId == idEngine && st.Date <= dateFinish && st.Date >= dateStart)
+                            .OrderBy(st => st.Date)
+                            .ToDictionary(st => ConvertDate(st.Date),
+                                st => (st.Value < maxValue ? st.Value.ToString() : maxValueString));
+                    }
+                }
             }
             if (result.Count > NUMBERS_FOR_GRAPHICS)
             {

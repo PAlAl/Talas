@@ -10,6 +10,11 @@ namespace Objects
         public DateTime Date { get; set; }
         public Int32 Value { get; set; }
 
+        public Decimal ClampValue
+        {
+            get { return (Decimal)Value/1000; }
+        }
+
         public Int32 EngineId { get; set; }
         public Engine Engine { get; set; }
 
