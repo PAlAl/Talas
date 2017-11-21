@@ -140,7 +140,7 @@ function showEnginesDispatching() {
                         var id = element.EngineId;
                         $('[name = Date№' + id + ']').text(element.DateString);
                         if (element.Engine != null && element.Engine.IsClamp)
-                            $('[name = Value№' + id + ']').text(element.Value / 1000000);
+                            $('[name = Value№' + id + ']').text(element.Value / 1000);
                         else {
                             if (element.Engine != null && element.Engine.IsTes)
                                 $('[name = Value№' + id + ']').text(element.Value == null ? 0 : (element.Value > 1000000 ? "High" : element.Value));

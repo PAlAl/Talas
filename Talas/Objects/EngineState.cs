@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Objects
 {
-    public class EngineState
+	public class EngineState
     {
         [Key]
         public Int32 Id { get; set; }
@@ -56,7 +56,7 @@ namespace Objects
                             break;
                     }
 
-                return result;
+                return result * 1000;
             }
         }
 

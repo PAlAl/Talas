@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using DotNet.Highcharts.Helpers;
@@ -8,11 +9,10 @@ using DotNet.Highcharts.Options;
 using Objects;
 using Talas.Models;
 using Talas.Objects;
-using System.Globalization;
 
 namespace Talas.Controllers
 {
-    public class EngineController : Controller
+	public class EngineController : Controller
     {
         private const byte NUMBERS_FOR_GRAPHICS=15;
        [Authorize]
@@ -56,7 +56,7 @@ namespace Talas.Controllers
                         case 3:
                             ViewBag.IsClamp = eng == null ? false : eng.IsClamp;
                             ViewBag.IsTes = eng == null ? false : eng.IsTes;
-                            ViewBag.ModeName = ViewBag.IsClamp? "Leakage Current, A" : ViewBag.IsTes ? "Insulation Resistance, kOhm" : "Insulation Resistance, kOhm";
+                            ViewBag.ModeName = ViewBag.IsClamp? "Leakage Current, mA" : ViewBag.IsTes ? "Insulation Resistance, kOhm" : "Insulation Resistance, kOhm";
                             break;
                         case 4:
                             ViewBag.IsTes = eng == null ? false : eng.IsTes;
